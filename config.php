@@ -1,7 +1,22 @@
 <?
-define('TITLE','Дропшипинг');
-define('DESCRIPTION','Дропшипинг');
-define('KEYWORDS','Дропшипинг');
+define('LANG','ru'); // Язык страницы
+define('TITLE','Дропшипинг'); // Название, метатег title
+define('DESCRIPTION','Дропшипинг'); // Название, метатег description
+define('KEYWORDS','Дропшипинг'); // Название, метатег keywords
+define('ROBOTS','all'); // Название, метатег robots
+
+/* Метатег robots управляет индексированием страниц. 
+Можно запретить роботам не только индексацию самого документа, 
+но и прохождение по имеющимся в нем ссылкам. Возможные значения:
+
+    index / noindex — индексировать / не индексировать эту страницу;
+    follow / nofollow — идти / не идти по ссылкам с этой страницы;
+    all = "index, follow"
+    none = "noindex, nofollow" */
+
+define('FAVICON_PATH','favicon'); // Путь для favicon
+define('FAVICON','favicon.png'); // Файл PNG размером не менее 152x152 для создания favicon. 
+
 define('SKYPE','Skype');
 define('PHONE','+38(000) 000-00-00');
 
