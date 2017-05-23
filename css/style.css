@@ -1,0 +1,54 @@
+#footer {
+    position: fixed; 
+    left: 0; bottom: 0; 
+    padding: 10px; 
+    background: #FFFFFF;
+    color: black; 
+    width: 100%; 
+   }
+#news {
+	max-width: 600px;
+}
+.drop_color{
+	color: #657977;
+}
+.help{
+	color: red;
+}
+.inform{
+	padding-top: 10px;
+	}
+.inform span{
+	min-width: 22px;
+	margin: 0 auto;
+	color: #657977;
+}
+.inform a{
+
+text-decoration: none;
+display: block;
+padding: 0;
+height: 15px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+-o-box-sizing: border-box;
+line-height: 15px;
+
+}
+.inform a:hover{
+	color:#ffffff;
+    background-color: #0 !important;
+}
+
+.table{
+	background-color: lightgrey;
+}
+.table p{
+	color: black;
+}
+.container{
+	padding-bottom: 50px !important;
+}
+.img_product{
+	max-height: 70px !important;
+}
