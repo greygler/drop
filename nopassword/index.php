@@ -1,10 +1,6 @@
 <? 
-session_start();
 require_once ('../config.php');
-require_once ("../class/autoring.class.php"); 
-//if (autoring::is_autoring()) header("Location: /");
 require_once ("../class/favicon.class.php");
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,25 +33,20 @@ require_once ("../class/favicon.class.php");
 </head>
 
 <body>
-
     <div class="wrapper">
-    <form class="form-signin" action="login.php" method="POST" >       
-      <h2 class="form-signin-heading">Авторизация</h2>
+    <form class="form-signin" >       
+      <h2 class="form-signin-heading">Сброс пароля</h2>
 	  <div class="input-group">
        <span class="input-group-addon "><i class="fa fa-at sybmol" aria-hidden="true"></i>
-</span><input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
+</span><input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
 	  </div>
-	  <div class="input-group">
- <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
-</span>
-         <input type="password" class="form-control" name="password" placeholder="Password" required=""/>  
-</div>	 <div> <br>
-<p class="text-center"> <a href="/nopassword">Я забыл пароль </a> </p>
-      <label class="checkbox">
-        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Запомнить меня
-      </label> </div> 
-      <button class="btn btn-lg btn-log btn-block" type="submit">Вход</button>  
 	  <br>
+
+     
+      <button class="btn btn-lg btn-log btn-block" type="submit">Сбросить пароль</button> 
+<br>
+	  <p class="text-center"> <a href="/login">Авторизоваться </a> </p>	  
+	
 	  <p class="text-center"> <a href="/registration">Зарегистрироваться </a> </p>
     </form>
   </div>

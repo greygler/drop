@@ -4,7 +4,7 @@
 		<div id="news">
 		<div class="media">
   <a class="pull-left" href="#">
-    <img data-src="holder.js/100x180" class="media-object" src="..." alt="...">
+    <img  class="media-object" src="img_news/noimg.jpg" alt="...">
   </a>
   <div class="media-body">
     <h4 class="media-heading text-left">Заголовок медиа</h4>

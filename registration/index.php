@@ -1,10 +1,6 @@
 <? 
-session_start();
 require_once ('../config.php');
-require_once ("../class/autoring.class.php"); 
-//if (autoring::is_autoring()) header("Location: /");
 require_once ("../class/favicon.class.php");
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,10 +33,13 @@ require_once ("../class/favicon.class.php");
 </head>
 
 <body>
-
     <div class="wrapper">
-    <form class="form-signin" action="login.php" method="POST" >       
-      <h2 class="form-signin-heading">Авторизация</h2>
+    <form class="form-signin" action="registration.php" >       
+      <h2 class="form-signin-heading">Регистрация</h2>
+	  <div class="input-group">
+       <span class="input-group-addon "><i class="fa fa-user sybmol" aria-hidden="true"></i>
+</span><input type="text" class="form-control" name="username" placeholder="Ваше имя" required="" autofocus="" />
+	  </div>
 	  <div class="input-group">
        <span class="input-group-addon "><i class="fa fa-at sybmol" aria-hidden="true"></i>
 </span><input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
@@ -48,16 +47,22 @@ require_once ("../class/favicon.class.php");
 	  <div class="input-group">
  <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
 </span>
-         <input type="password" class="form-control" name="password" placeholder="Password" required=""/>  
-</div>	 <div> <br>
-<p class="text-center"> <a href="/nopassword">Я забыл пароль </a> </p>
+         <input type="password" class="form-control" name="password" placeholder="Пароль" required=""/>  
+</div>	
+<div class="input-group">
+ <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
+</span>
+         <input type="password2" class="form-control" name="password" placeholder="Пароль повторно" required=""/>  
+</div>	
+ <div> 
       <label class="checkbox">
-        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Запомнить меня
-      </label> </div> 
-      <button class="btn btn-lg btn-log btn-block" type="submit">Вход</button>  
-	  <br>
-	  <p class="text-center"> <a href="/registration">Зарегистрироваться </a> </p>
+        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Согласен
+      </label>  </div> 
+      <button class="btn btn-lg btn-log btn-block" type="submit">Вход</button> <br>
+	  <p class="text-center"> <a href="/login">У меня уже есть регистрация </a> </p>
+
     </form>
+	
   </div>
   
 <? require_once ('../footer.php'); ?>

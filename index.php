@@ -1,6 +1,8 @@
-<? 
+<? session_start();
 require_once ('config.php');
 require_once ("class/db.class.php"); 
+require_once ("class/autoring.class.php"); 
+if (!autoring::is_autoring()) header("Location: login/");
 require_once ("class/lpcrm.class.php"); 
 require_once ("class/favicon.class.php");
 //db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
@@ -26,7 +28,7 @@ require_once ('head.php');
 		</ul>
 		<div class="row  hidden-xs">
 		 <div class="inform text-right col-md-1 col-lg-1 visible-lg visible-md"><span class="fa fa-user-circle fa-3x"></span> </div>
-		<div class="inform col-sm-4 col-md-3 col-lg-4"> <span class="fa fa-user fa-lg"></span> Иванов Ванёк<br><span class="fa fa-money fa-lg" ></span> 0 грн. </div>
+		<div class="inform col-sm-4 col-md-3 col-lg-4"> <span class="fa fa-user fa-lg"></span> <?= $_SESSION['name'] ?><br><span class="fa fa-money fa-lg" ></span> 0 грн. </div>
 		<!-- <div class="inform text-left col-sm-1 col-md-1 col-lg-1"><a href="#"><span class="fa fa-power-off fa-lg"></span></a> </div> -->
 		<div class="inform text-right  col-md-1 col-lg-1 visible-lg visible-md"><i class="help fa fa-support fa-3x"></i> </div>
 		<div class="inform text-left col-sm-3 col-md-3 col-lg-2">
@@ -59,5 +61,11 @@ require_once ('head.php');
 			</li>
 		</ul>	
 	</div>	
+	
+	<div class="container">
+	<? require_once ("pages/".$type); ?>
+	</div>
+	
+	
 	
 <? require_once ('footer.php'); ?>
