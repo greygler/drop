@@ -12,10 +12,11 @@
     <meta name="description" content="<?= DESCRIPTION ?>">
 	<meta name="robots" content="<?= ROBOTS ?>"> 
 	<?= favicon::favicons(FAVICON_PATH, FAVICON); // Favicon ?>
-	
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

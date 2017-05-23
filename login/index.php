@@ -1,116 +1,55 @@
 <? 
-require ('../config.php');
+require_once ('../config.php');
+require_once ("../class/favicon.class.php");
 ?>
-<!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="ru" class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="UTF-8" />
-        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
-		<title><?= TITLE ?></title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <meta name="description" content="<?= DESCRIPTION ?>" />
-        <meta name="keywords" content="<?= KEYWORDS ?>" />
-        <meta name="author" content="Igor Sayutin" />
-       
-		<link rel="shortcut icon" href="../img/favicon.png" type="image/png">
-        <link rel="stylesheet" type="text/css" href="css/demo.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
-    </head>
-    <body>
-        <div class="container">
-           
-            <header>
-                <h1>Авторизация и регистрация в системе <span><?= TITLE ?></span></h1>
-	        </header>
-            <section>				
-                <div id="container_demo" >
-                    <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
-                    <a class="hiddenanchor" id="toregister"></a>
-                    <a class="hiddenanchor" id="tologin"></a>
-					<a class="hiddenanchor" id="topass"></a>
-                    <div id="wrapper">
-                        <div id="login" class="animate form">
-                            <form  action="login.php" autocomplete="on"> 
-                                <h1>Авторизация</h1> 
-                                <p> 
-                                    <label for="username" class="uname" data-icon="u" > E-mail: </label>
-                                    <input id="username" name="username" required="required" type="text" placeholder="mymail@mail.com"/>
-                                </p>
-                                <p> 
-                                    <label for="password" class="youpasswd" data-icon="p"> Пароль: </label>
-                                    <input id="password" name="password" required="required" type="password" placeholder="X8df!90EO" /> 
-                                </p>
-                                <p class="keeplogin"> 
-									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
-									<label for="loginkeeping">Сохранить регистрацию</label><br>
-									<a href="#topass">Забыли пароль?</a>
-								</p>
-                                <p class="login button"> 
-                                    <input type="submit" value="Login" /> 
-								</p>
-                                <p class="change_link">
-									Нет регистрации?
-									<a href="#toregister" class="to_register">Зарегистрироваться</a>
-								</p>
-                            </form>
-                        </div>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="<?= LANG ?>">
+  <head>
+    <meta http-equiv="content-type" content="text/html; utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="GreyGler" />
+    <meta name="copyright" content="http://it-senior.pp.ua" />
+	<title><?= TITLE ?></title>
+    <meta name="keywords" content="<?= KEYWORDS ?>">
+    <meta name="description" content="<?= DESCRIPTION ?>">
+	<meta name="robots" content="none"> 
+	<?= favicon::favicons('../'.FAVICON_PATH, FAVICON); // Favicon ?>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../css/normalize.css" />
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/login.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-                        <div id="register" class="animate form">
-                            <form  action="registration.php" autocomplete="on"> 
-                                <h1> Sign up </h1> 
-                                <p> 
-                                    <label for="usernamesignup" class="uname" data-icon="u">Your username</label>
-                                    <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="mysuperusername690" />
-                                </p>
-                                <p> 
-                                    <label for="emailsignup" class="youmail" data-icon="e" > Your email</label>
-                                    <input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="mysupermail@mail.com"/> 
-                                </p>
-                                <p> 
-                                    <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
-                                    <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="eg. X8df!90EO"/>
-                                </p>
-                                <p> 
-                                    <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
-                                    <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
-                                </p>
-                                <p class="signin button"> 
-									<input type="submit" value="Sign up"/> 
-								</p>
-                                <p class="change_link">  
-									Already a member ?
-									<a href="#tologin" class="to_register"> Go and log in </a>
-								</p>
-                            </form>
-                        </div>
-						
-						<div id="pass" class="animate form">
-                            <form  action="login.php" autocomplete="on"> 
-                                <h1>Сброс пароля</h1> 
-                                <p> 
-                                    <label for="username" class="uname" data-icon="u" > E-mail: </label>
-                                    <input id="username" name="username" required="required" type="text" placeholder="mymail@mail.com"/>
-                                </p>
-                                
-                                
-                                <p class="login button"> 
-                                    <input type="submit" value="Сбросить" /> 
-								</p>
-                                <p class="change_link">
-									Нет регистрации?
-									<a href="#toregister" class="to_register">Зарегистрироваться</a>
-								</p>
-                            </form>
-                        </div>
-						
-                    </div>
-                </div>  
-            </section>
-        </div>
-    </body>
-</html>
+
+  
+</head>
+
+<body>
+    <div class="wrapper">
+    <form class="form-signin">       
+      <h2 class="form-signin-heading">Авторизация</h2>
+	  <div class="input-group">
+       <span class="input-group-addon "><i class="fa fa-at sybmol" aria-hidden="true"></i>
+</span><input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
+	  </div>
+	  <div class="input-group">
+ <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
+</span>
+         <input type="password" class="form-control" name="password" placeholder="Password" required=""/>  
+</div>	 <div> 
+      <label class="checkbox">
+        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Запомнить меня
+      </label>
+      <button class="btn btn-lg btn-log btn-block" type="submit">Login</button>  </div> 
+    </form>
+  </div>
+  
+<? require_once ('../footer.php'); ?>
