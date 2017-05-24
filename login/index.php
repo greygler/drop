@@ -16,15 +16,19 @@ require_once ("../class/favicon.class.php");
 	<meta name="author" content="GreyGler" />
     <meta name="copyright" content="http://it-senior.pp.ua" />
 	<title><?= TITLE ?></title>
+	
     <meta name="keywords" content="<?= KEYWORDS ?>">
     <meta name="description" content="<?= DESCRIPTION ?>">
 	<meta name="robots" content="none"> 
 	<?= favicon::favicons('../'.FAVICON_PATH, FAVICON); // Favicon ?>
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="../css/normalize.css" />
-	<link rel="stylesheet" href="../css/font-awesome.min.css">
-	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/login.css" rel="stylesheet">
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../css/font-awesome.min.css">
+	
+	
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -43,7 +47,7 @@ require_once ("../class/favicon.class.php");
       <h2 class="form-signin-heading">Авторизация</h2>
 	  <div class="input-group">
        <span class="input-group-addon "><i class="fa fa-at sybmol" aria-hidden="true"></i>
-</span><input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
+</span><input type="text" class="form-control" name="email" placeholder="Email Address" required="" />
 	  </div>
 	  <div class="input-group">
  <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>

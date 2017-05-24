@@ -11,6 +11,10 @@ $categories=lp_crm::getCategories(CRM,CRM_KEY);
 //if ($value['subcategories']!="") {$subcategories[$value['subcategoties'][$key]['id']]=$value['subcategoties'];
 //echo "{$key} = {$value['subcategoties']['name']}"; }
 
+$balance=7;
+$new_order=4;
+if ($balance<0) $color_balance="red"; else if ($balance!=0) $color_balance="green";
+ 
 if (!empty($_GET)) $type=$_GET['type'].".php"; else $type="news.php";
 require_once ('head.php');
 ?>
@@ -26,15 +30,29 @@ require_once ('head.php');
 </div></a></li></a></li>
 			<li class="visible-xs"><a href="?type=info"><span class="fa fa-info fa-2x"></span></a></li> 
 		</ul>
-		<div class="row  hidden-xs">
+		<div id="user" class="row  hidden-xs">
+		
 		 <div class="inform text-right col-md-1 col-lg-1 visible-lg visible-md"><span class="fa fa-user-circle fa-3x"></span> </div>
-		<div class="inform col-sm-4 col-md-3 col-lg-4"> <span class="fa fa-user fa-lg"></span> <?= $_SESSION['name'] ?><br><span class="fa fa-money fa-lg" ></span> 0 грн. </div>
-		<!-- <div class="inform text-left col-sm-1 col-md-1 col-lg-1"><a href="#"><span class="fa fa-power-off fa-lg"></span></a> </div> -->
-		<div class="inform text-right  col-md-1 col-lg-1 visible-lg visible-md"><i class="help fa fa-support fa-3x"></i> </div>
-		<div class="inform text-left col-sm-3 col-md-3 col-lg-2">
-		<span class="fa fa-skype fa-lg"></span> <?= SKYPE ?><br><span class="fa fa-phone fa-lg"></span> <?= PHONE ?>
+		<div class="inform col-sm-3 col-md-3 col-lg-4"> <span class="fa fa-user fa-lg"></span> <?= $_SESSION['name'] ?><a data-toggle="modal" data-target="#logmodal" class="visible-lg visible-md" href="#"> <i class="fa fa-power-off fa-lg"></i> Выход</a> 
+		
+		<a  id="logout-xs" class="inform visible-sm" data-toggle="modal" data-target="#logmodal" href="#"> <i class="fa fa-power-off fa-lg"></i></a>
+		<br>
+		<font color="<?= $color_balance ?>">
+		<span class="fa fa-money fa-lg" ></span> <strong><?= $balance ?> <?= CURRENCY ?>. </strong></font>
+		<? if ($new_order>0) {$color_order="red"; ?>
+		<a href="?type=order&orders=new">
+		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></font> </strong></a> <? } ?> 
+		</div>
+		
+		
+		<div class="inform text-left col-sm-3 col-md-4 col-lg-3"><a href="tel:<?= SKYPE ?>">
+		<span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br><a href="tel:<?= PHONE ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a>
 		</div>
 		</div>
+		
+		<div id="logout-xs" class="inform visible-xs">
+		<a  href="<?= $logout ?>"> <i class="fa fa-power-off fa-lg"></i></a></div>
+		<div class="text-right visible-xs"><i class="help fa fa-support fa-3x"></i> </div> 
 	</nav>
 
 	<!-- HTML Markup for Sidebar Slide Out Menu -->
@@ -66,6 +84,24 @@ require_once ('head.php');
 	<? require_once ("pages/".$type); ?>
 	</div>
 	
+	<div class="modal fade" id="logmodal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Выход из системы</h4>
+      </div>
+      <div class="modal-body">
+        <p>Вы действительно хотите выйти?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <a href="/logout"><button type="button" class="btn btn-primary">Выйти</button></a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 	
 	
 <? require_once ('footer.php'); ?>

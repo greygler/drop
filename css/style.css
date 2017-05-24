@@ -16,6 +16,7 @@
 	color: red;
 }
 .inform{
+	
 	padding-top: 10px;
 	}
 .inform span{
@@ -23,8 +24,14 @@
 	margin: 0 auto;
 	color: #5b6064;
 }
-.inform a{
-
+.login{
+	background-color: #FFFFFF;
+}
+#user{
+	
+}
+#user a{
+float: right;
 text-decoration: none;
 display: block;
 padding: 0;
@@ -33,12 +40,43 @@ height: 15px;
 -moz-box-sizing: border-box;
 -o-box-sizing: border-box;
 line-height: 15px;
+padding-right: 2%;
 
 }
-.inform a:hover{
-	color:#ffffff;
-    background-color: #0 !important;
+
+
+#user a:hover{
+	color: red;
+	text-decoration: underline;
+    background-color: transparent !important;
 }
+
+#logout-xs{
+	padding-left: 1%;
+}
+
+#logout-xs a{
+float: right;
+text-decoration: none;
+display: block;
+padding: 0;
+height: 15px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+-o-box-sizing: border-box;
+line-height: 15px;
+padding-right: 2%;
+
+}
+.neworder{
+	padding-left: 2%;
+	color: red !important;
+}
+.neworder span{
+	
+	color: red;
+}
+
 
 .table{
 	background-color: lightgrey;

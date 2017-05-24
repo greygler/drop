@@ -19,7 +19,7 @@ define('FAVICON','favicon.png'); // Файл PNG размером не мене�
 
 define('SKYPE','Skype');
 define('PHONE','+38(000) 000-00-00');
-
+define('CURRENCY','грн');
 
 
 define('CRM','testcrm');
