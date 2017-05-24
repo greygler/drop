@@ -16,6 +16,15 @@ class Autoring {
 			if ($myrow[0]>0) return true; else return false;
 		}
 		
+	public function get_base($email, $password)
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$result = mysql_query("SELECT * FROM users WHERE email='{$email}'");
+			$myrow = mysql_fetch_array($result);
+			if ($myrow['password']==md5($password)) return $myrow;
+			else return false;
+		}
+		
 		public function create_key() // Создаемк ключ
 		{
 			return md5(time());

@@ -27,9 +27,9 @@
 .login{
 	background-color: #FFFFFF;
 }
-#user{
-	
-}
+
+.users_data {max-width: 230px;}
+
 #user a{
 float: right;
 text-decoration: none;

@@ -31,11 +31,11 @@ require_once ('head.php');
 			<li class="visible-xs"><a data-toggle="modal" data-target="#support" href="#"><span class="help fa fa-support fa-2x"></span></a></li> 
 		</ul>
 		<div id="user" class="row  hidden-xs">
+		<div id="data_user"> 
+		 <div class="inform  text-right col-md-1 col-lg-1 visible-lg visible-md"><span class="fa fa-user-circle fa-3x"></span> </div>
+		<div class="inform users_data col-sm-3 col-md-3 col-lg-4"> <span class="fa fa-user fa-lg"></span> <?= $_SESSION['name'] ?><a data-toggle="modal" data-target="#logmodal" class="visible-lg visible-md" href="#"> <i class="fa fa-power-off fa-lg"></i> Выход</a> 
 		
-		 <div class="inform text-right col-md-1 col-lg-1 visible-lg visible-md"><span class="fa fa-user-circle fa-3x"></span> </div>
-		<div class="inform col-sm-3 col-md-3 col-lg-4"> <span class="fa fa-user fa-lg"></span> <?= $_SESSION['name'] ?><a data-toggle="modal" data-target="#logmodal" class="visible-lg visible-md" href="#"> <i class="fa fa-power-off fa-lg"></i> Выход</a> 
-		
-		<a  id="logout-xs" class="inform visible-sm" data-toggle="modal" data-target="#logmodal" href="#"> <i class="fa fa-power-off fa-lg"></i></a>
+		<a data-toggle="modal" data-target="#logmodal" id="logout-xs" class="inform visible-sm" href="#"> <i class="fa fa-power-off fa-lg"></i></a>
 		<br>
 		<font color="<?= $color_balance ?>">
 		<span class="fa fa-money fa-lg" ></span> <strong><?= $balance ?> <?= CURRENCY ?>. </strong></font>
@@ -43,15 +43,15 @@ require_once ('head.php');
 		<a href="?type=order&orders=new">
 		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></font> </strong></a> <? } ?> 
 		</div>
+		</div>
 		
-		
-		<div class="inform text-left col-sm-3 col-md-4 col-lg-3"><a href="tel:<?= SKYPE ?>">
+		<div class="inform text-left col-sm-3 col-md-4 col-lg-5"><a href="tel:<?= SKYPE ?>">
 		<span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br><a href="tel:<?= PHONE ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a>
 		</div>
 		</div>
 		
 		<div id="logout-xs" class="inform visible-xs">
-		<a  href="<?= $logout ?>"> <i class="fa fa-power-off fa-lg"></i></a></div>
+		<a  data-toggle="modal" data-target="#logmodal" href="#"> <i class="fa fa-power-off fa-lg"></i></a></div>
 		<!--<div class="text-right visible-xs"><i class="help fa fa-support fa-3x"></i> </div>  -->
 	</nav>
 

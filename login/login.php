@@ -1,12 +1,18 @@
 <?
 session_start();
-$_SESSION['login']=$_POST['email'];
-$_SESSION['password']=md5($_POST['password']);
-$_SESSION['auttime']=time();
-$_SESSION['remember']=true;
-$_SESSION['user_group']='';
-$_SESSION['name']='Игорь Саютин';
+require_once ('../config.php');
+require_once ("../class/autoring.class.php");
+require_once ('../class/db.class.php');
+if (!autoring::is_base($_POST['email'])) echo ("no"); else {
+	$get_base=autoring::get_base($_POST['email'], $_POST['password'] );
+	if ($get_base==false) echo (error);
+	    else {
+			autoring::set_autoring($get_base['email'], $get_base['password'], '0', $get_base['user_group'], $get_base['name']);
+			echo ("ok");
+			}
+}
+	
 
 
-header("Location: /");
+
 ?>
