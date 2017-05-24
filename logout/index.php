@@ -5,4 +5,3 @@ require_once ("../class/autoring.class.php");
 autoring::logout();
 header("Location: /");
 ?>
-?>

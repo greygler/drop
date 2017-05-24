@@ -27,42 +27,74 @@ require_once ("../class/favicon.class.php");
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	 <script type="text/javascript" language="javascript">
+ 	function call() {
+		 if ($('#password1').val()!=$('#password2').val())
+          { $('.results').html('Пароли не совпадают!');
+								$('#password1_group').addClass('has-error');
+								$('#password2_group').addClass('has-error');} else {			 ;
+	
+ 	  var msg   = $('#form_reg').serialize();
+        $.ajax({
+          type: 'POST',
+          url: 'registration.php',
+          data: msg,
+          success: function(data) {
+			if (data=='error') { $('.results').html('Такой E-mail уже зарегистрирован!');
+								$('#emailgroup').addClass('has-error');} else
+		  if (data=='ok') {document.location.href = '/'; } else $('.results').html(data)
+									
+								
+          },
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+    }
+</script>
+	
   
 </head>
 
 <body>
     <div class="wrapper">
-    <form class="form-signin" action="registration.php" >       
+    <form id="form_reg" class="form-signin" action="javascript:void(null);" onsubmit="call()">       
       <h2 class="form-signin-heading">Регистрация</h2>
+	 
+
 	  <div class="input-group">
        <span class="input-group-addon "><i class="fa fa-user sybmol" aria-hidden="true"></i>
-</span><input type="text" class="form-control" name="username" placeholder="Ваше имя" required="" autofocus="" />
+</span><input type="text" class="form-control" name="name"  id="name" placeholder="Ваше имя" required="" />
 	  </div>
-	  <div class="input-group">
+	  <div id='emailgroup' class="input-group">
+	  
        <span class="input-group-addon "><i class="fa fa-at sybmol" aria-hidden="true"></i>
-</span><input type="text" class="form-control" name="email" placeholder="Email Address" required="" autofocus="" />
-	  </div>
-	  <div class="input-group">
+</span><input type="email" id="email" class="form-control" name="email" placeholder="Email Address" required=""  />
+	  </div> <div class="results"></div>
+	  <div id="password1_group" class="input-group">
  <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
 </span>
-         <input type="password" class="form-control" name="password" placeholder="Пароль" required=""/>  
+         <input type="password" id="password1" class="form-control" name="password1" placeholder="Пароль" required="" onchange="checkPasswords()"/>  
 </div>	
-<div class="input-group">
+<div id="password2_group" class="input-group">
  <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
 </span>
-         <input type="password2" class="form-control" name="password" placeholder="Пароль повторно" required=""/>  
+         <input type="password" id="password2"  class="form-control" name="password2" placeholder="Пароль повторно" required="" onchange="checkPasswords()"/>  
 </div>	
+<div class="error"></div>
  <div> 
       <label class="checkbox">
-        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Согласен
+        <input required type="checkbox" value="rules" id="rules" name="rules"> Согласен с Правилами
       </label>  </div> 
-      <button class="btn btn-lg btn-log btn-block" type="submit">Вход</button> <br>
+      <button class="btn btn-lg btn-log btn-block"  id="submit" type="submit">Вход</button> <br>
 	  <p class="text-center"> <a href="/login">У меня уже есть регистрация </a> </p>
 
     </form>
 	
   </div>
   
-<? require_once ('../footer.php'); ?>
+<? $jquery='no';
+require_once ('../footer.php'); ?>

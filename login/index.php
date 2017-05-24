@@ -47,7 +47,7 @@ require_once ("../class/favicon.class.php");
       <h2 class="form-signin-heading">Авторизация</h2>
 	  <div class="input-group">
        <span class="input-group-addon "><i class="fa fa-at sybmol" aria-hidden="true"></i>
-</span><input type="text" class="form-control" name="email" placeholder="Email Address" required="" />
+</span><input type="email" class="form-control" name="email" placeholder="Email Address" required="" />
 	  </div>
 	  <div class="input-group">
  <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
