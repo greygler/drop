@@ -81,6 +81,9 @@ padding-right: 2%;
 	color: red;
 }
 
+.page_form{
+	width: 70px; float: right;
+}
 
 .table{
 	background-color: lightgrey;
