@@ -22,6 +22,8 @@ define('PHONE','+38(000) 000-00-00');
 define('CURRENCY','грн');
 define('ADDRESS','OOO "ДропСервис", г. Мухосральск');
 
+$view_pages=array(10, 25, 50, 100);
+
 
 define('CRM','testcrm');
 define('CRM_KEY','9ef4d26ea5e96179a98c8d8502cb4c34');

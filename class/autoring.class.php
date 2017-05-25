@@ -24,13 +24,23 @@ class Autoring {
 			else return false;
 		}
 		
-	public function user_group($group_id)
+	public function groups()
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-			$result = mysql_query("SELECT * FROM users_group WHERE id_group='{$group_id}'");
+			$result = mysql_query("SELECT * FROM users_group");
 			$myrow = mysql_fetch_array($result);
-			return $myrow;
+			do
+			{
+				$groups[$myrow['id_group']]['name_group']=$myrow['name_group'];
+				$groups[$myrow['id_group']]['fa_logo']=$myrow['fa_logo'];
+				$groups[$myrow['id_group']]['fa_user']=$myrow['fa_user'];
+			}
+			while ($myrow = mysql_fetch_array($result));
+						
+			return $groups;
 		}
+		
+		
 		
 		public function create_key() // Создаем ключ
 		{
@@ -55,8 +65,9 @@ class Autoring {
 	
 	public function set_autoring($base, $user_group) // Авторизация
 		{
-			foreach($base as $key => $value) $_SESSION[$key]=$value;
-			foreach($user_group as $key => $value) $_SESSION[$key]=$value;
+			
+			$_SESSION=array_merge ($base, $user_group);
+			
 			
 		}
 		

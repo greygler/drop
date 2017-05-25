@@ -2,6 +2,7 @@
 require_once ('config.php');
 require_once ("class/db.class.php"); 
 require_once ("class/autoring.class.php"); 
+
 if (!autoring::is_autoring()) header("Location: login/");
 require_once ("class/lpcrm.class.php"); 
 require_once ("class/favicon.class.php");
@@ -40,7 +41,7 @@ require_once ('head.php');
 		<a data-toggle="modal" data-target="#logmodal" id="logout-xs" class="inform visible-sm" href="#"> <i class="fa fa-power-off fa-lg"></i></a>
 		<br>
 		<font color="<?= $color_balance ?>">
-		<span class="fa fa-money fa-lg" ></span> <strong><?= $balance ?> <?= CURRENCY ?>. </strong></font>
+		<span class="fa fa-money fa-lg" ></span> <strong><?= $_SESSION['balance'] ?> <?= CURRENCY ?>. </strong></font>
 		<? if ($new_order>0) {$color_order="red"; ?>
 		<a href="?type=order&orders=new">
 		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></font> </strong></a> <? } ?> 
