@@ -29,9 +29,11 @@
 <?
 $groups=autoring::groups();
 $count_users=db::cound_bd('users');
-$count_pages=ceil($count_users/$_GET['pages']);
+if ($_GET['pages']!="") $count_pages=ceil($count_users/$_GET['pages']);
+else $count_pages=$count_users;
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-$result = mysql_query("SELECT * FROM users LIMIT {$_GET['pages']}");
+//$result = mysql_query("SELECT * FROM users LIMIT {$_GET['pages']}");
+$result = mysql_query("SELECT * FROM users");
 $myrow = mysql_fetch_array($result);
 do
 { ?>

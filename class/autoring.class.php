@@ -24,6 +24,15 @@ class Autoring {
 			else return false;
 		}
 		
+	public function user_group($group_id)
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$result = mysql_query("SELECT * FROM users_group WHERE id_group={$group_id}");
+			$myrow = mysql_fetch_array($result);
+			
+			return $myrow;
+		}
+		
 	public function groups()
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
