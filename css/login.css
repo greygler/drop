@@ -17,6 +17,9 @@ body {
     color: black; 
     width: 100%; 
    }
+#footer span {
+	font-size: 10px;
+} 
 h2 {
 	font-family: 'Roboto';
 }

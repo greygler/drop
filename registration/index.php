@@ -87,7 +87,7 @@ require_once ("../class/favicon.class.php");
 <div class="error"></div>
  <div> 
       <label class="checkbox">
-        <input required type="checkbox" value="rules" id="rules" name="rules"> Согласен с Правилами
+        <input required type="checkbox" value="rules" id="rules" name="rules"> Согласен с <a data-toggle="modal" data-target="#rules_modal" href="#">Правилами</a>
       </label>  </div> 
       <button class="btn btn-lg btn-log btn-block"  id="submit" type="submit">Вход</button> <br>
 	  <p class="text-center"> <a href="/login">У меня уже есть регистрация </a> </p>
