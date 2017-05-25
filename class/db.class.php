@@ -12,6 +12,9 @@
  *                                                                                       *
  * echo db::db_size(); // Размер БД                                                      *
  *                                                                                       * 
+ * echo db::cound_bd($table? $where); // Колличество записей в таблице					 *
+ *                                                                                       * 
+ *                                                                                       * 
  * echo db::formatfilesize(Размер в байтах); // Преобразовываем байты в кБ и МБ (Бонус)  *
  *                                                                                       *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -52,6 +55,15 @@ class Db
         else {
         return round( ( $data / 1024000 ), 1 ) . " MB"; }
     }
+	
+	public function cound_bd($table, $where)
+	{
+		$db_connect="SELECT COUNT(1) FROM {$table}";
+		if ($where!="") $db_connect.=" WHERE {$where}";
+		$result = mysql_query($db_connect);
+        $myrow = mysql_fetch_array($result);
+		return $myrow[0];
+	}
 	
 	public function db_size()
 	{

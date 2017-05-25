@@ -5,18 +5,17 @@ class Autoring {
 	
 	public function is_autoring() // есть ли авторизация
 		{
-			if (($_SESSION['login']!="") AND ($_SESSION['password']!="")) return true; else return false;
+			if (($_SESSION['email']!="") AND ($_SESSION['password']!="")) return true; else return false;
 		}
 		
 	public function is_base($email) // есть ли в базе
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-			$result = mysql_query("SELECT COUNT(1) FROM users WHERE email='{$email}'");
-			$myrow = mysql_fetch_array($result);
-			if ($myrow[0]>0) return true; else return false;
+			$count=db::cound_bd('users', "email='{$email}'");
+			if ($count>0) return true; else return false;
 		}
 		
-	public function get_base($email, $password)
+	public function get_base($email, $password) // Забираем из базы. Если нет - возвращаем FALSE
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE email='{$email}'");
@@ -25,7 +24,15 @@ class Autoring {
 			else return false;
 		}
 		
-		public function create_key() // Создаемк ключ
+	public function user_group($group_id)
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$result = mysql_query("SELECT * FROM users_group WHERE id_group='{$group_id}'");
+			$myrow = mysql_fetch_array($result);
+			return $myrow;
+		}
+		
+		public function create_key() // Создаем ключ
 		{
 			return md5(time());
 		}
@@ -43,29 +50,20 @@ class Autoring {
 			}
 			else return false;
 		}
+	
 		
 	
-	
-	
-	public function set_autoring($login, $password, $remember, $usergroup, $name) // Авторизация
+	public function set_autoring($base, $user_group) // Авторизация
 		{
+			foreach($base as $key => $value) $_SESSION[$key]=$value;
+			foreach($user_group as $key => $value) $_SESSION[$key]=$value;
 			
-			$_SESSION['login']=$login;
-			$_SESSION['password']=$password;
-			$_SESSION['auttime']=time();
-			$_SESSION['remember']=$remember;
-			$_SESSION['user_group']=$usergroup;
-			$_SESSION['name']=$name;
 		}
 		
 	public function logout() // выход
 		{
-			$_SESSION['login']='';
-			$_SESSION['password']='';
-			$_SESSION['auttime']=time();
-			$_SESSION['remember']='';
-			$_SESSION['user_group']='';
-			$_SESSION['name']='';
+			$_SESSION = array();
+			session_destroy();
 		}
 	
 	
