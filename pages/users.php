@@ -39,11 +39,11 @@ $count_pages=ceil($count_users/$limit);
 
 <table class="table table-striped table-responsive" >
 	<tr valign="middle" class="info">
-		<td valign="middle"><strong>ID</strong></td>
-		<td valign="middle"><strong>Имя</strong></td>
-		<td valign="middle"><strong>Группа</strong></td>
-		<td valign="middle"><strong>Баланс</strong></td>
-		<td valign="middle"><strong>Регистрация</strong></td>
+		<td valign="middle"><p><strong>ID</strong></p></td>
+		<td valign="middle"><p><strong>Имя</strong></p></td>
+		<td valign="middle"><p><strong>Группа</strong></p></td>
+		<td valign="middle"><p><strong>Баланс</strong></p></td>
+		<td valign="middle"><p><strong>Регистрация</strong></p></td>
 	</tr>
 <?
 
@@ -57,7 +57,7 @@ do
 	<tr valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?></td>
 		
-		<td valign="middle"><?= $myrow['name'] ?></td>
+		<td valign="middle"><p class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></td>
 		<td valign="middle"> <!--<span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> -->
 		<select id="view_pages1"  class="form-control" size="1" name="pages" onchange="">
 		<? foreach ($groups as $key => $value)  { ?>
@@ -67,8 +67,8 @@ do
 		</select>
 		
 		</td>
-		<td valign="middle"><?= $myrow['balance'] ?> <?= CURRENCY ?></td>
-		<td valign="middle"><?= date("d.m.Y G:i",$myrow['registration']) ?></td>
+		<td valign="middle"><p class="text-right"><?= $myrow['balance'] ?> <?= CURRENCY ?></p></td>
+		<td valign="middle"><p><?= date("d.m.Y G:i",$myrow['registration']) ?></p></td>
 	</tr>
 <?	
 //echo $myrow['ИМЯ_ПОЛЯ1'];
