@@ -54,4 +54,4 @@ do
 while ($myrow = mysql_fetch_array($result));
 ?>
 </table>
-
+<? $limit=pagination::pagin($_GET,$count_users, $view_pages)	?>
