@@ -20,7 +20,7 @@ body {
 
 .container {
 	text-align:center;
-	width: 70%;
+	/* width: 70%; */
 	margin:0 auto;
 }
 
@@ -150,7 +150,8 @@ nav {
 		
 		#sideNav.showFullMenu {
 			left:0;
-			width: 311px;		
+			width: 311px;
+			z-index: 22;			
 		}
 
 			#sideNav.showFullMenu ul ul li {

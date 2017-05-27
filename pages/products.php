@@ -2,6 +2,10 @@
 <div class="page-header">
 		<h1>товары</h1>
 		</div>
+		<div class="visible-xs alert alert-warning alert-dismissable"> 
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		Рекомендуется просматривать в горизонтальном расположении устройства.<br>Поверните устройство и заново загрузите таблицу товаров через боковое меню
+		</div>
 <table class="table table-striped table-responsive" >
 	<tr valign="middle" class="warning">
 		<td valign="middle"><small>ID</small></td>
