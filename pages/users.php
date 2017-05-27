@@ -11,7 +11,8 @@ $count_users=db::cound_bd('users');
 		Рекомендуется просматривать в горизонтальном расположении устройства.<br>Поверните устройство и заново загрузите таблицу товаров через боковое меню
 		</div>
 	
-<? $limit=pagination::pagin($_GET,$count_users, $view_pages)	?>
+<? $limit=pagination::pagin($_GET,$count_users, $view_pages);
+	?>
 		
 
 <table class="table table-striped table-responsive" >
@@ -24,7 +25,7 @@ $count_users=db::cound_bd('users');
 	</tr>
 <?
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-$result = mysql_query("SELECT * FROM users LIMIT {$limit}");
+$result = mysql_query("SELECT * FROM users LIMIT {$limit['begin']}, {$limit['count']}");
 
 $myrow = mysql_fetch_array($result);
 do
