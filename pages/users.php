@@ -23,8 +23,6 @@ $count_users=db::cound_bd('users');
 		
 	</tr>
 <?
-
-
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 $result = mysql_query("SELECT * FROM users LIMIT {$limit}");
 
@@ -33,19 +31,15 @@ do
 { ?>
 	<tr valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?></td>
-		
 		<td valign="middle"><p class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></td>
-		<td valign="middle"> <!--<span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> -->
+		<td valign="middle"> 
 		<select id="view_pages1"  class="form-control" size="1" name="pages" onchange="">
 		<? foreach ($groups as $key => $value)  { ?>
 		<option <? if ($key==$myrow['users_group']) echo ("selected") ; ?> value="<?= $key ?>"><?= $value['name_group'] ?></option>
-		<!--<option value="<?= $myrow['users_group'] ?>"><?= $groups[$myrow['users_group']]['name_group']; ?></option> -->
 		<? } ?>
 		</select>
-		
 		</td>
 		<td valign="middle"><p ><?= $myrow['balance'] ?> <?= CURRENCY ?></p></td>
-		
 	</tr>
 <?	
 //echo $myrow['ИМЯ_ПОЛЯ1'];

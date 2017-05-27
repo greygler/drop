@@ -16,7 +16,7 @@ if (($get_params['pages']!="") AND ($get_params['pages']!='all'))  $limit=$get_p
 else $limit=$view_pages['0'];
 $count_pages=ceil($count_records/$limit);
 ?>
-<? if ($get_params['pages']<$count_records) { ?>
+<? if (($get_params['pages']<$count_records) AND ($count_records>$limit))  { ?>
 <ul class="pagination">
   <li <? if ($page_no==1) {echo('class="disabled"'); $href="#"; } else {$get_params['page_no']=$page_no-1; $href=Pagination::pagelink($get_params);} ?>><a href="<?= $href  ?>">&laquo;</a></li>
   <? for ($i=1; $i<=$count_pages; $i++ ) { ?>

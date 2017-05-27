@@ -28,7 +28,7 @@ require_once ('head.php');
 			<li><a href="?type=order"><div class="hidden-xs">Заказы</div><div class="visible-xs"><i class="fa fa-shopping-cart fa-2x"></i>
 </div></a></li>
 			<li><a href="?type=user"><div class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
-</div></a></li></a></li>
+</div></a></li>
           <? if ($_SESSION['users_group']>=5) echo('<li class="visible-xs"><a data-toggle="modal" data-target="#support" href="#"><span class="help fa fa-support fa-2x"></span></a></li>');
 		   else echo('<li><a href="?type=users"><i class="visible-xs fa fa-users fa-2x"></i><div class="hidden-xs">Пользователи</div></a></li>'); ?>
 			 
@@ -44,7 +44,7 @@ require_once ('head.php');
 		<span class="fa fa-money fa-lg" ></span> <strong><?= $_SESSION['balance'] ?> <?= CURRENCY ?>. </strong></font>
 		<? if ($new_order>0) {$color_order="red"; ?>
 		<a href="?type=order&orders=new">
-		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></font> </strong></a> <? } ?> 
+		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></strong></font></a> <? } ?> 
 		</div>
 		</div>
 		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-5"><address><a href="tel:<?= SKYPE ?>"><span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br><a href="tel:<?= PHONE ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a></address>
