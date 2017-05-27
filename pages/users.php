@@ -11,10 +11,17 @@ $count_users=db::cound_bd('users');
 		Рекомендуется просматривать в горизонтальном расположении устройства.<br>Поверните устройство и заново загрузите таблицу товаров через боковое меню
 		</div>
 	
-<? $limit=pagination::pagin($_GET,$count_users, $view_pages);
-	?>
-		
+<? $limit=pagination::pagin($_GET,$count_users, $view_pages); 	?>
+	
+<script type="text/javascript" language="javascript">
+function save_group() {
+ alert("Во, бля!");
+ 
+ 
+}
 
+</script>	
+<form>
 <table class="table table-striped table-responsive" >
 	<tr valign="middle" class="info">
 		<td valign="middle"><p><strong>ID</strong></p></td>
@@ -34,7 +41,7 @@ do
 		<td valign="middle"><?= $myrow['id'] ?></td>
 		<td valign="middle"><p class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></td>
 		<td valign="middle"> 
-		<select id="view_pages1"  class="form-control" size="1" name="pages" onchange="">
+		<select id="view_pages1"  class="form-control" size="1" name="pages" onchange="save_group()">
 		<? foreach ($groups as $key => $value)  { ?>
 		<option <? if ($key==$myrow['users_group']) echo ("selected") ; ?> value="<?= $key ?>"><?= $value['name_group'] ?></option>
 		<? } ?>
@@ -49,4 +56,5 @@ do
 while ($myrow = mysql_fetch_array($result));
 ?>
 </table>
+</form>
 <? $limit=pagination::pagin($_GET,$count_users, $view_pages)	?>
