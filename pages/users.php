@@ -12,16 +12,34 @@ $count_users=db::cound_bd('users');
 		</div>
 	
 <? $limit=pagination::pagin($_GET,$count_users, $view_pages); 	?>
+
 	
 <script type="text/javascript" language="javascript">
-function save_group() {
- alert("Во, бля!");
- 
+function save_group(id) {
+	 var group_user = $('#group_user-'+id).val();
+	 
+  $.ajax({
+        type: "POST",
+        url: "../action/save_group.php",
+        data: {
+                'id': id, 
+                'group_user':group_user
+            },
+            // тип передачи данных
+            //dataType: "json",
+            // действие, при ответе с сервера
+            success: function(data){
+				
+				$('#fa-user-'+id).html(data);
+				if (group_user==0) $('#table-'+id).addClass('danger');
+				else $('#table-'+id).removeClass('danger');
+			}
+  })
  
 }
 
 </script>	
-<form>
+
 <table class="table table-striped table-responsive" >
 	<tr valign="middle" class="info">
 		<td valign="middle"><p><strong>ID</strong></p></td>
@@ -30,6 +48,7 @@ function save_group() {
 		<td valign="middle"><p><strong>Баланс</strong></p></td>
 		
 	</tr>
+	<form>
 <?
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 $result = mysql_query("SELECT * FROM users LIMIT {$limit['begin']}, {$limit['count']}");
@@ -37,11 +56,11 @@ $result = mysql_query("SELECT * FROM users LIMIT {$limit['begin']}, {$limit['cou
 $myrow = mysql_fetch_array($result);
 do
 { ?>
-	<tr valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
+	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?></td>
-		<td valign="middle"><p class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></td>
+		<td valign="middle"><a href="#"><p id="fa-user-<?= $myrow['id'] ?>" class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></a></td>
 		<td valign="middle"> 
-		<select id="view_pages1"  class="form-control" size="1" name="pages" onchange="save_group()">
+		<select id="group_user-<?= $myrow['id']?>"  class="form-control" size="1" name="pages" onchange="save_group(<?= $myrow['id']?>)">
 		<? foreach ($groups as $key => $value)  { ?>
 		<option <? if ($key==$myrow['users_group']) echo ("selected") ; ?> value="<?= $key ?>"><?= $value['name_group'] ?></option>
 		<? } ?>

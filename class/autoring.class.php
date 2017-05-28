@@ -24,6 +24,15 @@ class Autoring {
 			else return false;
 		}
 		
+		public function get_user($id) // Забираем из базы по ID.
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$result = mysql_query("SELECT * FROM users WHERE id='{$id}'");
+			$myrow = mysql_fetch_array($result);
+			return $myrow;
+			
+		}
+		
 	public function user_group($group_id)
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
@@ -31,6 +40,14 @@ class Autoring {
 			$myrow = mysql_fetch_array($result);
 			
 			return $myrow;
+		}
+		
+	public function save_group($id, $group_id)
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$result = mysql_query("UPDATE users SET users_group={$group_id}  WHERE id={$id}" );
+						
+			//return $myrow;
 		}
 		
 	public function groups()
