@@ -25,9 +25,9 @@ function save_group(id) {
                 'id': id, 
                 'group_user':group_user
             },
-            // тип передачи данных
+            
             //dataType: "json",
-            // действие, при ответе с сервера
+          
             success: function(data){
 				
 				$('#fa-user-'+id).html(data);

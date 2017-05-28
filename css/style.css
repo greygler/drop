@@ -32,7 +32,7 @@
 	background-color: #FFFFFF;
 }
 
-.users_data {max-width: 230px;}
+.users_data {max-width: 320px;}
 
 #user a{
 float: right;
@@ -103,9 +103,12 @@ padding-right: 2%;
 }
 .container_user_data{
 	margin: 0, auto;
-	color: white;
+	
 }
 
 .container_user_data h1 small{
 	color: white;
+}
+.text_white{
+	color: white !important;
 }

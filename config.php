@@ -1,4 +1,5 @@
 <?
+define('SITE_ADDR','http://drop'); // Адрес системы
 define('LANG','ru'); // Язык страницы
 define('TITLE','Дропшипинг'); // Название, метатег title
 define('DESCRIPTION','Дропшипинг'); // Название, метатег description

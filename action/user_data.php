@@ -14,9 +14,9 @@ $user=autoring::get_user($_GET['id']);
 <div class="page-header">
 		<h1 style="margin: 0px 0 10px 0;"><small>Пользователь: </small><strong><?= $user['name']?></strong><small>, id: <?= $_GET['id'] ?></small></h1>
 </div>
-<div class="col-sm-6 col-md-6 col-lg-6"><h4 class="text-left"><span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y", $user['registration']); ?></h3></div>
-<div class="col-sm-6 col-md-6 col-lg-6"><h4 class="text-right"><span class="fa <?= $groups[$user['users_group']]['fa_user'] ?> fa-lg"></span><?= $groups[$user['users_group']]['name_group'] ?></h3></div>
-<div class="col-sm-6 col-md-6 col-lg-6"><h3 class="text-center"><span class="fa fa-address-card-o fa-lg"></span> Контакты:</h3>
+<div class="col-sm-6 col-md-6 col-lg-6"><h4 class="text-left text_white"><span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y", $user['registration']); ?></h4></div>
+<div class="col-sm-6 col-md-6 col-lg-6"><h4 class="text-right text_white"><span class="fa <?= $groups[$user['users_group']]['fa_user'] ?> fa-lg"></span> <?= $groups[$user['users_group']]['name_group'] ?></h4></div>
+<div class="col-sm-6 col-md-6 col-lg-6 panel panel-default"><h3 class="text-center"><span class="fa fa-address-card-o fa-lg"></span> Контакты:</h3>
 <dl class="dl-horizontal">
   <dt>E-mail:</dt>
   <dd><?= $user['email'] ?></dd>
@@ -26,9 +26,11 @@ $user=autoring::get_user($_GET['id']);
   <dd>Skype</dd>
   <dt>Счет:</dt>
   <dd>43534534534535</dd>
+  <dt>Еще что-то:</dt>
+  <dd>43534534534535</dd>
 </dl>
 </div>
-<div class="col-sm-6 col-md-6 col-lg-6"><h3 class="text-center"><span class="fa fa-calculator fa-lg"></span><strong>Статистика:</strong></h3>
+<div class="col-sm-6 col-md-6 col-lg-6 panel panel-default"><h3 class="text-center"><span class="fa fa-calculator fa-lg"></span><strong>Статистика:</strong></h3>
 <dl class="dl-horizontal">
   <dt>Текущий баланс:</dt>
   <dd><?= $user['balance'] ?></dd>
