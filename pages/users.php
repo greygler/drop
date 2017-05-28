@@ -40,7 +40,7 @@ function save_group(id) {
 
 </script>	
 
-<table class="table table-striped table-responsive" >
+<table class="table table-striped table-responsive table-hover" >
 	<tr valign="middle" class="info">
 		<td valign="middle"><p><strong>ID</strong></p></td>
 		<td valign="middle"><p><strong>Имя</strong></p></td>
@@ -48,6 +48,7 @@ function save_group(id) {
 		<td valign="middle"><p><strong>Баланс</strong></p></td>
 		
 	</tr>
+	
 	<form>
 <?
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
@@ -58,7 +59,7 @@ do
 { ?>
 	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?></td>
-		<td valign="middle"><a href="#"><p id="fa-user-<?= $myrow['id'] ?>" class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></a></td>
+		<td valign="middle"><a data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><p id="fa-user-<?= $myrow['id'] ?>" class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></a></td>
 		<td valign="middle"> 
 		<select id="group_user-<?= $myrow['id']?>"  class="form-control" size="1" name="pages" onchange="save_group(<?= $myrow['id']?>)">
 		<? foreach ($groups as $key => $value)  { ?>

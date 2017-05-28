@@ -17,6 +17,7 @@ $new_order=4;
 if ($balance<0) $color_balance="red"; else if ($balance!=0) $color_balance="green";
  
 if (!empty($_GET)) $type=$_GET['type'].".php"; else $type="news.php";
+$no_favicon=true;
 require_once ('head.php');
 ?>
 
