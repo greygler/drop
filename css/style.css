@@ -101,3 +101,11 @@ padding-right: 2%;
 	color: white;
 	padding-bottom: 10px;
 }
+.container_user_data{
+	margin: 0, auto;
+	color: white;
+}
+
+.container_user_data h1 small{
+	color: white;
+}
