@@ -21,11 +21,11 @@ $user=autoring::get_user($_GET['id']);
   <dt>E-mail:</dt>
   <dd><?= $user['email'] ?></dd>
   <dt>Phone:</dt>
-  <dd>Телефон</dd>
+  <dd><?= $user['phone'] ?></dd>
   <dt>Skype:</dt>
-  <dd>Skype</dd>
-  <dt>Счет:</dt>
-  <dd>43534534534535</dd>
+  <dd><?= $user['skype'] ?></dd>
+  <dt>WM:</dt>
+  <dd><?= $user['wm'] ?></dd>
   <dt>Еще что-то:</dt>
   <dd>43534534534535</dd>
 </dl>
@@ -35,13 +35,13 @@ $user=autoring::get_user($_GET['id']);
   <dt>Текущий баланс:</dt>
   <dd><?= $user['balance'] ?></dd>
   <dt>Всего заработано:</dt>
-  <dd><?= $user['balance'] ?></dd>
+  <dd><?= $user['total_balance'] ?></dd>
   <dt>Текущие продажи:</dt>
-  <dd>7</dd>
+  <dd><?= $user['sale'] ?></dd>
   <dt>Всего продаж:</dt>
-  <dd>12</dd>
+  <dd><?= $user['total_sale'] ?></dd>
   <dt>Из них успешных:</dt>
-  <dd>11</dd>
+  <dd><?= $user['sale_ok'] ?></dd>
 </dl>
 </div>
 

@@ -24,7 +24,7 @@ class Autoring {
 			else return false;
 		}
 		
-		public function get_user($id) // Забираем из базы по ID.
+	public function get_user($id) // Забираем из базы по ID.
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE id='{$id}'");
@@ -32,6 +32,7 @@ class Autoring {
 			return $myrow;
 			
 		}
+		
 		
 	public function user_group($group_id)
 		{
@@ -95,6 +96,14 @@ class Autoring {
 			$_SESSION=array_merge ($base, $user_group);
 			
 			
+		}
+	public function update_user_info($id)
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$result = mysql_query("SELECT * FROM users WHERE id='{$id}'");
+			$myrow = mysql_fetch_array($result);
+			$user_group=autoring::user_group($myrow['users_group']);
+			autoring::set_autoring($myrow, $user_group);
 		}
 		
 	public function logout() // выход

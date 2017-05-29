@@ -112,3 +112,6 @@ padding-right: 2%;
 .text_white{
 	color: white !important;
 }
+.panel_user{
+	min-height: 250px;
+}

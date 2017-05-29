@@ -12,9 +12,9 @@ $categories=lp_crm::getCategories(CRM,CRM_KEY);
 //if ($value['subcategories']!="") {$subcategories[$value['subcategoties'][$key]['id']]=$value['subcategoties'];
 //echo "{$key} = {$value['subcategoties']['name']}"; }
 
-$balance=7;
+
 $new_order=4;
-if ($balance<0) $color_balance="red"; else if ($balance!=0) $color_balance="green";
+if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!=0) $color_balance="green";
  
 if (!empty($_GET)) $type=$_GET['type'].".php"; else $type="news.php";
 $no_favicon=true;

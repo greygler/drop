@@ -31,8 +31,28 @@ function save_group(id) {
             success: function(data){
 				
 				$('#fa-user-'+id).html(data);
-				if (group_user==0) $('#table-'+id).addClass('danger');
-				else $('#table-'+id).removeClass('danger');
+				if (group_user==0) {
+					$('#table-'+id).addClass('danger');
+					$('#btn_user-'+id).addClass('btn-danger');
+					$('#btn_user-'+id).removeClass('btn-default');
+					$('#fa-user-'+id).addClass('text_white');
+					$('#fa-user-'+id).removeClass('drop_color');
+					$('#btn_balance-'+id).addClass('btn-danger');
+					$('#btn_balance-'+id).removeClass('btn-default');
+					$('#btn_balance-'+id).addClass('text_white');
+					$('#btn_balance-'+id).removeClass('drop_color');
+				}
+				else {
+					$('#table-'+id).removeClass('danger');
+					$('#btn_user-'+id).removeClass('btn-danger');
+					$('#btn_user-'+id).addClass('btn-default');
+					$('#fa-user-'+id).removeClass('text_white');
+					$('#fa-user-'+id).addClass('drop_color');
+					$('#btn_balance-'+id).addClass('btn-default');
+					$('#btn_balance-'+id).removeClass('btn-danger');
+					$('#btn_balance-'+id).removeClass('text_white');
+					$('#btn_balance-'+id).addClass('drop_color');
+				}
 			}
   })
  
@@ -40,7 +60,7 @@ function save_group(id) {
 
 </script>	
 
-<table class="table table-striped table-responsive table-hover" >
+<table class="table table-striped table-responsive" >
 	<tr valign="middle" class="info">
 		<td valign="middle"><p><strong>ID</strong></p></td>
 		<td valign="middle"><p><strong>Имя</strong></p></td>
@@ -59,7 +79,7 @@ do
 { ?>
 	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?></td>
-		<td valign="middle"><a data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><p id="fa-user-<?= $myrow['id'] ?>" class="text-left"><span class="drop_color fa <?= $groups[$myrow['users_group']]['fa_user'] ?> fa-lg"></span> <?= $myrow['name'] ?></p></a></td>
+		<td class="users_href" valign="middle"><a data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><button id="btn_user-<?= $myrow['id']?>" type="button" class="btn btn-block <? if ($myrow['users_group']==0) echo('btn-danger text_white'); else echo ('btn-default') ?>"><div id="fa-user-<?= $myrow['id'] ?>" class="text-left <? if ($myrow['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['name'] ?></div></button></a></td>
 		<td valign="middle"> 
 		<select id="group_user-<?= $myrow['id']?>"  class="form-control" size="1" name="pages" onchange="save_group(<?= $myrow['id']?>)">
 		<? foreach ($groups as $key => $value)  { ?>
@@ -67,7 +87,10 @@ do
 		<? } ?>
 		</select>
 		</td>
-		<td valign="middle"><p ><?= $myrow['balance'] ?> <?= CURRENCY ?></p></td>
+		<td valign="middle"><button id="btn_balance-<?= $myrow['id']?>" type="button" class="btn btn-block <? if (($myrow['users_group']==0) OR ($myrow['balance']<0)) echo('btn-danger text_white'); else if ($myrow['balance']>0)
+		echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>"> <? if ($myrow['balance']>0) echo('<span class="badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($myrow['balance']!=0) echo('<span class="badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?>
+	
+	<?= $myrow['balance'] ?> <?= CURRENCY ?></button></td>
 	</tr>
 <?	
 //echo $myrow['ИМЯ_ПОЛЯ1'];
