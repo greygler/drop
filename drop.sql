@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 25 2017 г., 12:34
+-- Время создания: Май 29 2017 г., 21:07
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -78,13 +78,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `users_group` tinyint(4) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `skype` varchar(50) NOT NULL,
+  `wm` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
   `drop_key` varchar(50) NOT NULL,
-  `balance` decimal(6,2) NOT NULL,
+  `balance` decimal(10,2) NOT NULL,
+  `total_balance` decimal(10,2) NOT NULL,
+  `sale` int(11) NOT NULL,
+  `total_sale` int(11) NOT NULL,
+  `sale_ok` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
 
 --
 -- Структура таблицы `users_group`
@@ -103,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `users_group` (
 --
 
 INSERT INTO `users_group` (`id_group`, `name_group`, `fa_logo`, `fa_user`) VALUES
-(0, 'Бан', 'fa-ban', 'fa-ban'),
+(0, 'Заблокирован', 'fa-ban', 'fa-ban'),
 (1, 'Администратор', 'fa-trophy', 'fa-diamond'),
 (2, 'Управляющий', 'fa-line-chart', 'fa-star'),
 (5, 'Пользователь', 'fa-user-circle', 'fa-user');
