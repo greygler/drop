@@ -105,6 +105,16 @@ class Autoring {
 			$user_group=autoring::user_group($myrow['users_group']);
 			autoring::set_autoring($myrow, $user_group);
 		}
+	
+	public function update_password($id, $password)
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$password_md5=md5($password);
+			$result = mysql_query("UPDATE users SET password='{$password_md5}'  WHERE id={$id}" );
+						
+			
+		}
+	
 		
 	public function logout() // выход
 		{

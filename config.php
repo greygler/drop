@@ -22,8 +22,13 @@ define('SKYPE','Skype');
 define('PHONE','+38(000) 000-00-00');
 define('CURRENCY','грн');
 define('ADDRESS','OOO "ДропСервис", г. Мухосральск');
+define('MIN_PAY','100');
 
 $view_pages=array(10, 25, 50, 100);
+
+
+define('MASK_PHONE','\+38(0*9) 999-99-99');
+
 
 
 define('CRM','testcrm');

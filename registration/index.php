@@ -28,33 +28,8 @@ require_once ("../class/favicon.class.php");
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	 <script type="text/javascript" language="javascript">
- 	function call() {
-		 if ($('#password1').val()!=$('#password2').val())
-          { $('.results').html('Пароли не совпадают!');
-								$('#password1_group').addClass('has-error');
-								$('#password2_group').addClass('has-error');} else {			 ;
 	
- 	  var msg   = $('#form_reg').serialize();
-        $.ajax({
-          type: 'POST',
-          url: 'registration.php',
-          data: msg,
-          success: function(data) {
-			if (data=='error') { $('.results').html('Такой E-mail уже зарегистрирован!');
-								$('#emailgroup').addClass('has-error');} else
-		  if (data=='ok') {document.location.href = '/'; } else $('.results').html(data)
-									
-								
-          },
-          error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
-          }
-        });
-	}
-    }
-</script>
+	<script src="/js/registration.php"></script>
 	
   
 </head>
@@ -89,12 +64,12 @@ require_once ("../class/favicon.class.php");
       <label class="checkbox">
         <input required type="checkbox" value="rules" id="rules" name="rules"> Согласен с <a data-toggle="modal" data-target="#rules_modal" href="#">Правилами</a>
       </label>  </div> 
-      <button class="btn btn-lg btn-log btn-block"  id="submit" type="submit">Вход</button> <br>
+      <button class="btn btn-lg btn-log btn-block"  id="submit" type="submit">Регистрация</button> <br>
 	  <p class="text-center"> <a href="/login">У меня уже есть регистрация </a> </p>
 
     </form>
 	
   </div>
   
-<? $jquery='no';
+<? 
 require_once ('../footer.php'); ?>

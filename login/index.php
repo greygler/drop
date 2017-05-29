@@ -36,34 +36,8 @@ require_once ("../class/favicon.class.php");
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	 <script type="text/javascript" language="javascript">
- 	function call() {
-		 			 ;
-	
- 	  var msg   = $('#form_reg').serialize();
-        $.ajax({
-          type: 'POST',
-          url: 'login.php',
-          data: msg,
-          success: function(data) {
-			if (data=='no') { $('.results').html('Такой E-mail не зарегистрирован!');
-								$('#emailgroup').addClass('has-error');} else
-			if (data=='error') { $('.results').html('E-mail или пароль не верны!');
-								$('#emailgroup').addClass('has-error');
-								$('#password_group').addClass('has-error');} else
-								
-		  if (data=='ok') {document.location.href = '/'; } else $('.results').html(data)
-									
-								
-          },
-          error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
-          }
-        });
-	
-    }
-</script>
+
+	  <script src="/js/login.php"></script>
   
 </head>
 
@@ -92,5 +66,4 @@ require_once ("../class/favicon.class.php");
     </form>
   </div>
   
-<? $jquery='no';
-require_once ('../footer.php'); ?>
+<? require_once ('../footer.php'); ?>

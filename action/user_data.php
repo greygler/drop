@@ -19,29 +19,29 @@ $user=autoring::get_user($_GET['id']);
 <div class="col-sm-6 col-md-6 col-lg-6 panel panel-default"><h3 class="text-center"><span class="fa fa-address-card-o fa-lg"></span> Контакты:</h3>
 <dl class="dl-horizontal">
   <dt>E-mail:</dt>
-  <dd><?= $user['email'] ?></dd>
+  <dd><button type="button" class="btn btn-default btn-block"><?= $user['email'] ?></button></dd>
   <dt>Phone:</dt>
-  <dd><?= $user['phone'] ?></dd>
+  <dd><button type="button" class="btn btn-default btn-block"><?= $user['phone'] ?></button></dd>
   <dt>Skype:</dt>
-  <dd><?= $user['skype'] ?></dd>
+  <dd><button type="button" class="btn btn-default btn-block"><?= $user['skype'] ?></button></dd>
   <dt>WM:</dt>
-  <dd><?= $user['wm'] ?></dd>
+  <dd><button type="button" class="btn btn-default btn-block"><?= $user['wm'] ?></button></dd>
   <dt>Еще что-то:</dt>
-  <dd>43534534534535</dd>
+  <dd><button type="button" class="btn btn-default btn-block">43534534534535</button></dd>
 </dl>
 </div>
 <div class="col-sm-6 col-md-6 col-lg-6 panel panel-default"><h3 class="text-center"><span class="fa fa-calculator fa-lg"></span><strong>Статистика:</strong></h3>
 <dl class="dl-horizontal">
   <dt>Текущий баланс:</dt>
-  <dd><?= $user['balance'] ?></dd>
+  <dd><button type="button" class="btn <? if ($user['balance']<0) echo('btn-danger text_white'); else if ($user['balance']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?> btn-block"><? if ($user['balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($user['balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $user['balance'] ?> <?= CURRENCY ?></button></dd>
   <dt>Всего заработано:</dt>
-  <dd><?= $user['total_balance'] ?></dd>
+  <dd><button type="button" class="btn <? if ($user['total_balance']<0) echo('btn-danger text_white'); else if ($user['total_balance']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?> btn-block"><? if ($user['total_balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($user['total_balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $user['total_balance'] ?> <?= CURRENCY ?></button></dd>
   <dt>Текущие продажи:</dt>
-  <dd><?= $user['sale'] ?></dd>
+  <dd><button type="button" class="btn btn-default  btn-block"><?= $user['sale'] ?></button></dd>
   <dt>Всего продаж:</dt>
-  <dd><?= $user['total_sale'] ?></dd>
+  <dd><button type="button" class="btn btn-default btn-block"><?= $user['total_sale'] ?></button></dd>
   <dt>Из них успешных:</dt>
-  <dd><?= $user['sale_ok'] ?></dd>
+  <dd><button type="button" class="btn  <? if ($user['sale_ok']<0) echo('btn-danger text_white'); else if ($user['sale_ok']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>  btn-block"><? if ($user['sale_ok']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($user['sale_ok']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $user['sale_ok'] ?></button></dd>
 </dl>
 </div>
 
