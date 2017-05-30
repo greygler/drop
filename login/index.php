@@ -1,10 +1,12 @@
 <? 
 session_start();
 require_once ('../config.php');
+date_default_timezone_set(TIME_ZONE);
 require_once ("../class/autoring.class.php"); 
 //if (autoring::is_autoring()) header("Location: /");
 require_once ("../class/favicon.class.php");
 require_once ("../class/functions.class.php");
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

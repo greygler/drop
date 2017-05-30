@@ -1,5 +1,6 @@
 <?
 define('SITE_ADDR','http://drop'); // Адрес системы
+define('TIME_ZONE','Europe/Kiev'); // Временная зона, http://php.net/manual/ru/timezones.europe.php
 define('LANG','ru'); // Язык страницы
 define('TITLE','Дропшипинг'); // Название, метатег title
 define('DESCRIPTION','Дропшипинг'); // Название, метатег description

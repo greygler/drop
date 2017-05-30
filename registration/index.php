@@ -1,5 +1,6 @@
 <? 
 require_once ('../config.php');
+date_default_timezone_set(TIME_ZONE);
 require_once ("../class/favicon.class.php");
 require_once ("../class/functions.class.php");
 ?>

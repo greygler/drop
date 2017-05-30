@@ -1,5 +1,6 @@
 <? session_start();
 require_once ('config.php');
+date_default_timezone_set(TIME_ZONE);
 require_once ("class/db.class.php"); 
 require_once ("class/autoring.class.php"); 
 
