@@ -34,7 +34,7 @@ class Autoring {
 		}
 		
 		
-	public function user_group($group_id)
+	public function user_group($group_id) // Узнаем текущий ID группы пользователя
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users_group WHERE id_group={$group_id}");
@@ -43,7 +43,7 @@ class Autoring {
 			return $myrow;
 		}
 		
-	public function save_group($id, $group_id)
+	public function save_group($id, $group_id) // Изменяем номер группы пользователя
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("UPDATE users SET users_group={$group_id}  WHERE id={$id}" );
@@ -51,7 +51,7 @@ class Autoring {
 			//return $myrow;
 		}
 		
-	public function groups()
+	public function groups() // Возвращаем информацию о группах пользователй
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users_group");
@@ -82,7 +82,7 @@ class Autoring {
 			$password=md5($password);
 			$registration=time();
 			$drop_key=autoring::create_key();
-			$result = mysql_query("INSERT INTO users (email, password, name, drop_key, registration, users_group, balance) VALUES ('{$email}', '{$password}', '{$name}', '{$drop_key}','{$registration}', '2', '0')");
+			$result = mysql_query("INSERT INTO users (email, password, name, drop_key, registration, users_group, balance) VALUES ('{$email}', '{$password}', '{$name}', '{$drop_key}','{$registration}', '5', '0')");
 			return $result;
 			}
 			else return false;
@@ -97,7 +97,7 @@ class Autoring {
 			
 			
 		}
-	public function update_user_info($id)
+	public function update_user_info($id) // Обновляем иноформацию о пользователе
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE id='{$id}'");
@@ -106,13 +106,22 @@ class Autoring {
 			autoring::set_autoring($myrow, $user_group);
 		}
 	
-	public function update_password($id, $password)
+	public function update_password($id, $password) // Замена паролья
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$password_md5=md5($password);
 			$result = mysql_query("UPDATE users SET password='{$password_md5}'  WHERE id={$id}" );
 						
 			
+		}
+		
+	public function user_log($id, $ip, $country, $city,  $region, $agent, $device, $last_enter) // Сохраяем логи
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$time=time();
+			$result = mysql_query("UPDATE users SET ipv4='{$ip}', last_time='{$time}', country='{$country}', city='{$city}', region='{$region}', agent='{$agent}', device='{$device}', last_enter='{$last_enter}'  WHERE id='{$id}'");
+			$result = mysql_query("INSERT INTO enter_log (user_id, last_time, ipv4, country, city, region, agent, device) VALUES ('{$id}', '{$time}', '{$ip}', '{$country}', '{$city}', '{$region}', '{$agent}', '{$device}')");
+						
 		}
 	
 		

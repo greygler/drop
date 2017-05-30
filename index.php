@@ -3,9 +3,11 @@ require_once ('config.php');
 require_once ("class/db.class.php"); 
 require_once ("class/autoring.class.php"); 
 
+
 if (!autoring::is_autoring()) header("Location: login/");
 require_once ("class/lpcrm.class.php"); 
 require_once ("class/favicon.class.php");
+require_once ("class/functions.class.php");
 //db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 $categories=lp_crm::getCategories(CRM,CRM_KEY);
 //foreach ($categories['data'] as $key => $value)

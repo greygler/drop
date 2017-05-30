@@ -4,7 +4,7 @@ $groups=autoring::groups();
 $count_users=db::cound_bd('users');
 ?>
 <div class="page-header">
-		<h1 style="margin: 70px 0 10px 0;">Пользователи системы</h1>
+		<h1>Пользователи системы</h1>
 </div>
 <div class="visible-xs alert alert-warning alert-dismissable"> 
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

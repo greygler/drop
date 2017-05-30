@@ -65,13 +65,13 @@
   </div>
 </div>
 
-  <? if ($jquery!='no') { ?>
+
   <!-- <script src="/js/jquery.min.js"></script>  -->
   <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <? }?>
+ 
 <script src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript">
    jQuery(function($){
@@ -81,6 +81,8 @@
 	 <script src="/js/bootstrap.min.js"></script>
     <script src="/js/gnmenu.js"></script>
 	<script src="/js/jquery.fancybox.min.js"></script>
+	<script>var ip='<?= func::GetRealIp() ?>'</script>
 	
+	 <script src="/js/geobase.js"></script>
   </body>
 </html>
