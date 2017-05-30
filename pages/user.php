@@ -1,23 +1,28 @@
 <? autoring::update_user_info($_SESSION['id']); 
 $last_enter=unserialize($_SESSION['last_enter']);
-
+$_SESSION['info_profile']="1";
 ?>
 
  <script src="/js/user.php"></script>
+ <script>
+
+    
+ </script>
 
 
 <div class="page-header lead">
 		<h1><small class="text_white">Пользователь: </small><wbr><strong><?= $_SESSION['name']?></strong><small class="text_white">, id: <?= $_SESSION['id'] ?></small></h1>
 </div>
 
-<?= func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SESSION['city'], $_SESSION['region'], $_SESSION['country'], $_SESSION['agent']); ?>
+<? if  ($last_enter['agent']!="") 
+func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SESSION['city'], $_SESSION['region'], $_SESSION['country'], $_SESSION['agent']); ?>
 
 
 
-<div class="col-sm-6 col-md-6 col-lg-6 text_white"><h4 class="text-left"><span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y", $_SESSION['registration']); ?></h4></div>
+<div class="col-sm-6 col-md-6 col-lg-6 text_white"><h4 class="text-left"><span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y H:i:s", $_SESSION['registration']); ?></h4></div>
 <div class="col-sm-6 col-md-6 col-lg-6 text_white"><h4 class="text-right"><span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <?= $_SESSION['name_group'] ?></h3></div>
 
-<form >
+<form id="data_form" class="form-signin" action="javascript:void(null);" onsubmit="data_form()">
 <div class="col-sm-6 col-md-6 col-lg-6 panel panel-default panel_user"><h3 class="text-center"><span class="fa fa-address-card-o fa-lg"></span> Профиль:</h3>
 
 <dl class="dl-horizontal">
@@ -31,7 +36,7 @@ $last_enter=unserialize($_SESSION['last_enter']);
   <dd><input class="form-control" type="text" name="skype" value="<?= $_SESSION['skype'] ?>"></dd>
   <dt>Счет:</dt>
   <dd><input class="form-control" type="text" name="wm" value="<?= $_SESSION['wm'] ?>"></dd>
-  <dt></dt>
+  <dt><div class="results_form"></div></dt>
   <dd><button type="submit" class="btn btn-primary btn-block user-buttom"><span class="pull-left"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
  Сохранить</button></dd>
 </dl>
@@ -50,7 +55,7 @@ $last_enter=unserialize($_SESSION['last_enter']);
   <dd><button type="button" class="btn btn-default btn-block"><?= $_SESSION['total_sale'] ?></button></dd>
   <dt>Из них успешных:</dt>
   <dd><button type="button" class="btn  <? if ($_SESSION['sale_ok']<0) echo('btn-danger text_white'); else if ($_SESSION['sale_ok']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>  btn-block"><? if ($_SESSION['sale_ok']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['sale_ok']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['sale_ok'] ?></button></dd>
-  <dt></dt><dd><button type="button"  <? if ($_SESSION['balance']<MIN_PAY) echo('disabled="disabled"'); ?> class="btn btn-primary btn-block user-buttom" ><? if ($_SESSION['balance']<MIN_PAY) echo('Выплата не доступна!'); else echo('Заказать выплату'); ?></button><span class="help-block">Минимальная сумма выплат - <?= MIN_PAY ?> <?= CURRENCY ?></span>
+  <dt></dt><dd><button type="button"  <? if ($_SESSION['balance']<MIN_PAY) echo('disabled="disabled"'); ?> class="btn <? if ($_SESSION['balance']>0) echo('btn-primary'); else echo('btn-danger') ?> btn-block user-buttom" ><? if (($_SESSION['balance']<MIN_PAY) AND ($_SESSION['balance']>0)) echo('Выплата не доступна!'); else if ($_SESSION['balance']>0) echo('Заказать выплату'); else echo('Отрицательный баланс!') ?></button><? if ($_SESSION['balance']>0) echo('<span class="help-block">Минимальная сумма выплат - '.MIN_PAY.' '.CURRENCY.'</span>'); else echo('<span class="help-block">Дальнейшая работа только по предоплате<br>или после погашения задолженности!</span>'); ?><a data-toggle="modal" data-target="#rules_modal" href="#">Правила работы с системой <?= TITLE ?></a>
    </dd>
   </dl>
 
@@ -86,6 +91,24 @@ $last_enter=unserialize($_SESSION['last_enter']);
       </div>
     </div>
    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="form_ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Обновление профиля</h4>
+      </div>
+      <div class="modal-body">
+        Данные сохранены успешно!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+       
+      </div>
+    </div>
   </div>
 </div>
 

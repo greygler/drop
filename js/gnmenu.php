@@ -1,3 +1,7 @@
+<?
+session_start();
+require_once ('../config.php');
+if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 $(function () {
 	
 	var GNmenu = {
@@ -102,3 +106,4 @@ $(function () {
 	GNmenu.init();
 	
 });
+<? } else echo ("Слоны идут нахер!"); ?>

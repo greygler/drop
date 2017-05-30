@@ -25,7 +25,7 @@ body {
 }
 
 .container a {
-	color:#78beef;
+	color: #286090;
 	text-decoration:none;
 }
 
@@ -34,7 +34,7 @@ body {
 	-moz-transition: 1s ease;			
 	-ms-transition: 1s ease;						
 	transition: 1s ease;	
-	color:#fff;
+	color:red;
 }
 
 .container h1 {

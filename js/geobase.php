@@ -1,4 +1,7 @@
-﻿  jQuery.ajax ({
+﻿<?
+require_once ('../config.php');
+if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?> 
+ jQuery.ajax ({
     type: "GET",
     url: "http://ipgeobase.ru:7020/geo/?ip=" + ip,
     dataType: "xml",
@@ -20,4 +23,5 @@
 	
 	
   });
+  <? } else echo ("Слоны идут нахер!"); ?>
   

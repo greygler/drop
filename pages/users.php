@@ -1,4 +1,5 @@
 <?
+if (($_SESSION['users_group']>0) AND ($_SESSION['users_group']<5)) {
 require_once ("class/pagination.class.php");
 $groups=autoring::groups();
 $count_users=db::cound_bd('users');
@@ -56,4 +57,4 @@ while ($myrow = mysql_fetch_array($result));
 ?>
 </table>
 </form>
-<? $limit=pagination::pagin($_GET,$count_users, $view_pages)	?>
+<? $limit=pagination::pagin($_GET,$count_users, $view_pages);	} ?>

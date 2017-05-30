@@ -10,7 +10,7 @@ function update_password() {
 								$('#password1_group').removeClass('has-error');
 								$('#password2_group').removeClass('has-error');
 
-								;
+								
 	
  	  var msg   = $('#form_pass').serialize();
         $.ajax({
@@ -31,6 +31,24 @@ function update_password() {
 	}
     }
 	
+function data_form() {
+		 	
+ 	  var msg   = $('#data_form').serialize();
+        $.ajax({
+          type: 'POST',
+          url: '/action/update_profile.php',
+          data: msg,
+          success: function(data) {
+			
+		  if (data=='ok') {$('#form_ok').modal('show'); } else $('results_form').html(data);
+									
+								
+          },
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+	
 
-<? } else echo ("Слоны идут нахер!");
-?>
+<? } else echo ("Слоны идут нахер!"); ?>

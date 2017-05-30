@@ -15,7 +15,7 @@ class Autoring {
 			if ($count>0) return true; else return false;
 		}
 		
-	public function get_base($email, $password) // Забираем из базы. Если нет - возвращаем FALSE
+	public function get_base($email, $password) // Забираем из базы по паролю и почте. Если нет - возвращаем FALSE
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE email='{$email}'");
@@ -97,7 +97,7 @@ class Autoring {
 			
 			
 		}
-	public function update_user_info($id) // Обновляем иноформацию о пользователе
+	public function update_user_info($id) // Обновляем информацию о пользователе в сесии
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE id='{$id}'");
@@ -106,11 +106,22 @@ class Autoring {
 			autoring::set_autoring($myrow, $user_group);
 		}
 	
-	public function update_password($id, $password) // Замена паролья
+	public function update_password($id, $password) // Замена пароля
 		{
 			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$password_md5=md5($password);
 			$result = mysql_query("UPDATE users SET password='{$password_md5}'  WHERE id={$id}" );
+						
+			
+		}
+		
+	public function update_profile($id, $profile) // Обновление профиля пользователя
+		{
+			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			foreach($profile as $key => $value) $command.="{$key}='{$value}',";
+			$command = substr($command, 0, -1);
+			$bd="UPDATE users SET {$command}  WHERE id={$id}";
+			$result = mysql_query($bd);
 						
 			
 		}
@@ -124,6 +135,11 @@ class Autoring {
 						
 		}
 	
+	public function filling_profile($profile)
+		{
+			if (($profile['phone']!="") OR ($profile['skype']!="")) return true; else return false;
+			
+		}
 		
 	public function logout() // выход
 		{

@@ -66,6 +66,8 @@
 </div>
 
 
+
+
   <!-- <script src="/js/jquery.min.js"></script>  -->
   <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -73,16 +75,53 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
  
 <script src="/js/jquery.maskedinput.js"></script>
-<script type="text/javascript">
-   jQuery(function($){
-   $(".phone").mask("<?= MASK_PHONE ?>");   
-   });
-</script>
+<script type="text/javascript"> jQuery(function($){$(".phone").mask("<?= MASK_PHONE ?>");}); </script>
 	 <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/gnmenu.js"></script>
+    <script src="/js/gnmenu.php"></script>
 	<script src="/js/jquery.fancybox.min.js"></script>
 	<script>var ip='<?= func::GetRealIp() ?>'</script>
+	<? if ((!autoring::filling_profile($_SESSION)) AND ($_SESSION['info_profile']!="1")) { ?>
+		<div class="modal fade" id="no_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Ваш профиль не заполнен!</h4>
+      </div>
+      <div class="modal-body">
+        Для продолжения работы настоятельно рекомедуется заполнить контактные данные Вашего профиля!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">В следующий раз</button>
+        <a href="?type=user" type="button" class="btn btn-primary">Заполнить профиль</a>
+      </div>
+    </div>
+  </div>
+</div>
+	<script type="text/javascript"> jQuery(function($){$('#no_info').modal('show') }); </script>
+	<? $_SESSION['info_profile']="1"; } ?>
 	
-	 <script src="/js/geobase.js"></script>
+	<? if (($_SESSION['balance']<0) AND ($_SESSION['info_balance']!="1")) {
+		 ?>
+		<div class="modal fade" id="info_balance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">У Вас отрицательный баланс!</h4>
+      </div>
+      <div class="modal-body">
+        Дальнейшая работа возможна только по предоплате<br>или после погашения задолженности!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Понятно</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+	<script type="text/javascript"> jQuery(function($){$('#info_balance').modal('show') }); </script>
+	<? $_SESSION['info_balance']="1"; } ?>
+	 <script src="/js/geobase.php"></script>
   </body>
 </html>
