@@ -226,7 +226,7 @@ public function Last_enter($last_enter, $device, $ip, $city, $region, $country, 
 	$device=func::device_name($last_enter['device']);
 	$os=func::getOS($last_enter['agent']);
 	$browser=func::user_browser($last_enter['agent']);
-	$text="<strong>Предыдущий вход:</strong> {$last_time}, <strong>ip:</strong> {$last_enter['ipv4']} (<em>{$last_enter['city']}, {$last_enter['region']}, {$last_enter['country']}</em>).<br><strong>Устройство:</strong> {$device} на базе {$os}, браузер: {$browser}{$warning}";
+	$text="<strong>Предыдущий вход:</strong> {$last_time}, <strong>ip:</strong> {$last_enter['ipv4']} (<i class=\"flag-{$last_enter['country']}\"></i> <em>{$last_enter['city']}, {$last_enter['region']}</em>).<br><strong>Устройство:</strong> {$device} на базе {$os}, браузер: {$browser}{$warning}";
 	$block="<div id=\"last_info\" class=\"alert {$alert} alert-dismissable\">\n<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>{$text}</div>";
 
 	

@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="/css/main.css" />
 	<link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/flags.css">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/style.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

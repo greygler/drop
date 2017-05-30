@@ -85,10 +85,10 @@ padding-right: 2%;
 	width: 70px; float: right;
 }
 
-.table{
+.table, .table-responsive{
 	background-color: lightgrey;
 }
-.table p{
+.table, .table-responsive p{
 	color: black;
 }
 .container{

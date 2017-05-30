@@ -1,20 +1,24 @@
 <?
 if (!empty($_POST)) {
-	require ('../config.php');
-	require ("../class/db.class.php");
-	require ("../class/lpcrm.class.php"); 
-	db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
-	$db="SELECT * FROM users WHERE drop_key='{$_POST['key']}'";
-	$result = mysql_query($db);
-	//echo $db;
-	$myrow = mysql_fetch_array($result);
-    $user_id=$myrow['id'];
-	//echo  $user_id;
-	//echo("Результат:<br>");
-	//foreach ($_POST as $key => $value) echo ("{$key} = {$value}<br>\n");
+	require ($_SERVER['DOCUMENT_ROOT'].'/config.php');
+	require ($_SERVER['DOCUMENT_ROOT']."/class/db.class.php");
+	require ($_SERVER['DOCUMENT_ROOT']."/class/lpcrm.class.php"); 
+	require ($_SERVER['DOCUMENT_ROOT']."/class/drop.class.php"); 
+	$user_id=drop::get_id($_POST['key']);
+	$result=drop::new_order($user_id, $_POST,'3');
 
+	echo $result;
 	
 	echo time();
+	$products_list = array(
+    1 => array( 
+            'product_id' => '1',    //код товара (из каталога CRM)
+            'price'      => '2', //цена товара 1
+            'count'      => '1'                      //количество товара 1
+    ),  
+    );
+$products = urlencode(serialize($products_list));
+ 
 	$data = array(
     'key'             => CRM_KEY, //Ваш секретный токен
     'order_id'        => $_POST['order_id'], //идентификатор (код) заказа (*автоматически*)
@@ -36,8 +40,8 @@ if (!empty($_POST)) {
     'utm_content'     => $_POST['utm_content'], // utm_content    
     'utm_campaign'    => $_POST['utm_campaign'] // utm_campaign
 );
-	$out=json_encode(lp_crm::getcurl(CRM, 'addNewOrder.html', $data));
-	echo $out;
+	//$out=json_encode(lp_crm::getcurl(CRM, 'addNewOrder.html', $data));
+	//echo $out;
 }
 else
 	header("Location: / ");

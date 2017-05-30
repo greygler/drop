@@ -15,7 +15,9 @@ $_SESSION['info_profile']="1";
 </div>
 
 <? if  ($last_enter['agent']!="") 
-func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SESSION['city'], $_SESSION['region'], $_SESSION['country'], $_SESSION['agent']); ?>
+echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SESSION['city'], $_SESSION['region'], $_SESSION['country'], $_SESSION['agent']);  
+
+?>
 
 
 
