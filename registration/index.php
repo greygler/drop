@@ -1,11 +1,10 @@
 <? 
-require_once ('../config.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 date_default_timezone_set(TIME_ZONE);
-require_once ("../class/favicon.class.php");
-require_once ("../class/functions.class.php");
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html">
 <html lang="<?= LANG ?>">
   <head>
     <meta http-equiv="content-type" content="text/html; utf-8">
@@ -74,4 +73,4 @@ require_once ("../class/functions.class.php");
   </div>
   
 <? 
-require_once ('../footer.php'); ?>
+require_once ($_SERVER['DOCUMENT_ROOT'].'/footer.php'); ?>

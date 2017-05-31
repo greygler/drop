@@ -1,14 +1,14 @@
 <? session_start();
-require_once ('config.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 date_default_timezone_set(TIME_ZONE);
-require_once ("class/db.class.php"); 
-require_once ("class/autoring.class.php"); 
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/db.class.php'); 
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/autoring.class.php'); 
 
 
 if (!autoring::is_autoring()) header("Location: login/");
-require_once ("class/lpcrm.class.php"); 
-require_once ("class/favicon.class.php");
-require_once ("class/functions.class.php");
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/lpcrm.class.php'); 
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
 //db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 $categories=lp_crm::getCategories(CRM,CRM_KEY);
 //foreach ($categories['data'] as $key => $value)
@@ -86,7 +86,7 @@ require_once ('head.php');
 	</div>	
 	
 	<div class="container">
-	<? require_once ("pages/".$type); ?>
+	<? require_once ($_SERVER['DOCUMENT_ROOT'].'/pages/'.$type); ?>
 	</div>
 	
 	<div class="modal fade" id="logmodal" tabindex="-1" role="dialog">
@@ -128,4 +128,4 @@ require_once ('head.php');
 <? } ?>
 	
 	
-<? require_once ('footer.php'); ?>
+<? require_once ($_SERVER['DOCUMENT_ROOT'].'/footer.php'); ?>

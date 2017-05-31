@@ -1,6 +1,6 @@
 <?
 if (($_SESSION['users_group']>0) AND ($_SESSION['users_group']<5)) {
-require_once ("class/pagination.class.php");
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/pagination.class.php');
 $groups=autoring::groups();
 $count_users=db::cound_bd('users');
 ?>

@@ -5,7 +5,7 @@ define('LANG','ru'); // Язык страницы
 define('TITLE','Дропшипинг'); // Название, метатег title
 define('DESCRIPTION','Дропшипинг'); // Название, метатег description
 define('KEYWORDS','Дропшипинг'); // Название, метатег keywords
-define('ROBOTS','all'); // Название, метатег robots
+define('ROBOTS','none'); // Название, метатег robots
 
 /* Метатег robots управляет индексированием страниц. 
 Можно запретить роботам не только индексацию самого документа, 
