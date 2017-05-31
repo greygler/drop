@@ -68,4 +68,5 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
     </form>
   </div>
   
-<? require_once ($_SERVER['DOCUMENT_ROOT'].'/footer.php'); ?>
+<? $geobase='yes'; 
+require_once ($_SERVER['DOCUMENT_ROOT'].'/footer.php'); ?>

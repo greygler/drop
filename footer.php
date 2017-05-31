@@ -77,9 +77,12 @@
 <script src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript"> jQuery(function($){$(".phone").mask("<?= MASK_PHONE ?>");}); </script>
 	 <script src="/js/bootstrap.min.js"></script>
+	 <script src="/js/control-modal.js"></script>
     <script src="/js/gnmenu.php"></script>
 	<script src="/js/jquery.fancybox.min.js"></script>
-	<script>var ip='<?= func::GetRealIp() ?>'</script>
+	<script src="/js/bootstrap-switch.min.js"></script>
+	<script>$("[name='checkbox']").bootstrapSwitch();</script>
+	
 	<? if ((!autoring::filling_profile($_SESSION)) AND ($_SESSION['info_profile']!="1")) { ?>
 		<div class="modal fade" id="no_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -121,7 +124,10 @@
   </div>
 </div>
 	<script type="text/javascript"> jQuery(function($){$('#info_balance').modal('show') }); </script>
-	<? $_SESSION['info_balance']="1"; } ?>
-	 <script src="/js/geobase.php"></script>
+	<? $_SESSION['info_balance']="1"; } 
+	if ($geobase=='yes') { ?>
+	<script>var ip='<?= func::GetRealIp() ?>'</script>
+    <script src="/js/geobase.php"></script>
+	<? } ?>
   </body>
 </html>

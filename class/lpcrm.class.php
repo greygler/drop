@@ -13,6 +13,7 @@ class LP_CRM
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		$out = curl_exec($curl);
+		//print_r($out);
 		curl_close($curl);
 		return json_decode($out, true);
 	}
@@ -24,8 +25,27 @@ class LP_CRM
 		);
  
 		$out_data = lp_crm::getcurl($crm, 'getCategories', $data);
+		
 		return $out_data;
 	}
+	
+	public function subCategories($categories) // Категории с подкатегориями
+		{
+			
+			foreach($categories['data'] as $key => $value){
+				
+				//echo("{$key} = {$value}<br>");
+				if ($value['subcategories']!="") foreach($value['subcategories'] as $skey => $svalue) 
+				{
+					$allcat[$svalue['id']]['name']=$svalue['name'];
+					$allcat[$svalue['id']]['parent']=$svalue['parent'];
+					$allcat[$svalue['id']]['parent_name']=$categories['data'][$svalue['parent']]['name'];
+				}
+				
+			}
+			return $allcat;
+			
+		}
 	
 	public function getProducts($crm, $key) // Все товары
 	{
@@ -46,6 +66,7 @@ class LP_CRM
 		$out_data = lp_crm::getcurl($crm, 'getStatuses', $data);
 		return $out_data;
 	}
+	
 	
 }
 ?>

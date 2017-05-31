@@ -72,5 +72,5 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
 	
   </div>
   
-<? 
+<? $geobase='yes';
 require_once ($_SERVER['DOCUMENT_ROOT'].'/footer.php'); ?>

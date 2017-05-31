@@ -16,19 +16,21 @@ $count_users=db::cound_bd('users');
 
 	
  <script src="/js/users.php"></script>	
-
-<table class="table table-striped table-responsive" >
-	<tr valign="middle" class="info">
-		<td valign="middle"><p><strong>ID</strong></p></td>
-		<td valign="middle"><p><strong>Имя</strong></p></td>
-		<td valign="middle"><p><strong>Группа</strong></p></td>
-		<td valign="middle"><p><strong>Баланс</strong></p></td>
+<form>
+<table class="table table-striped" >
+<thead>
+	<tr valign="middle">
+		<th><strong>ID</strong></th>
+		<th><strong>Имя</strong></th>
+		<th><strong>Группа</strong></th>
+		<th><strong>Баланс</strong></th>
 		
 	</tr>
+</thead>	
 	
-	<form>
+	<tbody>
 <?
-$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 $result = mysql_query("SELECT * FROM users LIMIT {$limit['begin']}, {$limit['count']}");
 
 $myrow = mysql_fetch_array($result);
@@ -36,9 +38,13 @@ do
 { ?>
 	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?></td>
-		<td class="users_href" valign="middle"><a title="Подробнее о пользователе <?= $myrow['name'] ?>" data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><button id="btn_user-<?= $myrow['id']?>" type="button" class="btn btn-block <? if ($myrow['users_group']==0) echo('btn-danger text_white'); else echo ('btn-default') ?>"><div id="fa-user-<?= $myrow['id'] ?>" class="text-left <? if ($myrow['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['name'] ?></div></button></a></td>
+		<td class="users_href" valign="middle">
+		
+		<a id="btn_user-<?= $myrow['id']?>" type="button" class="btn btn-block <? if ($myrow['users_group']==0) echo('btn-danger text_white'); else echo ('btn-default') ?>" title="Подробнее о пользователе <?= $myrow['name'] ?>" data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><div id="fa-user-<?= $myrow['id'] ?>" class="text-left <? if ($myrow['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['name'] ?></div></a>
+		
+		</td>
 		<td valign="middle"> 
-		<select id="group_user-<?= $myrow['id']?>"  class="form-control" size="1" name="pages" onchange="save_group(<?= $myrow['id']?>)">
+		<select title="Выбор группы для пользователя <?= $myrow['name'] ?>" id="group_user-<?= $myrow['id']?>"  class="form-control" size="1" name="pages" onchange="save_group(<?= $myrow['id']?>)">
 		<? foreach ($groups as $key => $value)  { ?>
 		<option <? if ($key==$myrow['users_group']) echo ("selected") ; ?> value="<?= $key ?>"><?= $value['name_group'] ?></option>
 		<? } ?>
@@ -55,6 +61,7 @@ do
 }
 while ($myrow = mysql_fetch_array($result));
 ?>
+</tbody>
 </table>
 </form>
 <? $limit=pagination::pagin($_GET,$count_users, $view_pages);	} ?>

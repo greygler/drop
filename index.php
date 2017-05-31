@@ -9,8 +9,10 @@ if (!autoring::is_autoring()) header("Location: login/");
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/lpcrm.class.php'); 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
-//db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/drop.class.php');
+db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 $categories=lp_crm::getCategories(CRM,CRM_KEY);
+$subcategoties=lp_crm::subCategories($categories);
 //foreach ($categories['data'] as $key => $value)
 //if ($value['subcategories']!="") {$subcategories[$value['subcategoties'][$key]['id']]=$value['subcategoties'];
 //echo "{$key} = {$value['subcategoties']['name']}"; }
@@ -86,7 +88,19 @@ require_once ('head.php');
 	</div>	
 	
 	<div class="container">
-	<? require_once ($_SERVER['DOCUMENT_ROOT'].'/pages/'.$type); ?>
+	<?
+	
+	if (time()-$_SESSION['product_time']>3600) {
+	$products=lp_crm::getProducts(CRM,CRM_KEY); 
+	if ($products['status']=='ok') foreach ($products['data'] as $key => $value) {
+	if ($categories['data'][$value['category_id']]['name']!=""){ $cat=$value['category_id']; }
+		else {  $cat=$subcategoties[$value['category_id']]['parent']; $subcat=$value['category_id'];  }
+		$result=drop::products($value ['id'], $value ['name'], $value ['model'], $value ['description'], $value ['price'], $value ['spec_price'], $cat, $subcat); $cat=0; $subcat=0;
+	}
+	$_SESSION['product_time']=time();
+	echo $_SESSION['product_time'];
+	}
+	require_once ($_SERVER['DOCUMENT_ROOT'].'/pages/'.$type); ?>
 	</div>
 	
 	<div class="modal fade" id="logmodal" tabindex="-1" role="dialog">
