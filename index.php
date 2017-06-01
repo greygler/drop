@@ -90,7 +90,7 @@ require_once ('head.php');
 	<div class="container">
 	<?
 	
-	if (time()-$_SESSION['product_time']>3600) {
+	if (time()-$_SESSION['product_time']>UPDATE_TIME) {
 	$products=lp_crm::getProducts(CRM,CRM_KEY); 
 	if ($products['status']=='ok') foreach ($products['data'] as $key => $value) {
 	if ($categories['data'][$value['category_id']]['name']!=""){ $cat=$value['category_id']; }

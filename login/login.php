@@ -5,6 +5,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/autoring.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/db.class.php');
+$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 if (!autoring::is_base($_POST['email'])) echo ("no"); else {
 	$get_base=autoring::get_base($_POST['email'], $_POST['password'] );
 	if ($get_base==false) echo ("error");

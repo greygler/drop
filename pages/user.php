@@ -7,8 +7,126 @@ $last_enter=unserialize($_SESSION['last_enter']);
 
  <script src="/js/user.php"></script>
  <script>
-
+ 
+  function verify_email() {
+		 $('#verify_email').modal('hide');
+ 	  var msg   = $('#verify_email').serialize();
+        $.ajax({
+          type: 'POST',
+          url: '/verify/email/vemail.php',
+          data: msg,
+          success: function(data) {
+			
+		  if (data=='ok') {$('.novemail').html('Письмо отправлено.');
+		  $('.vemaillink').html('Отправить повторно');
+		   $('#vemail_ok').modal('show');
+		  } else $('.results_form').html(data);
+									
+								
+          },
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+ 
     
+ </script>
+  <script>
+  
+  function nohide_vphone() {
+	  
+	 var phone_num=$("#phone_num").val();
+	 if (phone_num!=""){
+		 var msg   = $('#data_form').serialize();
+		 $.ajax({
+          type: 'POST',
+          url: '/verify/phone/session_phone.php',
+          data: msg,
+          success: function(data) {
+			 // alert(data);
+			$('.modal_phone').html(phone_num);
+			$('#phide1').removeClass('hide');
+			$('#phide2').removeClass('hide');
+			$('#phide2').removeClass('glyphicon-ok');
+			 },
+          error:  function(xhr, str){
+		  alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+		  });
+		   }
+	 else {
+		 $('#phide1').addClass('hide');
+		 $('#phide2').addClass('hide');
+		 $('#phone_group').addClass('has-warning');
+		 $('#phone_group').removeClass('has-success');
+		 $('#phide2').removeClass('glyphicon-ok');
+		}
+  
+	
+  }
+ 
+  function verify_phone() {
+		 $('#verify_phone').modal('hide');
+ 	  var msg   = $('#verify_phone').serialize();
+        $.ajax({
+          type: 'POST',
+          url: '/verify/phone/sendsms.php',
+          data: msg,
+          success: function(data) {
+			
+		  if (data!='') {$('.novphone').html('SMS отправлено.');
+		  $('.vphonelink').html('Отправить повторно');
+		  $('.out_sms').html(data);
+		  
+		   $('#sms_ok').modal('show');
+		  } else $('.results_form').html(data);
+									
+								
+          },
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+	
+	function is_sms() {
+		 
+ 	  var msg   = $('#sms_ok').serialize();
+        $.ajax({
+          type: 'POST',
+          url: '/verify/phone/sms_ok.php',
+          data: msg,
+          success: function(data) {
+			
+		  if (data='ok') {$('.verify_help').html('Телефон успешно верифицирован!');
+		   $('#verify_fg').addClass('has-success');
+		   $('#verify_fg').addClass('has-feedback');
+		   $('#fc-ok').removeClass('hide');
+		   $('#phide1').addClass('hide');
+			$('#phide2').removeClass('glyphicon-warning-sign');
+			$('#phone_group').removeClass('has-warning');
+			$('#phone_group').addClass('has-success');
+			$('#phide2').addClass('glyphicon-ok');
+		 
+		  } else {
+			  $('.verify_help').html('Ошибка верификации!');
+			$('#verify_fg').addClass('has-error');
+		    $('#verify_fg').addClass('has-feedback');
+			 $('#fc-no').removeClass('hide');
+						
+		  }			 
+          },
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+		 $('#button_ok').addClass('hide');
+		  $('.sms_btn_cansel').html('Ок');
+	}
+ 
+    
+	
  </script>
 
 
@@ -34,9 +152,13 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 <dd><button  type="button"   data-toggle="modal" data-target="#update_password" class="btn btn-danger user-buttom"><span class="pull-left fa fa-key" aria-hidden="true"></span>Cменить пароль</button></dd><div class="update_pass_results"></div>
   <dt>E-mail:</dt>
   <dd>
-  <div class="form-group <? if ($_SESSION['v_email']!="1") echo('has-warning'); else echo('has-success'); ?> has-feedback">
-  <input class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>">
-  <? if ($_SESSION['v_email']!="1") echo('<span class="help-block control-label"><small>E-mail не верифицирован!</small> <a href=""><small>Верифицировать</small></a></span><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>'); ?>
+  <div class="form-group <? if  (autoring::is_verify_email($_SESSION)) echo('has-warning'); else echo('has-success'); ?> has-feedback">
+  <input class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>" disabled>
+  <? if (autoring::is_verify_email($_SESSION)) echo('<span  class="help-block control-label"><small><span class="novemail">E-mail не верифицирован!</span></small> <a data-toggle="modal" data-target="#verify_email" href="#"><small><span class="vemaillink">Верифицировать</span></small></a></span><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>');
+  else echo('<span class="glyphicon glyphicon-ok form-control-feedback"></span>');   ?>
+
+  
+
  
 </div>
   
@@ -44,9 +166,15 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
   </dd>
   <dt>Phone:</dt>
   <dd>
-  <div class="form-group <? if ($_SESSION['v_phone']!="1") echo('has-warning'); else echo('has-success'); ?> has-feedback">
-  <input class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>">
-   <? if ($_SESSION['v_phone']!="1") echo('<span class="help-block control-label"><small>Телефон не верифицирован!</small> <a href=""><small>Верифицировать</small></a></span><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>'); ?>
+  <div id="phone_group" class="form-group <? if (autoring::is_verify_phone($_SESSION)) echo('has-warning'); else echo('has-success'); ?> has-feedback">
+  <input id="phone_num" class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>" onchange="nohide_vphone()">
+   <? if (($_SESSION['phone']=="") OR (!autoring::is_verify_phone($_SESSION)))  $hide="hide"; ?>
+  <span id="phide1" class="<?= $hide ?> help-block control-label"><small class="novphone">Телефон не верифицирован!</small> <a data-toggle="modal" data-target="#verify_phone" href="#"><small class="vphonelink">Верифицировать</small></a></span>
+  <span id="phide2" class="glyphicon <? if (autoring::is_verify_phone($_SESSION)) echo('glyphicon-warning-sign'); else echo('glyphicon-ok');?>
+     form-control-feedback"></span>
+  
+  
+
    </div>
    </dd>
   <dt>Skype:</dt>
@@ -146,5 +274,104 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
     </div>
   </div>
 </div>
+
+<? if ($_SESSION['v_email']!="1") { ?> 
+<div class="modal fade" id="verify_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация E-mail</h4>
+      </div>
+      <div class="modal-body">
+        Для верификации на Ваш E-mail будет отправленна ссылка верификации.<br>
+		Для подтверждения Вашего <strong>E-mail: <?= $_SESSION['email'] ?></strong> зайдите в Вашу почту,<br>откройте письмо и перейдите по указанной в письме ссылке
+      </div>
+	  <form id="verify_email" class="form-signin" action="javascript:void(null);" onsubmit="verify_email()">
+	  <input type="hidden" name="id" value="<?= $_SESSION['id'] ?>">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="submit" class="btn btn-primary">Отправить письмо верификации</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="vemail_ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация E-mail</h4>
+      </div>
+      <div class="modal-body">
+        Для верификации на Ваш E-mail Вам отправленна ссылка верификации.<br>
+		Для подтверждения Вашего <strong>E-mail: <?= $_SESSION['email'] ?></strong> зайдите в Вашу почту,<br>откройте письмо и перейдите по указанной в письме ссылке
+      </div>
+	
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+       
+      </div>
+	
+    </div>
+  </div>
+</div>
+<? } ?>
+<? if ($_SESSION['v_phone']!="1") { ?> 
+<div class="modal fade" id="verify_phone" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация телефона</h4>
+      </div>
+      <div class="modal-body">
+        Для верификации на Ваш <strong>телефон: <span class="modal_phone"><?= $_SESSION['phone'] ?></span></strong><br>будет отправленна SMS c кодом подтверждения.<br>
+		
+      </div>
+	  <form id="verify_phone" class="form-signin" action="javascript:void(null);" onsubmit="verify_phone()">
+	  <input type="hidden" name="id" value="<?= $_SESSION['id'] ?>">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <button type="submit" class="btn btn-primary">Отправить SMS для верификации</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="sms_ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация телефона</h4>
+      </div>
+	  <form id="is_sms" class="form-signin" action="javascript:void(null);" onsubmit="is_sms()">
+      <div class="modal-body">
+        <span class="out_sms"></span><br><br>
+		
+		<div id="verify_fg" class=" form-group "> <!-- has-success has-feedback -->
+		<input type="text" class="sms form-control" required placeholder="Код из СМС" name="code_sms">
+		<span id="fc-ok" class="hide glyphicon glyphicon-ok form-control-feedback"></span>
+		<span id="fc-no" class="hide glyphicon glyphicon-remove form-control-feedback"></span>
+		<span class="verify_help help-block"></span>
+
+		</div>
+      </div>
+	
+      <div class="modal-footer">
+        <button type="button" class="sms_btn_cansel btn btn-default" data-dismiss="modal">Отмена</button>
+        <button id="button_ok" type="submit" class="btn btn-primary">Подтвердить телефон</button>
+      </div>
+	</form>
+    </div>
+  </div>
+</div>
+<? } ?>
+
+<? $geobase='yes'; ?>
 
 

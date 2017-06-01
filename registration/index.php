@@ -3,6 +3,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 date_default_timezone_set(TIME_ZONE);
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
+$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 ?>
 <!DOCTYPE html">
 <html lang="<?= LANG ?>">

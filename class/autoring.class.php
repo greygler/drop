@@ -10,14 +10,14 @@ class Autoring {
 		
 	public function is_base($email) // есть ли в базе
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+		//	$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$count=db::cound_bd('users', "email='{$email}'");
 			if ($count>0) return true; else return false;
 		}
 		
 	public function get_base($email, $password) // Забираем из базы по паролю и почте. Если нет - возвращаем FALSE
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+		//	$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE email='{$email}'");
 			$myrow = mysql_fetch_array($result);
 			if ($myrow['password']==md5($password)) return $myrow;
@@ -26,7 +26,7 @@ class Autoring {
 		
 	public function get_user($id) // Забираем из базы по ID.
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+		//	$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE id='{$id}'");
 			$myrow = mysql_fetch_array($result);
 			return $myrow;
@@ -36,7 +36,7 @@ class Autoring {
 		
 	public function user_group($group_id) // Узнаем текущий ID группы пользователя
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users_group WHERE id_group={$group_id}");
 			$myrow = mysql_fetch_array($result);
 			
@@ -53,7 +53,7 @@ class Autoring {
 		
 	public function groups() // Возвращаем информацию о группах пользователй
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users_group");
 			$myrow = mysql_fetch_array($result);
 			do
@@ -78,7 +78,7 @@ class Autoring {
 	public function set_base($email, $password, $name) // Добавляем в базу
 		{
 			if (($email!="") AND ($password!="") AND ($name!="")){
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$password=md5($password);
 			$registration=time();
 			$drop_key=autoring::create_key();
@@ -100,7 +100,7 @@ class Autoring {
 		}
 	public function update_user_info($id) // Обновляем информацию о пользователе в сесии
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users WHERE id='{$id}'");
 			$myrow = mysql_fetch_array($result);
 			$user_group=autoring::user_group($myrow['users_group']);
@@ -109,9 +109,18 @@ class Autoring {
 	
 	public function update_password($id, $password) // Замена пароля
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$password_md5=md5($password);
 			$result = mysql_query("UPDATE users SET password='{$password_md5}'  WHERE id={$id}" );
+						
+			
+		}
+		
+	public function update_phone($id, $phone) // Замена пароля
+		{
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			
+			$result = mysql_query("UPDATE users SET phone='{$phone}' WHERE id={$id}" );
 						
 			
 		}
@@ -138,13 +147,23 @@ class Autoring {
 	
 	public function filling_profile($profile) // Заполнен ли профиль
 		{
-			if (($profile['phone']!="") OR ($profile['skype']!=""))  return true; else return false;
+			if (($profile['phone']!="") AND ($profile['skype']!=""))  return true; else return false;
 			
+		}
+		
+	public function is_verify_phone($profile) // Верифицирован ли телефон
+		{
+			if ($profile['phone']!=$profile['v_phone'])  return true; else return false;
+		}
+		
+	public function is_verify_email($profile) // Верифицирован ли E-mail
+		{
+			if ($profile['email']!=$profile['v_email']) return true;  else return false;
 		}
 		
 	public function is_verify_profile($profile) // Верифицирован ли профиль
 		{
-			if (($profile['v_phone']!="1") OR ($profile['v_email']!="1"))  return true; else return false;
+			if ((autoring::is_verify_phone($profile)) AND (autoring::is_verify_email($profile)))  return true;  else return false;
 		}
 		
 	public function logout() // выход
