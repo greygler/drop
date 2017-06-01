@@ -82,7 +82,8 @@ class Autoring {
 			$password=md5($password);
 			$registration=time();
 			$drop_key=autoring::create_key();
-			$result = mysql_query("INSERT INTO users (email, password, name, drop_key, registration, users_group, balance) VALUES ('{$email}', '{$password}', '{$name}', '{$drop_key}','{$registration}', '5', '0')");
+			$start_user=START_USER;
+			$result = mysql_query("INSERT INTO users (email, password, name, drop_key, registration, users_group, balance) VALUES ('{$email}', '{$password}', '{$name}', '{$drop_key}','{$registration}', '{$start_user}', '0')");
 			return $result;
 			}
 			else return false;
@@ -135,10 +136,15 @@ class Autoring {
 						
 		}
 	
-	public function filling_profile($profile)
+	public function filling_profile($profile) // Заполнен ли профиль
 		{
-			if (($profile['phone']!="") OR ($profile['skype']!="")) return true; else return false;
+			if (($profile['phone']!="") OR ($profile['skype']!=""))  return true; else return false;
 			
+		}
+		
+	public function is_verify_profile($profile) // Верифицирован ли профиль
+		{
+			if (($profile['v_phone']!="1") OR ($profile['v_email']!="1"))  return true; else return false;
 		}
 		
 	public function logout() // выход

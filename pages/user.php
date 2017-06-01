@@ -1,6 +1,8 @@
-<? autoring::update_user_info($_SESSION['id']); 
+<? 
+ if (!isset($_SESSION['info_profile'])) autoring::update_user_info($_SESSION['id']); 
+ else {autoring::update_user_info($_SESSION['id']); $_SESSION['info_profile']="1"; }
 $last_enter=unserialize($_SESSION['last_enter']);
-$_SESSION['info_profile']="1";
+
 ?>
 
  <script src="/js/user.php"></script>
@@ -31,9 +33,22 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 <dt></dt>
 <dd><button  type="button"   data-toggle="modal" data-target="#update_password" class="btn btn-danger user-buttom"><span class="pull-left fa fa-key" aria-hidden="true"></span>Cменить пароль</button></dd><div class="update_pass_results"></div>
   <dt>E-mail:</dt>
-  <dd><input class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>"></dd>
+  <dd>
+  <div class="form-group <? if ($_SESSION['v_email']!="1") echo('has-warning'); else echo('has-success'); ?> has-feedback">
+  <input class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>">
+  <? if ($_SESSION['v_email']!="1") echo('<span class="help-block control-label"><small>E-mail не верифицирован!</small> <a href=""><small>Верифицировать</small></a></span><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>'); ?>
+ 
+</div>
+  
+ 
+  </dd>
   <dt>Phone:</dt>
-  <dd><input class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>"></dd>
+  <dd>
+  <div class="form-group <? if ($_SESSION['v_phone']!="1") echo('has-warning'); else echo('has-success'); ?> has-feedback">
+  <input class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>">
+   <? if ($_SESSION['v_phone']!="1") echo('<span class="help-block control-label"><small>Телефон не верифицирован!</small> <a href=""><small>Верифицировать</small></a></span><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>'); ?>
+   </div>
+   </dd>
   <dt>Skype:</dt>
   <dd><input class="form-control" type="text" name="skype" value="<?= $_SESSION['skype'] ?>"></dd>
   <dt>Счет:</dt>

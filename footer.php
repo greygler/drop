@@ -83,16 +83,23 @@
 	<script src="/js/bootstrap-switch.min.js"></script>
 	<script>$("[name='checkbox']").bootstrapSwitch();</script>
 	
-	<? if ((!autoring::filling_profile($_SESSION)) AND ($_SESSION['info_profile']!="1")) { ?>
+		
+	<? if ((autoring::filling_profile($_SESSION)) AND  (autoring::is_verify_profile($profile)) AND (!isset($_SESSION['info_profile']))) { ?>
 		<div class="modal fade" id="no_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Ваш профиль не заполнен!</h4>
+        <h4 class="modal-title" id="myModalLabel">Внимание! Замечания в работе системы!</h4>
       </div>
       <div class="modal-body">
-        Для продолжения работы настоятельно рекомедуется заполнить контактные данные Вашего профиля!
+	  <? if (autoring::filling_profile($_SESSION)) {?>
+	  <p><strong>Ваш профиль не заполнен!</strong><br>
+        Для продолжения работы настоятельно рекомедуется заполнить контактные данные Вашего профиля!</p>
+		 <? } if (autoring::is_verify_profile($profile)) {?>
+	  <p><strong>Данные Вашего профиля не верифицировнны! </strong><br>
+        Для продолжения работы настоятельно рекомедуется верифицировать контактные данные Вашего профиля!</p>
+		 <? } ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">В следующий раз</button>
