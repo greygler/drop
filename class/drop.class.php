@@ -36,7 +36,7 @@ class drop{
 		 
 	 }
 	
-	public function products($id, $name, $model, $description, $price, $spec_price, $cat, $subcat)
+	public function products($id, $name, $model, $description, $price, $spec_price, $cat, $subcat) // Обновление базы товаров. Если нет - добавляем
 	{
 		if (drop::is_product($id)) 
 			$result = mysql_query ("UPDATE products SET name='{$name}', model='{$model}', price='{$price}', spec_price='{$spec_price}',  description='{$description}', cat='{$cat}', subcat='{$subcat}' WHERE id='{$id}'");

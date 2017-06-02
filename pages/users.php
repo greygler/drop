@@ -40,15 +40,19 @@ do
 		<td valign="middle"><?= $myrow['id'] ?></td>
 		<td class="users_href" valign="middle">
 		
-		<a id="btn_user-<?= $myrow['id']?>" type="button" class="btn btn-block <? if ($myrow['users_group']==0) echo('btn-danger text_white'); else echo ('btn-default') ?>" title="Подробнее о пользователе <?= $myrow['name'] ?>" data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><div id="fa-user-<?= $myrow['id'] ?>" class="text-left <? if ($myrow['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['name'] ?></div></a>
+		<a id="btn_user-<?= $myrow['id']?>" type="button" class="btn btn-block <? if ($myrow['users_group']==0) echo('btn-danger text_white'); else 
+		if ($myrow['balance']<0) echo ('btn-warning'); else	echo ('btn-default') ?>" title="Подробнее о пользователе <?= $myrow['name'] ?>" data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><div id="fa-user-<?= $myrow['id'] ?>" class="text-left <? if ($myrow['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['name'] ?></div></a>
 		
 		</td>
 		<td valign="middle"> 
 		<select title="Выбор группы для пользователя <?= $myrow['name'] ?>" id="group_user-<?= $myrow['id']?>"  class="form-control" size="1" name="pages" onchange="save_group(<?= $myrow['id']?>)">
 		<? foreach ($groups as $key => $value)  { ?>
-		<option <? if ($key==$myrow['users_group']) echo ("selected") ; ?> value="<?= $key ?>"><?= $value['name_group'] ?></option>
-		<? } ?>
+		<option <? if ($key==$myrow['users_group']) {echo ("selected"); $symbol="&#10004;";} ?>
+				<? if (($myrow['balance']<0) AND ($key=='5')) { echo ("disabled"); $symbol="&#128274;";} ?>
+		value="<?= $key ?>"> <?= $symbol.' '.$value['name_group'] ?></option>
+		<? $symbol=""; } ?>
 		</select>
+		<input id="balance_<?= $myrow['id'] ?>" type="hidden" name="balance_<?= $myrow['id'] ?>" value="<?= $myrow['balance'] ?>">
 		</td>
 		<td valign="middle"><button id="btn_balance-<?= $myrow['id']?>" type="button" class="btn btn-block <? if (($myrow['users_group']==0) OR ($myrow['balance']<0)) echo('btn-danger text_white'); else if ($myrow['balance']>0)
 		echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>"> <? if ($myrow['balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($myrow['balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?>

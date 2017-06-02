@@ -41,8 +41,7 @@ function data_form() {
 		<th><strong>Фото<br>товара</strong></th>
 		<th><strong><i class="pull-left fa fa-folder-open" aria-hidden="true"></i> Категория<br><i class="pull-left fa fa-folder" aria-hidden="true"></i> Подкатегория</strong></th>
 		<th><strong><i class="fa fa-shopping-bag" aria-hidden="true"></i> Наименование, модель<br><i class="fa fa-industry" aria-hidden="true"></i> Производитель</strong></th>
-		<th><strong><i class="fa fa-tag" aria-hidden="true"></i>
-Цена для Вас<br><i class="fa fa-hand-o-right" aria-hidden="true"></i> Рекомендуемая цена</strong></th>
+		<th><strong><i class="fa fa-tag" aria-hidden="true"></i>Цена продажи<br><i class="fa fa-hand-o-right" aria-hidden="true"></i> Рекомендуемая цена</strong></th>
 		<th><strong>Активность</strong></th>
 	</tr>
 </thead>
@@ -58,11 +57,11 @@ function data_form() {
 		<td valign="middle"><?= $myrow ['id']; ?></td>
 		<td valign="middle"><img class="img_product img-rounded img-responsive" src="img_product/noimg.png"></td>
 		<td valign="middle"><? 
-		if ($myrow['subcat']==0){ echo ('<a type="button" class="btn btn-default btn-block" href="/?type=products&cat='.$myrow['cat'].'" ><i class="pull-left fa fa-folder-open" aria-hidden="true"></i>'.$categories['data'][$myrow['cat']]['name'].'</a>');  }
-		else {echo ('<a type="button" class="btn btn-default btn-block" href="/?type=products&cat='.$myrow['cat'].'" ><i class="pull-left fa fa-folder-open" aria-hidden="true"></i>'.$subcategoties[$myrow['subcat']]['parent_name'].'</a><a type="button" class="btn btn-default btn-block btn-sm" href="/?type=products&subcat='.$myrow['subcat'].'" ><i class="pull-left fa fa-folder" aria-hidden="true"></i>'.$subcategoties[$myrow['subcat']]['name'].'</a>');  }?>
+		if ($myrow['subcat']==0){ echo ('<a type="button" title="Показать все товары категории &laquo;'.$categories['data'][$myrow['cat']]['name'].'&raquo;" class="btn btn-default btn-block" href="/?type=products&cat='.$myrow['cat'].'" ><i class="pull-left fa fa-folder-open" aria-hidden="true"></i>'.$categories['data'][$myrow['cat']]['name'].'</a>');  }
+		else {echo ('<a type="button" title="Показать все товары категории &laquo;'.$subcategoties[$myrow['subcat']]['parent_name'].'&raquo;" class="btn btn-default btn-block" href="/?type=products&cat='.$myrow['cat'].'" ><i class="pull-left fa fa-folder-open" aria-hidden="true"></i>'.$subcategoties[$myrow['subcat']]['parent_name'].'</a><a type="button" title="Показать все товары подкатегории &laquo;'.$subcategoties[$myrow['subcat']]['name'].'&raquo;" class="btn btn-default btn-block btn-sm" href="/?type=products&subcat='.$myrow['subcat'].'" ><i class="pull-left fa fa-folder" aria-hidden="true"></i>'.$subcategoties[$myrow['subcat']]['name'].'</a>');  }?>
 		
 		</td>
-		<td valign="middle"><a type="button" class="btn btn-default btn-block" href="#" title="<?= $myrow ['description']; 
+		<td valign="middle"><a type="button" class="btn btn-default btn-block" href="#" title="<? if ($myrow ['description']!="") echo("Краткое описание:\n");else echo("Краткое описание отсутствует"); ?><?= $myrow ['description']; 
 		
 		?>">
 		<div class="text-left"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <strong><?= $myrow ['name']; ?></strong> 
