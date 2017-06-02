@@ -10,9 +10,16 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/class/lpcrm.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/drop.class.php');
+
 db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 $categories=lp_crm::getCategories(CRM,CRM_KEY);
+if ($categories['status']=='ok') foreach ($categories['data'] as $key => $value)
+	$cat_status[]= drop::cat_base($key, $value['name']);
+					
+					
+
 $subcategoties=lp_crm::subCategories($categories);
+
 //foreach ($categories['data'] as $key => $value)
 //if ($value['subcategories']!="") {$subcategories[$value['subcategoties'][$key]['id']]=$value['subcategoties'];
 //echo "{$key} = {$value['subcategoties']['name']}"; }
@@ -67,13 +74,20 @@ require_once ('head.php');
 		<ul>
 			<li class="searchForm"><a href="#" class="icon icon-search"><span><input type="text" placeholder="Поиск товара" class="search" /></span></a></li> 
 			<li><a href="/" class="icon icon-home"><span>Главная</span></a></li>
-			<li><a href="?type=products" class="icon icon-articles"><span>Товары (<?= $categories['status']; ?>)</span></a>
+			<li><a href="?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
 				<ul>
 				<? 
-				if ($categories['status']=='ok') foreach ($categories['data'] as $key => $value){
-					echo ('<li><a href="?type=products&cat='.$key.'"><span>'.$value['name'].'</span></a>'."</li>\n");
-				}
+				
+				$result = mysql_query("SELECT * FROM categories");
+					$myrow = mysql_fetch_array($result);
+					do
+					{
+						echo ('<li><a href="?type=products&cat='.$myrow['id'].'"><span><i class="fa fa-caret-right" aria-hidden="true"></i> '.$myrow['name'].'</span></a>'."</li>\n");
 					
+					}
+					while ($myrow = mysql_fetch_array($result));
+				
+									
 				?>
 					<!-- <li><a href="#"><span>Web Development</span></a></li> -->
 				</ul>

@@ -35,6 +35,19 @@ class drop{
 		if ($count>0) return true; else return false;
 		 
 	 }
+	 
+	public function is_categories($id) // Есть ли такая категория в базе
+	{
+		$count=db::cound_bd('categories', "id='{$id}'");
+		if ($count>0) return true; else return false;
+	}
+	
+	
+	public function is_subcategories($id) // Есть ли такая cубкатегория в базе
+	{
+		$count=db::cound_bd('subcategories', "id='{$id}'");
+		if ($count>0) return true; else return false;
+	}
 	
 	public function products($id, $name, $model, $description, $price, $spec_price, $cat, $subcat) // Обновление базы товаров. Если нет - добавляем
 	{
@@ -44,5 +57,26 @@ class drop{
 			$result = mysql_query ("INSERT INTO products (id, name, model,  price, spec_price,  description, cat, subcat, active) VALUES ('{$id}', '{$name}', '{$model}','{$price}', '{$spec_price}', '{$description}','{$cat}', '{$subcat}','1')");
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
+	
+	public function cat_base($id, $name) // Обновление базы категорий. Если нет - добавляем
+	{
+		if (drop::is_categories($id)) 
+			$result = mysql_query ("UPDATE categories SET name='{$name}' WHERE id='{$id}'");
+		
+		else
+			$result = mysql_query ("INSERT INTO categories (id, name) VALUES ('{$id}', '{$name}')");
+		
+		if ($result == 'true') return 'ok'; else return 'error';
+	}
+	
+	public function subcat_base($id, $name) //Обновление базы субкатегорий. Если нет - добавляем
+	{
+		if (drop::is_subcategories($id)) 
+			$result = mysql_query ("UPDATE categories SET name='{$name}' WHERE id='{$id}'");
+		else 
+			$result = mysql_query ("INSERT INTO categories (id, name,) VALUES ('{$id}', '{$name}')");
+		if ($result == 'true') return 'ok'; else return 'error';
+	}
+	
 }
 ?>
