@@ -32,7 +32,8 @@ class LP_CRM
 	public function subCategories($categories) // Категории с подкатегориями
 		{
 			
-			foreach($categories['data'] as $key => $value){
+			if ($categories['status']=='ok')
+				foreach($categories['data'] as $key => $value){
 				
 				//echo("{$key} = {$value}<br>");
 				if ($value['subcategories']!="") foreach($value['subcategories'] as $skey => $svalue) 

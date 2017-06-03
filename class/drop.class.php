@@ -1,6 +1,18 @@
 <?
 class drop{
 	
+	public function last_time($type)
+	{
+		$fp = fopen($_SERVER['DOCUMENT_ROOT'].'/'.LAST_TIME_FILE, 'w+');
+		flock($fp, LOCK_EX); // Блокирование файла для записи
+		if ($type=='p') {$t1=time(); $t2=LAST_TIME_CATEGORY;} else {$t1=LAST_TIME_PRODUCT; $t2=time(); }
+		$text="<?\n\tdefine('LAST_TIME_PRODUCT','".$t1."');\n\tdefine('LAST_TIME_CATEGORY','".$t2."');\n?>";
+		fwrite($fp, $text);
+		flock($fp, LOCK_UN); // Снятие блокировки
+		fclose($fp);
+
+	}
+	
 	public function get_id($key) // Ищем ID пользователя по ключу
 	{
 		//db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);

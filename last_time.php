@@ -1,0 +1,4 @@
+<?
+	define('LAST_TIME_PRODUCT','1496476026');
+	define('LAST_TIME_CATEGORY','1496476229');
+?>
