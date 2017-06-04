@@ -129,7 +129,7 @@ class Autoring {
 		
 	public function update_profile($id, $profile) // Обновление профиля пользователя
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			foreach($profile as $key => $value) $command.="{$key}='{$value}',";
 			$command = substr($command, 0, -1);
 			$bd="UPDATE users SET {$command}  WHERE id={$id}";
@@ -140,11 +140,34 @@ class Autoring {
 		
 	public function user_log($id, $ip, $country, $city,  $region, $agent, $device, $last_enter) // Сохраяем логи
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$time=time();
 			$result = mysql_query("UPDATE users SET ipv4='{$ip}', last_time='{$time}', country='{$country}', city='{$city}', region='{$region}', agent='{$agent}', device='{$device}', last_enter='{$last_enter}'  WHERE id='{$id}'");
 			$result = mysql_query("INSERT INTO enter_log (user_id, last_time, ipv4, country, city, region, agent, device) VALUES ('{$id}', '{$time}', '{$ip}', '{$country}', '{$city}', '{$region}', '{$agent}', '{$device}')");
 						
+		}
+	
+	public function sms_code($id)
+		{
+			
+		if ($_SESSION['sms']!="") $sms=$_SESSION['sms']; else {$sms="444-44-444";
+			$result = mysql_query("UPDATE users SET sms='{$sms}'  WHERE id='{$id}'");
+			}
+			$_SESSION['sms']=$sms;
+			return $sms;
+		}
+		
+	public function del_sms_code($id)
+		{
+			$result = mysql_query("UPDATE users SET sms=''  WHERE id='{$id}'");
+			$_SESSION['sms']='';
+		}
+		
+	public function verify_sms($id, $v_phone)
+		{
+			$result = mysql_query("UPDATE users SET v_phone='{$v_phone}' WHERE id='{$id}'");
+			$_SESSION['v_phone']=$v_phone;
+			
 		}
 	
 	public function filling_profile() // Заполнен ли профиль
@@ -159,7 +182,7 @@ class Autoring {
 		{
 			//echo ("<script>alert('Тел {$_SESSION['phone']}')</script>");
 			if ($_SESSION['phone']!=$_SESSION['v_phone'])  
-			{//echo ("<script>alert('Телефоны {$profile['phone']} и {$profile['v_phone']} не равны')</script>");
+			{//echo ("<script>alert('Телефоны {$_SESSION['phone']} и {$_SESSION['v_phone']} не равны')</script>");
 		return true;} else 
 		{//echo ("<script>alert('Телефоны равны')</script>"); 
 	return false;}

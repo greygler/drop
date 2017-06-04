@@ -47,7 +47,7 @@ $last_enter=unserialize($_SESSION['last_enter']);
           url: '/verify/phone/session_phone.php',
           data: msg,
           success: function(data) {
-			 alert(data);
+			// alert(data);
 			 if (data=='ok'){
 			$('#phone_group').removeClass('has-warning');
 			$('#phone_group').addClass('has-success');
@@ -102,6 +102,8 @@ $last_enter=unserialize($_SESSION['last_enter']);
           success: function(data) {
 			//alert(data);
 		  if (data!='') {$('.novphone').html('SMS отправлено.');
+		   $('#phide3').removeClass('hide');
+		  phide3
 		  $('.vphonelink').html('Отправить повторно');
 		 // $('#phone_num').hide();
         $('#phone_num').attr("disabled","disabled");
@@ -123,14 +125,14 @@ $last_enter=unserialize($_SESSION['last_enter']);
 	
 	function is_sms() {
 		 
- 	  var msg   = $('#sms_ok').serialize();
+ 	  var msg   = $('#is_sms').serialize();
         $.ajax({
           type: 'POST',
           url: '/verify/phone/sms_ok.php',
           data: msg,
           success: function(data) {
-			alert(data);
-		  if (data='ok') {$('.verify_help').html('Телефон успешно верифицирован!');
+			// alert(data);
+		  if (data=='ok') {$('.verify_help').html('Телефон успешно верифицирован!');
 		   $('#verify_fg').addClass('has-success');
 		   $('#verify_fg').addClass('has-feedback');
 		   $('#fc-ok').removeClass('hide');
@@ -198,9 +200,12 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
   <dt>Phone:</dt>
   <dd>
   <div id="phone_group" class="form-group <? if (autoring::is_verify_phone($_SESSION)) echo('has-warning'); else echo('has-success'); ?> has-feedback">
-  <input id="phone_num" class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>" <? if ($_SESSION['send_sms']=='ok') echo('disabled'); ?> onchange="nohide_vphone()"> <? print_r($_SESSION); ?>
-   <? if (($_SESSION['phone']=="") OR (!autoring::is_verify_phone($_SESSION)))  $hide="hide"; ?>
-  <span id="phide1" class="<?= $hide ?> help-block control-label"><small class="novphone">Телефон не верифицирован!</small> <a data-toggle="modal" data-target="#verify_phone" href="#"><small class="vphonelink">Верифицировать</small></a></span>
+  <input id="phone_num" class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>" <? if ($_SESSION['send_sms']=='ok') echo('disabled'); ?> onchange="nohide_vphone()"> 
+   <? if (($_SESSION['phone']=="") OR (!autoring::is_verify_phone()))  $hide="hide"; ?>
+  <span id="phide1" class="<?= $hide ?> help-block control-label"><small class="novphone">
+  <? if ($_SESSION['sms']!="") echo "SMS отправлено."; else echo("Телефон не верифицирован!");?></small>
+  <a id="phide3" <? if ($_SESSION['sms']=="") echo ('class="hide"')?> data-toggle="modal" data-target="#sms_ok" href="#"><small><?= $_SESSION['sms'] ?>Ввести код из SMS</small></a>
+ | <a data-toggle="modal" data-target="#verify_phone" href="#"><small class="vphonelink"><? if ($_SESSION['sms']!="") echo "Отправить повторно"; else echo("Верифицировать");?></small></a></span>
   <span id="phide2" class="glyphicon <? if (autoring::is_verify_phone($_SESSION)) echo('glyphicon-warning-sign'); else echo('glyphicon-ok');?>
      form-control-feedback"></span>
   
@@ -382,12 +387,14 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
       </div>
 	  <form id="is_sms" class="form-signin" action="javascript:void(null);" onsubmit="is_sms()">
       <div class="modal-body">
-        <span class="out_sms"></span><br><br>
+        <span class="out_sms">
+		<? if ($_SESSION['sms']!="") echo ("Введите код SMS для проверки телефона<br>{$_SESSION['phone']}") ?></span><br><br>
 		
 		<div id="verify_fg" class=" form-group "> <!-- has-success has-feedback -->
-		<input type="text" class="sms form-control" required placeholder="Код из СМС" name="code_sms">
-		<span id="fc-ok" class="glyphicon glyphicon-ok form-control-feedback"></span>
-		<span id="fc-no" class="glyphicon glyphicon-remove form-control-feedback"></span>
+		<input id="code_sms" type="text" class="sms form-control" required placeholder="Код из СМС" name="code_sms">
+		<input id="v_phone" type="hidden" name="v_phone" value="<?= $_SESSION['phone']?>">
+		<span id="fc-ok" class="glyphicon <? if ($_SESSION['sms']!="") echo ("hide") ?> glyphicon-ok form-control-feedback"></span>
+		<span id="fc-no" class="glyphicon <? if ($_SESSION['sms']!="") echo ("hide") ?> glyphicon-remove form-control-feedback"></span>
 		<span class="verify_help help-block"></span>
 
 		</div>

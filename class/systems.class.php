@@ -90,18 +90,23 @@ public function registration()
 	  <div id="password1_group" class="input-group">
  <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
 </span>
-         <input type="password" id="password1" class="form-control" name="password1" placeholder="Пароль" required="" onchange="checkPasswords()"/>  
+         <input type="password" id="password1" class="form-control" name="password1" placeholder="Пароль" required="" />  
 </div>	
 <div id="password2_group" class="input-group">
  <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
 </span>
-         <input type="password" id="password2"  class="form-control" name="password2" placeholder="Пароль повторно" required="" onchange="checkPasswords()"/>  
+         <input type="password" id="password2"  class="form-control" name="password2" placeholder="Пароль повторно" required="" />  
 </div>	
 <div class="error"></div>
- <div> 
-      <label class="checkbox">
-        <input required type="checkbox" value="rules" id="rules" name="rules"> Согласен с <a data-toggle="modal" data-target="#rules_modal" href="#">Правилами</a>
-      </label>  </div> 
+<div class="no_rules"> </div>
+<div class="checkbox">
+      <label>
+            <input id="rules" value="ok" name="rules" type="checkbox"> Согласен с <a data-toggle="modal" data-target="#rules_modal" href="#">Правилами работы</a>
+          </label>
+    </div>
+
+
+ 
       <button class="btn btn-lg btn-log btn-block"  id="submit" type="submit">Регистрация</button> <br>
 	  <p class="text-center"> <a href="/login">У меня уже есть регистрация </a> </p>
 
@@ -299,6 +304,7 @@ public function rules()
 
 public function attention()
 {
+	$_SESSION['info_profile']="1";
 ?>
 <div class="modal fade" id="no_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -325,11 +331,12 @@ public function attention()
 </div>
 <script type="text/javascript"> jQuery(function($){$('#no_info').modal('show') }); </script>
 <?
-$_SESSION['info_profile']="1";
+
 }
 
 public function info_balance()
 {
+	$_SESSION['info_balance']="1";
 ?>
 <div class="modal fade" id="info_balance" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -349,7 +356,7 @@ public function info_balance()
   </div>
 </div>
 <script type="text/javascript"> jQuery(function($){$('#info_balance').modal('show') }); </script>
-<? $_SESSION['info_balance']="1";
+<? 
 }
 
 
@@ -382,7 +389,7 @@ public function footer($geobase="")
  
 <script src="/js/jquery.maskedinput.js"></script>
 <script type="text/javascript"> jQuery(function($){$(".phone").mask("<?= MASK_PHONE ?>");}); </script>
-<script type="text/javascript"> jQuery(function($){$(".sms").mask("\ 999-99-999");}); </script>
+<script type="text/javascript"> jQuery(function($){$(".sms").mask("\999-99-999");}); </script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/control-modal.js"></script>
 <script src="/js/gnmenu.php"></script>
@@ -395,7 +402,7 @@ public function footer($geobase="")
 $filling_profile=autoring::filling_profile();
 $is_verify_profile=autoring::is_verify_profile();
 $autoring=autoring::is_autoring();
-if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='0')) AND ($autoring)) echo systems::attention();
+if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='1')) AND ($autoring)) echo systems::attention();
 ?>
 
 <? if (($_SESSION['balance']<0) AND ($_SESSION['info_balance']!="1")) echo systems::info_balance(); ?>
