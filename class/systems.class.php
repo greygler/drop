@@ -24,7 +24,7 @@ public function head($login="", $registration="")
 	<link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/flags.css">
-	<? if ($login=="yes") {?><link href="/css/login.css" rel="stylesheet"><?} ?>
+	<? if (($login=="yes") OR  ($registration=='yes')) {?><link href="/css/login.css" rel="stylesheet"><?} ?>
 	<link href="/css/bootstrap-switch.min.css" rel="stylesheet">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/style.css" rel="stylesheet">
@@ -35,6 +35,7 @@ public function head($login="", $registration="")
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<? if ($login=="yes") {?><script src="/js/login.php"></script><?} ?>
+	<? if ($registration=='yes') {?><script src="/js/registration.php"></script><?} ?>
   </head>
   <body>
 <?
@@ -65,6 +66,47 @@ public function login()
 	  <br>
 	  <p class="text-center"> <a href="/registration">Зарегистрироваться </a> </p>
     </form>
+  </div>
+<?
+}
+
+public function registration()
+{ 
+?>
+ <div class="wrapper">
+    <form id="form_reg" class="form-signin" action="javascript:void(null);" onsubmit="call()">       
+      <h2 class="form-signin-heading">Регистрация</h2>
+	 
+
+	  <div class="input-group">
+       <span class="input-group-addon "><i class="fa fa-user sybmol" aria-hidden="true"></i>
+</span><input type="text" class="form-control" name="name"  id="name" placeholder="Ваше имя" required="" />
+	  </div>
+	  <div id='emailgroup' class="input-group">
+	  
+       <span class="input-group-addon "><i class="fa fa-at sybmol" aria-hidden="true"></i>
+</span><input type="email" id="email" class="form-control" name="email" placeholder="Email Address" required=""  />
+	  </div> <div class="results"></div>
+	  <div id="password1_group" class="input-group">
+ <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
+</span>
+         <input type="password" id="password1" class="form-control" name="password1" placeholder="Пароль" required="" onchange="checkPasswords()"/>  
+</div>	
+<div id="password2_group" class="input-group">
+ <span class="input-group-addon"><i class="fa fa-key sybmol" aria-hidden="true"></i>
+</span>
+         <input type="password" id="password2"  class="form-control" name="password2" placeholder="Пароль повторно" required="" onchange="checkPasswords()"/>  
+</div>	
+<div class="error"></div>
+ <div> 
+      <label class="checkbox">
+        <input required type="checkbox" value="rules" id="rules" name="rules"> Согласен с <a data-toggle="modal" data-target="#rules_modal" href="#">Правилами</a>
+      </label>  </div> 
+      <button class="btn btn-lg btn-log btn-block"  id="submit" type="submit">Регистрация</button> <br>
+	  <p class="text-center"> <a href="/login">У меня уже есть регистрация </a> </p>
+
+    </form>
+	
   </div>
 <?
 }
@@ -269,7 +311,7 @@ public function attention()
 	  <? if (!autoring::filling_profile($_SESSION)) {?>
 	  <p><strong>Ваш профиль не заполнен!</strong><br>
         Для продолжения работы настоятельно рекомедуется заполнить контактные данные Вашего профиля!</p>
-		 <? } if (!autoring::is_verify_profile($profile)) {?>
+		 <? } if (autoring::is_verify_profile($profile)) {?>
 	  <p><strong>Данные Вашего профиля не верифицировнны! </strong><br>
         Для продолжения работы настоятельно рекомедуется верифицировать контактные данные Вашего профиля!</p>
 		 <? } ?>
@@ -349,8 +391,11 @@ public function footer($geobase="")
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
 	
 		
-<? if (((!autoring::filling_profile($_SESSION)) OR  (!autoring::is_verify_profile($profile))) AND (!isset($_SESSION['info_profile']))) 
-	echo systems::attention();
+<? 
+$filling_profile=autoring::filling_profile();
+$is_verify_profile=autoring::is_verify_profile();
+$autoring=autoring::is_autoring();
+if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='0')) AND ($autoring)) echo systems::attention();
 ?>
 
 <? if (($_SESSION['balance']<0) AND ($_SESSION['info_balance']!="1")) echo systems::info_balance(); ?>

@@ -5,7 +5,6 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/'.LAST_TIME_FILE);
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/db.class.php'); 
 $db_result=db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/autoring.class.php'); 
-
 if (!autoring::is_autoring()) header("Location: login/");
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/systems.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');

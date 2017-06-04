@@ -1,4 +1,5 @@
 <? 
+//session_start();
  if (!isset($_SESSION['info_profile'])) autoring::update_user_info($_SESSION['id']); 
  else {autoring::update_user_info($_SESSION['id']); $_SESSION['info_profile']="1"; }
 $last_enter=unserialize($_SESSION['last_enter']);
@@ -34,6 +35,8 @@ $last_enter=unserialize($_SESSION['last_enter']);
  </script>
   <script>
   
+ 
+  
   function nohide_vphone() {
 	  
 	 var phone_num=$("#phone_num").val();
@@ -44,11 +47,33 @@ $last_enter=unserialize($_SESSION['last_enter']);
           url: '/verify/phone/session_phone.php',
           data: msg,
           success: function(data) {
-			 // alert(data);
-			$('.modal_phone').html(phone_num);
-			$('#phide1').removeClass('hide');
+			 alert(data);
+			 if (data=='ok'){
+			$('#phone_group').removeClass('has-warning');
+			$('#phone_group').addClass('has-success');
+			$('#phide1').addClass('hide');
 			$('#phide2').removeClass('hide');
-			$('#phide2').removeClass('glyphicon-ok');
+			$('#phide2').removeClass('glyphicon-warning-sign');  
+			$('#phide2').addClass('glyphicon-ok');
+			 }
+			 else{
+				$('.novphone').html('Телефон не верифицирован!');
+				$('.vphonelink').html('Верифицировать');
+				$('#is_sms')[0].reset();
+				$('#verify_fg').removeClass('has-success');
+				$('#verify_fg').removeClass('has-feedback');
+				$('.verify_help').html('');
+				 //$('#fc-ok').addClass('hide');
+				 //$('#fc-no').addClass('hide');
+				$('.modal_phone').html(phone_num);
+				$('#phide1').removeClass('hide');
+				//$('#phide2').addClass('hide');
+				$('#phone_group').removeClass('has-success');
+				$('#phone_group').addClass('has-warning');
+				$('#phide2').removeClass('glyphicon-ok');  
+				$('#phide2').addClass('glyphicon-warning-sign');  
+				
+			 }
 			 },
           error:  function(xhr, str){
 		  alert('Возникла ошибка: ' + xhr.responseCode);
@@ -60,7 +85,8 @@ $last_enter=unserialize($_SESSION['last_enter']);
 		 $('#phide2').addClass('hide');
 		 $('#phone_group').addClass('has-warning');
 		 $('#phone_group').removeClass('has-success');
-		 $('#phide2').removeClass('glyphicon-ok');
+		 $('#phide2').removeClass('glyphicon-ok');  
+		 
 		}
   
 	
@@ -74,11 +100,16 @@ $last_enter=unserialize($_SESSION['last_enter']);
           url: '/verify/phone/sendsms.php',
           data: msg,
           success: function(data) {
-			
+			//alert(data);
 		  if (data!='') {$('.novphone').html('SMS отправлено.');
 		  $('.vphonelink').html('Отправить повторно');
-		  $('.out_sms').html(data);
+		 // $('#phone_num').hide();
+        $('#phone_num').attr("disabled","disabled");
+
 		  
+		  $('.out_sms').html(data);
+		  $('#fc-ok').addClass('hide');
+			$('#fc-no').addClass('hide');
 		   $('#sms_ok').modal('show');
 		  } else $('.results_form').html(data);
 									
@@ -98,7 +129,7 @@ $last_enter=unserialize($_SESSION['last_enter']);
           url: '/verify/phone/sms_ok.php',
           data: msg,
           success: function(data) {
-			
+			alert(data);
 		  if (data='ok') {$('.verify_help').html('Телефон успешно верифицирован!');
 		   $('#verify_fg').addClass('has-success');
 		   $('#verify_fg').addClass('has-feedback');
@@ -152,7 +183,7 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 <dd><button  type="button"   data-toggle="modal" data-target="#update_password" class="btn btn-danger user-buttom"><span class="pull-left fa fa-key" aria-hidden="true"></span>Cменить пароль</button></dd><div class="update_pass_results"></div>
   <dt>E-mail:</dt>
   <dd>
-  <div class="form-group <? if  (autoring::is_verify_email($_SESSION)) echo('has-warning'); else echo('has-success'); ?> has-feedback">
+  <div class="form-group <? if  (autoring::is_verify_email()) echo('has-warning'); else echo('has-success'); ?> has-feedback">
   <input class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>" disabled>
   <? if (autoring::is_verify_email($_SESSION)) echo('<span  class="help-block control-label"><small><span class="novemail">E-mail не верифицирован!</span></small> <a data-toggle="modal" data-target="#verify_email" href="#"><small><span class="vemaillink">Верифицировать</span></small></a></span><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>');
   else echo('<span class="glyphicon glyphicon-ok form-control-feedback"></span>');   ?>
@@ -167,7 +198,7 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
   <dt>Phone:</dt>
   <dd>
   <div id="phone_group" class="form-group <? if (autoring::is_verify_phone($_SESSION)) echo('has-warning'); else echo('has-success'); ?> has-feedback">
-  <input id="phone_num" class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>" onchange="nohide_vphone()">
+  <input id="phone_num" class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>" <? if ($_SESSION['send_sms']=='ok') echo('disabled'); ?> onchange="nohide_vphone()"> <? print_r($_SESSION); ?>
    <? if (($_SESSION['phone']=="") OR (!autoring::is_verify_phone($_SESSION)))  $hide="hide"; ?>
   <span id="phide1" class="<?= $hide ?> help-block control-label"><small class="novphone">Телефон не верифицирован!</small> <a data-toggle="modal" data-target="#verify_phone" href="#"><small class="vphonelink">Верифицировать</small></a></span>
   <span id="phide2" class="glyphicon <? if (autoring::is_verify_phone($_SESSION)) echo('glyphicon-warning-sign'); else echo('glyphicon-ok');?>
@@ -355,8 +386,8 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 		
 		<div id="verify_fg" class=" form-group "> <!-- has-success has-feedback -->
 		<input type="text" class="sms form-control" required placeholder="Код из СМС" name="code_sms">
-		<span id="fc-ok" class="hide glyphicon glyphicon-ok form-control-feedback"></span>
-		<span id="fc-no" class="hide glyphicon glyphicon-remove form-control-feedback"></span>
+		<span id="fc-ok" class="glyphicon glyphicon-ok form-control-feedback"></span>
+		<span id="fc-no" class="glyphicon glyphicon-remove form-control-feedback"></span>
 		<span class="verify_help help-block"></span>
 
 		</div>

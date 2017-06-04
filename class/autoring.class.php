@@ -5,7 +5,9 @@ class Autoring {
 	
 	public function is_autoring() // есть ли авторизация
 		{
-			if (($_SESSION['email']!="") AND ($_SESSION['password']!="")) return true; else return false;
+			if (($_SESSION['email']!="") AND ($_SESSION['password']!="")){
+//echo ("<script>alert('Авторизация OK')</script>");
+			return true; } else return false;
 		}
 		
 	public function is_base($email) // есть ли в базе
@@ -145,25 +147,38 @@ class Autoring {
 						
 		}
 	
-	public function filling_profile($profile) // Заполнен ли профиль
+	public function filling_profile() // Заполнен ли профиль
 		{
-			if (($profile['phone']!="") AND ($profile['skype']!=""))  return true; else return false;
+			if (($_SESSION['phone']!="") AND ($_SESSION['skype']!=""))  {
+				//echo ("<script>alert('Профиль заполнен')</script>");
+			return true; }else return false;
 			
 		}
 		
-	public function is_verify_phone($profile) // Верифицирован ли телефон
+	public function is_verify_phone() // Верифицирован ли телефон
 		{
-			if ($profile['phone']!=$profile['v_phone'])  return true; else return false;
+			//echo ("<script>alert('Тел {$_SESSION['phone']}')</script>");
+			if ($_SESSION['phone']!=$_SESSION['v_phone'])  
+			{//echo ("<script>alert('Телефоны {$profile['phone']} и {$profile['v_phone']} не равны')</script>");
+		return true;} else 
+		{//echo ("<script>alert('Телефоны равны')</script>"); 
+	return false;}
 		}
 		
-	public function is_verify_email($profile) // Верифицирован ли E-mail
+	public function is_verify_email() // Верифицирован ли E-mail
 		{
-			if ($profile['email']!=$profile['v_email']) return true;  else return false;
+			//echo ("<script>alert('Email {$_SESSION['email']}')</script>");
+			if ($_SESSION['email']!=$_SESSION['v_email']) {
+				//echo ("<script>alert('Email {$_SESSION['email']} и {$_SESSION['v_email']} не равны')</script>");
+				return true;} else {//echo ("<script>alert('Email равны')</script>"); 
+			return false;}
 		}
 		
-	public function is_verify_profile($profile) // Верифицирован ли профиль
-		{
-			if ((autoring::is_verify_phone($profile)) AND (autoring::is_verify_email($profile)))  return true;  else return false;
+	public function is_verify_profile() // Верифицирован ли профиль
+		{ //echo ("<script>alert('".print_r($_SESSION)."')</script>");
+		$is_verify_email=autoring::is_verify_email();
+		$is_verify_phone=autoring::is_verify_phone();
+			if ($is_verify_email AND $is_verify_phone )  return true;  else return false;
 		}
 		
 	public function logout() // выход
