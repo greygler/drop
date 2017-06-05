@@ -149,4 +149,14 @@ caption, th, td {
 .user-buttom {
 	margin: 15px 0 15px 0;
 }
+thead a{
+	color: white !important;
+}
+thead a:hover {
+	-webkit-transition: 1s ease;
+	-moz-transition: 1s ease;			
+	-ms-transition: 1s ease;						
+	transition: 1s ease;	
+	color:yellow !important;
+}
 

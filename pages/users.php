@@ -20,18 +20,21 @@ $count_users=db::cound_bd('users');
 <table class="table table-striped" >
 <thead>
 	<tr valign="middle">
-		<th><strong>ID</strong></th>
-		<th><strong>Имя</strong></th>
-		<th><strong>Группа</strong></th>
-		<th><strong>Баланс</strong></th>
+		<th><a title="Сортировка по ID" href="<?= Pagination::pagelink_desc($_GET, 'order', 'id') ?>"><strong>ID</strong></a></th>
+		<th><a title="Сортировка по имени" href="<?= Pagination::pagelink_desc($_GET, 'order', 'name') ?>"><strong>Имя</strong></a></th>
+		<th><a title="Сортировка по группе" href="<?= Pagination::pagelink_desc($_GET, 'order', 'users_group') ?>"><strong>Группа</strong></a></th>
+		<th><a title="Сортировка по балансу" href="<?= Pagination::pagelink_desc($_GET, 'order', 'balance') ?>"><strong>Баланс</strong></a></th>
 		
 	</tr>
 </thead>	
 	
 	<tbody>
 <?
+if ($_GET['order']!="") $order_by="ORDER BY {$_GET['order']}";
+	if ($_GET['desc']!="") $order_by.=" DESC";
+	
 //$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-$result = mysql_query("SELECT * FROM users LIMIT {$limit['begin']}, {$limit['count']}");
+$result = mysql_query("SELECT * FROM users {$order_by} LIMIT {$limit['begin']}, {$limit['count']}");
 
 $myrow = mysql_fetch_array($result);
 do

@@ -4,7 +4,7 @@ require_once ('../config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 function call() {
 	
-	alert($('#rules').is(':checked')); 
+	//alert($('#rules').is(':checked')); 
 		$('.no_rules').html('');
 		$('.results').html('')
 		$('#emailgroup').removeClass('has-error');

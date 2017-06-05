@@ -1,10 +1,20 @@
 <?
 class Pagination{
 
-private function  pagelink($params)
+public function  pagelink($params)
 {
  $link='/?'.http_build_query($params);
  return $link; 
+}
+public function pagelink_desc($params, $param, $element)
+{
+if ($params[$param]==$element){
+		if ($params['desc']!='') $params['desc']=''; else $params['desc']='1';
+	}
+	
+		
+$params[$param]=$element;
+	return Pagination::pagelink($params);
 }
 
 public function  pagin($get_params, $count_records, $view_pages ) 

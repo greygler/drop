@@ -33,6 +33,7 @@ $view_pages=array(10, 25, 50, 100); // Колличество отображае
 
 define('UPDATE_TIME','3600'); // Период обновления данных из LP-CRM
 define('LAST_TIME_FILE','last_time.php'); // Период обновления данных из LP-CRM
+define('ACTIVE_PRODUCT','1'); // Новый продукт изначально 1 - активный, 0 - не активный
 
 define('MASK_PHONE_UA','\+38(0*9) 999-99-99'); // Маска номера телефона Украина
 define('MASK_PHONE_RU','\+7(*99) 999-99-99'); // Маска номера телефона Россия
@@ -63,4 +64,10 @@ define('DB_HOST', 'localhost'); 	// Адрес базы данных, может
 define('DB_NAME', 'drop'); 	// Название базы данных
 define('DB_LOGIN', 'drop'); 	// Логин базы данных
 define('DB_PASS', 'drop'); 	// Пароль базы данных
+?>
+<?
+//define('DB_HOST', 'sql303.0fees.us'); 	// Адрес базы данных, может называться localhost
+//define('DB_NAME', '0fe_17966322_drop'); 	// Название базы данных
+//define('DB_LOGIN', '0fe_17966322'); 	// Логин базы данных
+//define('DB_PASS', 'coffecoffe'); 	// Пароль базы данных
 ?>
