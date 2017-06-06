@@ -135,7 +135,7 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 		<div id="user" class="row  hidden-xs">
 		<div id="data_user"> 
 		 <div class="inform  text-right col-md-1 col-lg-1 visible-lg visible-md"><span class="fa <?= $_SESSION['fa_logo'] ?> fa-3x"></span> </div>
-		<div class="inform users_data col-sm-3 col-md-3 col-lg-4"> <span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <?= $_SESSION['name'] ?><a data-toggle="modal" data-target="#logmodal" class="visible-lg visible-md" href="#"> <i class="fa fa-power-off fa-lg"></i> Выход</a> 
+		<div class="inform users_data col-sm-3 col-md-3 col-lg-4"> <span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <span class="user_name"><?= $_SESSION['name'] ?></span><a data-toggle="modal" data-target="#logmodal" class="visible-lg visible-md" href="#"> <i class="fa fa-power-off fa-lg"></i> Выход</a> 
 		
 		<a data-toggle="modal" data-target="#logmodal" id="logout-xs" class="inform visible-sm" href="#"> <i class="fa fa-power-off fa-lg"></i></a>
 		<br>
@@ -411,5 +411,9 @@ if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='
 </html>
 <?
 }
+
+
+
+
 }
 ?>

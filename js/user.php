@@ -40,7 +40,13 @@ function data_form() {
           data: msg,
           success: function(data) {
 			
-		  if (data=='ok') {$('#form_ok').modal('show'); } else $('results_form').html(data);
+		  if (data=='ok') {
+			  var user_name = $('#user_name_input').val()
+			  $('.user_name').html(user_name);
+			  
+			  $('#form_ok').modal('show');
+
+		  } else $('.results_form').html(data);
 									
 								
           },

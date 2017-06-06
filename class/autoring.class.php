@@ -127,6 +127,16 @@ class Autoring {
 			
 		}
 		
+		
+	public function active_drop($id, $active) // Автоматическая передача данных - да\нет
+		{
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			
+			$result = mysql_query("UPDATE users SET active_drop='{$active}' WHERE id={$id}" );
+						
+			return $result;
+		}
+		
 	public function update_profile($id, $profile) // Обновление профиля пользователя
 		{
 			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);

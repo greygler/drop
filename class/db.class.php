@@ -22,14 +22,16 @@ class Db
 {
 	public function connect_db($db_host, $db_name, $db_login, $db_pass)
 	{
-		$db = mysql_connect($db_host,$db_login,$db_pass) or die("MySQL сервер недоступен!".mysql_error());; /*Подключение к серверу */
-        mysql_select_db($db_name,$db) or die("Нет соединения с БД".mysql_error()); /*Подключение к базе данных на сервере*/
+		$db = mysql_connect($db_host,$db_login,$db_pass) or die("MySQL сервер недоступен!<br>\n".mysql_error());; /*Подключение к серверу */
+        mysql_select_db($db_name,$db) or die("Нет соединения с БД<br>\n".mysql_error()); /*Подключение к базе данных на сервере*/
         mysql_query("SET NAMES UTF8"); // UTF-8
         mysql_query("SET CHARACTER SET UTF8");
 		mysql_query("SET NAMES 'utf8'"); 
 		mysql_query("SET CHARACTER SET 'utf8'");
 		mysql_query("SET SESSION collation_connection = 'utf8_general_ci'");
 	}
+	
+	
 	
 	public function db_to_array($db_str, $db_param, $id)
 	{

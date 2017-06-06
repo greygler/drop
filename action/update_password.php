@@ -2,8 +2,9 @@
 session_start();
 require_once ('../config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
-require_once ("../class/autoring.class.php");
 require_once ('../class/db.class.php');
+$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+require_once ("../class/autoring.class.php");
 if (md5($_POST['old_password'])!=$_SESSION['password']) echo ('error');
 else 
 {

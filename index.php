@@ -11,7 +11,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/lpcrm.class.php'); 
 require_once ($_SERVER['DOCUMENT_ROOT'].'/class/drop.class.php');
-
+require_once ($_SERVER['DOCUMENT_ROOT'].'/class/users.class.php');
 drop::update_data();	
 					
 

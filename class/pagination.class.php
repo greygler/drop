@@ -28,6 +28,9 @@ public function sort_symbol($params, $param, $element, $symbol, $symbol_desc)
 // Группы символов цифры :
 // sort-numeric-asc  : 1-9
 // sort-numeric-desc : 9-1
+// Возрастание-убывание
+// sort-amount-asc 
+// sort-amount-desc
 
 {
 	
