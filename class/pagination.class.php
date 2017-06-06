@@ -1,21 +1,46 @@
 <?
 class Pagination{
 
-public function  pagelink($params)
+public function  pagelink($params) // Формируем Get-строку для ссылки из массива $params
 {
  $link='/?'.http_build_query($params);
  return $link; 
 }
+
 public function pagelink_desc($params, $param, $element)
+ // Формируем GET-строку  для ссылки из массива $params, добавляя елемент $params['param']=$element
+ // При повторном вызове устанавливаем или убираем параметр DESC
+ 
 {
 if ($params[$param]==$element){
 		if ($params['desc']!='') $params['desc']=''; else $params['desc']='1';
 	}
 	
-		
 $params[$param]=$element;
 	return Pagination::pagelink($params);
 }
+
+public function sort_symbol($params, $param, $element, $symbol, $symbol_desc) 
+// Формируем символ сортировки в массиве $params по параметру $params['param']=$element
+// Группы символов текст :
+// sort-alpha-asc : a-z
+// sort-alpha-desc : z-a
+// Группы символов цифры :
+// sort-numeric-asc  : 1-9
+// sort-numeric-desc : 9-1
+
+{
+	
+	if ($params[$param]==$element) { //echo $params[$param];
+		 if ($params['desc']!="") $s=$symbol_desc; else $s=$symbol;
+		 //echo $s;
+	   $sort_symbol='<span class="fa fa-'.$s.'"></span>';
+	} 
+	else $sort_symbol='<i class="fa fa-sort" aria-hidden="true"></i>';
+return $sort_symbol;
+}
+
+
 
 public function  pagin($get_params, $count_records, $view_pages ) 
 // Передаем содержимое $_GET, общее колличество записей и массив колличества отображаемых страниц

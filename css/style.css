@@ -159,4 +159,13 @@ thead a:hover {
 	transition: 1s ease;	
 	color:yellow !important;
 }
-
+thead .badge{
+	background-color: #333;
+}
+.badge a:hover {
+	-webkit-transition: 1s ease;
+	-moz-transition: 1s ease;			
+	-ms-transition: 1s ease;						
+	transition: 1s ease;	
+	color:yellow !important;
+}

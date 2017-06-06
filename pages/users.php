@@ -20,10 +20,17 @@ $count_users=db::cound_bd('users');
 <table class="table table-striped" >
 <thead>
 	<tr valign="middle">
-		<th><a title="Сортировка по ID" href="<?= Pagination::pagelink_desc($_GET, 'order', 'id') ?>"><strong>ID</strong></a></th>
-		<th><a title="Сортировка по имени" href="<?= Pagination::pagelink_desc($_GET, 'order', 'name') ?>"><strong>Имя</strong></a></th>
-		<th><a title="Сортировка по группе" href="<?= Pagination::pagelink_desc($_GET, 'order', 'users_group') ?>"><strong>Группа</strong></a></th>
-		<th><a title="Сортировка по балансу" href="<?= Pagination::pagelink_desc($_GET, 'order', 'balance') ?>"><strong>Баланс</strong></a></th>
+		<th><a title="Сортировка по ID" href="<?= Pagination::pagelink_desc($_GET, 'order', 'id') ?>"><strong>ID</strong> 
+<span class="badge pull-left"><?= Pagination::sort_symbol($_GET,'order','id', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>
+		
+</th>
+		<th><a title="Сортировка по имени" href="<?= Pagination::pagelink_desc($_GET, 'order', 'name') ?>"><strong>Имя</strong> 
+<span class="badge pull-left"><?= Pagination::sort_symbol($_GET,'order', 'name', 'sort-alpha-asc', 'sort-alpha-desc'); ?></span></a></th>
+		<th><a title="Сортировка по группе" href="<?= Pagination::pagelink_desc($_GET, 'order', 'users_group') ?>"><strong>Группа</strong> 
+<span class="badge pull-left"><?= Pagination::sort_symbol($_GET,'order', 'users_group', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a></th>
+		<th><a title="Сортировка по балансу" href="<?= Pagination::pagelink_desc($_GET, 'order', 'balance') ?>"><strong>Баланс</strong> 
+<span class="badge pull-left"><?= Pagination::sort_symbol($_GET,'order', 'balance', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>
+		</th>
 		
 	</tr>
 </thead>	
