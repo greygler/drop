@@ -57,7 +57,7 @@ function product_form(id) {
 		  //alert(data);
 		  if (data!="error") {
 		  $("#img_"+id).attr("src","<?= IMG_PRODUCT_PATH ?>"+data);
-			$('#button_'+id).attr("disabled","disabled");		  }
+			$('#ref-button_'+id).attr("disabled","disabled");		  }
 		   
 		  $('#refresh_code_'+id).removeClass('fa-spin');
 		  },

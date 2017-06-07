@@ -51,7 +51,7 @@ if ($_SESSION['user_group']<5) echo('<script src="'.JS_PATH.'/product.php"></scr
 		 <div class="input-group">
  		<input required id="new-img_<?= $myrow['id'] ?>" class="form-control" type="file" accept="image/*">
 		<span class="input-group-btn">
-        <button id="button_<?= $myrow['id'] ?>" class="btn btn-default" type="submit"><i id="refresh_code_<?= $myrow['id']; ?>" class="fa fa-refresh fa-lg fa-fw"></i></button>
+        <button id="ref-button_<?= $myrow['id'] ?>" class="btn btn-default" type="submit"><i id="refresh_code_<?= $myrow['id']; ?>" class="fa fa-refresh fa-lg fa-fw"></i></button>
 		</span>
 		</div>
 		<? } ?>
