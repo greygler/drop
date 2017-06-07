@@ -21,6 +21,12 @@ class drop{
 		$myrow = mysql_fetch_array($result);
 		return $myrow['id'];
 	}
+	
+	public function search($product)
+	{
+		$result = mysql_query("SELECT * from products WHERE name LIKE '%{$product}%'");
+		return $result;
+	}
 
 	public function new_order($user_id, $data, $status) // Cохраняем заказ
 	{

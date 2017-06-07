@@ -2,13 +2,13 @@
 		<h1>Новости системы</h1>
 		</div>
 		
-		
+<? $img_news=IMG_NEWS_NAME ?>		
 <div class="row">
 <div class="col-sm-6 col-md-6 col-lg-6 panel panel-default">
 
 <div class="media">
   <a class="pull-left" href="#">
-    <img  class="media-object" src="img_news/noimg.jpg" alt="...">
+    <img  class="media-object" src="<?= IMG_NEWS_PATH.$img_news ?>" alt="...">
   </a>
   <div class="media-body">
     <h4 class="media-heading text-left">Заголовок медиа</h4>
@@ -19,7 +19,7 @@
 
 <div class="media">
   <a class="pull-left" href="#">
-    <img  class="media-object" src="img_news/noimg.jpg" alt="...">
+    <img  class="media-object" src="<?= IMG_NEWS_PATH.$img_news ?>" alt="...">
   </a>
   <div class="media-body">
     <h4 class="media-heading text-left">Заголовок медиа</h4>

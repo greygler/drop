@@ -74,8 +74,8 @@ function product_form(id) {
 		$myrow = mysql_fetch_array($result);
 		do { ?>
 		<tr >
-		<td valign="middle"><?= $myrow['id']; ?></td>
-		<td valign="middle"><img class="img_product img-rounded img-responsive" src="img_product/noimg.png"></td>
+		<td valign="middle"><?= $myrow['id']; ?></td><? if ($myrow['pic']!="") $img_name=$myrow['pic']; else $img_name=IMG_PRODUCT_NAME ?>
+		<td valign="middle"><img class="img_product img-rounded img-responsive" src="<?= IMG_PRODUCT_PATH.$img_name ?>"></td>
 		<td valign="middle"><? 
 		$cat_name=drop::category($myrow['cat']);
 		$subcat_name=drop::subcategory($myrow['subcat']);

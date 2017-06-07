@@ -1,5 +1,6 @@
 <?
 define('SITE_ADDR','http://drop'); // Адрес системы
+//define('SITE_ADDR','http://drop.totalh.net'); // Адрес системы
 define('ABS_PATH',$_SERVER['DOCUMENT_ROOT']); //  Абсолютный путь на сервере
 define('TIME_ZONE','Europe/Kiev'); // Временная зона, http://php.net/manual/ru/timezones.europe.php
 define('LANG','ru'); // Язык страницы
@@ -23,8 +24,12 @@ define('FAVICON','favicon.png'); // Файл PNG размером не мене�
 define('JS_PATH',SITE_ADDR.'/js'); // Абсолютный путь для JS
 define('CSS_PATH',SITE_ADDR.'/css'); // Абсолютный путь для css
 define('ACTION_PATH',SITE_ADDR.'/action'); // Абсолютный путь для action
-define('PAGE_PATH',ABS_PATH.'/pages/'); // Абсолютный путь для pages
-define('CLASS_PATH',ABS_PATH.'/class'); // Абсолютный путь для class
+define('PAGE_PATH',ABS_PATH.'/pages/'); // Серверный путь для pages
+define('CLASS_PATH',ABS_PATH.'/class'); // Серверный  путь для class
+define('IMG_NEWS_PATH',SITE_ADDR.'/img_news/'); // Абсолютный путь для новостийных картинок
+define('IMG_NEWS_NAME','noimg.jpg'); // Новостийная картинка по умолчанию
+define('IMG_PRODUCT_PATH',SITE_ADDR.'/img_product/'); // Абсолютный путь для картинок с продуктом
+define('IMG_PRODUCT_NAME','noimg.png'); // Картинка продукта по умолчанию
 
 define('SKYPE','Skype'); // Skype техподдержки
 define('PHONE','+38(000) 000-00-00'); // Телефон техподдержки
@@ -66,15 +71,16 @@ define('UTM_MEDIUM','');
 define('UTM_TERM','');
 define('UTM_CONTENT','');
 define('UTM_CAMPAIGN','');
-
+?>
+<?
 define('DB_HOST', 'localhost'); 	// Адрес базы данных, может называться localhost
 define('DB_NAME', 'drop'); 	// Название базы данных
 define('DB_LOGIN', 'drop'); 	// Логин базы данных
 define('DB_PASS', 'drop'); 	// Пароль базы данных
 ?>
 <?
-//define('DB_HOST', 'sql303.0fees.us'); 	// Адрес базы данных, может называться localhost
-//define('DB_NAME', '0fe_17966322_drop'); 	// Название базы данных
-//define('DB_LOGIN', '0fe_17966322'); 	// Логин базы данных
-//define('DB_PASS', 'coffecoffe'); 	// Пароль базы данных
+/* define('DB_HOST', 'sql303.0fees.us'); 	// Адрес базы данных, может называться localhost
+define('DB_NAME', '0fe_17966322_drop'); 	// Название базы данных
+define('DB_LOGIN', '0fe_17966322'); 	// Логин базы данных
+define('DB_PASS', 'coffecoffe'); 	// Пароль базы данных */
 ?>

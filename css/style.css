@@ -16,6 +16,10 @@
 .drop_color{
 	color: #5b6064;
 }
+.drop_color ul li{
+	color: #5b6064 !important;
+}
+
 .help{
 	color: red;
 }
