@@ -9,7 +9,8 @@ $search=drop::search($product);
 $myrow = mysql_fetch_array($search);
 do
 {
- echo ("\n<li>".$myrow['name']."</li>");
+ //echo ("\n<li>".$myrow['name']."</li>");
+ echo('<option value = "'.$myrow['name'].'">');
 }
 while ($myrow = mysql_fetch_array($search));
 

@@ -3,6 +3,7 @@ if (($_SESSION['users_group']>0) AND ($_SESSION['users_group']<5)) {
  require_once (CLASS_PATH.'/pagination.class.php');
  if ($_GET['cat']!="") $where="cat={$_GET['cat']}";
  if ($_GET['subcat']!="") $where="subcat={$_GET['subcat']}";
+ if ($_GET['product']!="") $where="name LIKE '%{$_GET['product']}%'";
 $count_products=db::cound_bd('products', $where);
 if ($where!='') $where="WHERE ".$where;
 ?>
@@ -67,6 +68,7 @@ function product_form(id) {
 	<? 
 	if ($_GET['order']!="") $order_by="ORDER BY {$_GET['order']}";
 	if ($_GET['desc']!="") $order_by.=" DESC";
+	
 	
 	$db="SELECT * FROM products {$where} {$order_by} LIMIT {$limit['begin']}, {$limit['count']}";
 	//echo $db;

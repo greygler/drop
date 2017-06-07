@@ -158,13 +158,16 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 
 public function side_menu()
 {
-?>
+?><datalist id = "search_result"></datalist>
 
 	<div id="sideNav">
 		<ul>
-			<li class="searchForm"><form><a href="#" class="icon icon-search"><span>
-			<input type="text" placeholder="Поиск товара" name="product" class="search" autocomplete="off" /></span></a></form></li> 
-			<ul class="search_result drop_color"></ul>
+			<li class="searchForm"><form action="/" ><input type="hidden" name="type" value="products">
+			<a href="#" class="icon icon-search"><span>
+			
+			<input type="text"  list="search_result" placeholder="Поиск товара" name="product" class="search" /></span></a>
+			 </form></li> 
+			<!-- <ul class="search_result drop_color"></ul> -->
 			<li><a title="Главная страница системы &#171;<?= TITLE ?>&#187;" href="/" class="icon icon-home"><span>Главная</span></a></li>
 			<li><a title="Каталог всех товаров, всех категорий, представленных в системе &#171;<?= TITLE ?>&#187; для продаж.<?= "\n" ?>Актуальность &#9200; <?= date("d.m.Y H:i:s", LAST_TIME_PRODUCT) ?>" href="?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
 				<ul>
@@ -399,39 +402,12 @@ public function footer($geobase="")
 <script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
 <script src="<?= JS_PATH ?>/control-modal.js"></script>
 <script src="<?= JS_PATH ?>/gnmenu.php"></script>
+<script src="<?= JS_PATH ?>/search.php"></script>
 <script src="<?= JS_PATH ?>/jquery.fancybox.min.js"></script>
 <script src="<?= JS_PATH ?>/bootstrap-switch.min.js"></script>
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
-<script>
-$(function(){
-    
+<script src="<?= JS_PATH ?>/search.php"></script>
 
-$('.search').bind("change keyup input click", function() {
-    if(this.value.length >= 2){
-        $.ajax({
-            type: 'post',
-            url: "action/search.php", 
-            data: {'product':this.value},
-            response: 'text',
-            success: function(data){
-                $(".search_result").html(data).fadeIn(); //Выводим полученые данные в списке
-           }
-       })
-    }
-})
-    
-//$(".search_result").hover(function(){ $(".search").blur(); }) //Убираем фокус с input
-    
-//При выборе результата поиска, прячем список и заносим выбранный результат в input
-$(".search_result").on("click", "li", function(){
-    s_user = $(this).text();
-    //$(".search").val(s_user).attr('disabled', 'disabled'); //деактивируем input, если нужно
-    $(".search_result").fadeOut();
-})
-
-})
-</script>	
-		
 <? 
 $filling_profile=autoring::filling_profile();
 $is_verify_profile=autoring::is_verify_profile();
