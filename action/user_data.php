@@ -1,15 +1,18 @@
 <? session_start();
 require_once ('../config.php');
+if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
 require_once ("../class/db.class.php"); 
+$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+require_once (CLASS_PATH.'/favicon.class.php');
 require_once ("../class/autoring.class.php"); 
 
 if (!autoring::is_autoring()) header("Location: ../login/");
-
-require_once ('../head.php');
+require_once (CLASS_PATH.'/systems.class.php');
 $groups=autoring::groups();
 $user=autoring::get_user($_GET['id']);
 //print_r($user);
 ?>
+<?= systems::head(); ?>
 <div class="container container_user_data">
 <div class="page-header">
 		<h1 style="margin: 0px 0 10px 0;"><small>Пользователь: </small><strong><?= $user['name']?></strong><small>, id: <?= $_GET['id'] ?></small></h1>
@@ -52,8 +55,9 @@ $user=autoring::get_user($_GET['id']);
 
 
 <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-    <script src="/js/gnmenu.js"></script>
-	<script src="/js/jquery.fancybox.min.js"></script>
+	<script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
+    <script src="<?= JS_PATH ?>/gnmenu.js"></script>
+	<script src="<?= JS_PATH ?>/jquery.fancybox.min.js"></script>
   </body>
 </html>
+<? } else echo ("Слоны идут нахер!"); ?>

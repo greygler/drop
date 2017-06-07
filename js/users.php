@@ -8,7 +8,7 @@ function save_group(id) {
 	 
   $.ajax({
         type: "POST",
-        url: "../action/save_group.php",
+        url: '<?= ACTION_PATH ?>/save_group.php',
         data: {
                 'id': id, 
                 'group_user':group_user

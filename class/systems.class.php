@@ -17,25 +17,25 @@ public function head($login="", $registration="")
     <meta name="keywords" content="<?= KEYWORDS ?>">
     <meta name="description" content="<?= DESCRIPTION ?>">
 	<meta name="robots" content="<?= ROBOTS ?>"> 
-	<? if ($no_favicon) echo favicon::favicons(FAVICON_PATH, FAVICON); // Favicon ?>
+	<?= favicon::favicons(FAVICON_PATH, FAVICON_G_PATH, FAVICON); // Favicon ?>
 	<link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="/css/normalize.css" />
-	<link rel="stylesheet" href="/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/css/flags.css">
-	<? if (($login=="yes") OR  ($registration=='yes')) {?><link href="/css/login.css" rel="stylesheet"><?} ?>
-	<link href="/css/bootstrap-switch.min.css" rel="stylesheet">
-	<link href="/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?= CSS_PATH ?>/normalize.css" />
+	<link rel="stylesheet" href="<?= CSS_PATH ?>/main.css" />
+	<link rel="stylesheet" type="text/css" href="<?= CSS_PATH ?>/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="<?= CSS_PATH ?>/font-awesome.min.css">
+	<link rel="stylesheet" href="<?= CSS_PATH ?>/flags.css">
+	<? if (($login=="yes") OR  ($registration=='yes')) {?><link href="<?= CSS_PATH ?>/login.css" rel="stylesheet"><?} ?>
+	<link href="<?= CSS_PATH ?>/bootstrap-switch.min.css" rel="stylesheet">
+	<link href="<?= CSS_PATH ?>/bootstrap.min.css" rel="stylesheet">
+	<link href="<?= CSS_PATH ?>/style.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<? if ($login=="yes") {?><script src="/js/login.php"></script><?} ?>
-	<? if ($registration=='yes') {?><script src="/js/registration.php"></script><?} ?>
+	<? if ($login=="yes") {?><script src="<?= JS_PATH ?>/login.php"></script><?} ?>
+	<? if ($registration=='yes') {?><script src="<?= JS_PATH ?>/registration.php"></script><?} ?>
   </head>
   <body>
 <?
@@ -387,14 +387,14 @@ public function footer($geobase="")
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
  
-<script src="/js/jquery.maskedinput.js"></script>
+<script src="<?= JS_PATH ?>/jquery.maskedinput.js"></script>
 <script type="text/javascript"> jQuery(function($){$(".phone").mask("<?= MASK_PHONE ?>");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".sms").mask("\999-99-999");}); </script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/control-modal.js"></script>
-<script src="/js/gnmenu.php"></script>
-<script src="/js/jquery.fancybox.min.js"></script>
-<script src="/js/bootstrap-switch.min.js"></script>
+<script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
+<script src="<?= JS_PATH ?>/control-modal.js"></script>
+<script src="<?= JS_PATH ?>/gnmenu.php"></script>
+<script src="<?= JS_PATH ?>/jquery.fancybox.min.js"></script>
+<script src="<?= JS_PATH ?>/bootstrap-switch.min.js"></script>
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
 	
 		
@@ -406,7 +406,7 @@ if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='
 ?>
 
 <? if (($_SESSION['balance']<0) AND ($_SESSION['info_balance']!="1")) echo systems::info_balance(); ?>
-<? 	if ($geobase=='yes') { ?><script>var ip='<?= func::GetRealIp() ?>'</script><script src="/js/geobase.php"></script><? } ?>
+<? 	if ($geobase=='yes') { ?><script>var ip='<?= func::GetRealIp() ?>'</script><script src="<?= JS_PATH ?>/geobase.php"></script><? } ?>
   </body>
 </html>
 <?

@@ -1,6 +1,6 @@
 <?
 session_start();
-require_once ('../config.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 
  
@@ -99,7 +99,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
           url: '/verify/phone/sms_ok.php',
           data: msg,
           success: function(data) {
-			// alert(data);
+			 alert(data);
 		  if (data=='ok') {$('.verify_help').html('Телефон успешно верифицирован!');
 		   $('#verify_fg').addClass('has-success');
 		   $('#verify_fg').addClass('has-feedback');

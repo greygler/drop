@@ -1,5 +1,6 @@
 <?
 define('SITE_ADDR','http://drop'); // Адрес системы
+define('ABS_PATH',$_SERVER['DOCUMENT_ROOT']); //  Абсолютный путь на сервере
 define('TIME_ZONE','Europe/Kiev'); // Временная зона, http://php.net/manual/ru/timezones.europe.php
 define('LANG','ru'); // Язык страницы
 define('TITLE','Дропшипинг'); // Метатег title
@@ -16,8 +17,14 @@ define('ROBOTS','none'); // Метатег robots
     all = "index, follow"
     none = "noindex, nofollow" */
 
-define('FAVICON_PATH','favicon'); // Путь для favicon
+define('FAVICON_PATH',ABS_PATH.'/favicon'); // Путь для favicon на сервере
+define('FAVICON_G_PATH',SITE_ADDR.'/favicon'); // Абсолютный путь для favicon
 define('FAVICON','favicon.png'); // Файл PNG размером не менее 152x152 для создания favicon. 
+define('JS_PATH',SITE_ADDR.'/js'); // Абсолютный путь для JS
+define('CSS_PATH',SITE_ADDR.'/css'); // Абсолютный путь для css
+define('ACTION_PATH',SITE_ADDR.'/action'); // Абсолютный путь для action
+define('PAGE_PATH',ABS_PATH.'/pages/'); // Абсолютный путь для pages
+define('CLASS_PATH',ABS_PATH.'/class'); // Абсолютный путь для class
 
 define('SKYPE','Skype'); // Skype техподдержки
 define('PHONE','+38(000) 000-00-00'); // Телефон техподдержки
@@ -37,7 +44,7 @@ define('ACTIVE_PRODUCT','1'); // Новый продукт изначально 
 
 define('MASK_PHONE_UA','\+38(0*9) 999-99-99'); // Маска номера телефона Украина
 define('MASK_PHONE_RU','\+7(*99) 999-99-99'); // Маска номера телефона Россия
-define('MASK_PHONE_RU8','\ 8 (999) 999-99-99'); // Маска номера телефона Россия с 8
+define('MASK_PHONE_RU8','\8(999) 999-99-99'); // Маска номера телефона Россия с 8
 define('MASK_PHONE_BY','\+37(599) 999-99-99'); // Маска номера телефона РБ
 
 define('MASK_PHONE', MASK_PHONE_UA); // Активная маска номера телефона

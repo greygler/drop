@@ -1,9 +1,9 @@
 <?
 if (!empty($_POST)) {
 	require ($_SERVER['DOCUMENT_ROOT'].'/config.php');
-	require ($_SERVER['DOCUMENT_ROOT'].'/class/db.class.php');
-	require ($_SERVER['DOCUMENT_ROOT'].'/class/lpcrm.class.php'); 
-	require ($_SERVER['DOCUMENT_ROOT'].'/class/drop.class.php'); 
+	require (CLASS_PATH.'/db.class.php');
+	require (CLASS_PATH.'/lpcrm.class.php'); 
+	require (CLASS_PATH.'/drop.class.php'); 
 	$user_id=drop::get_id($_POST['key']);
 	$result=drop::new_order($user_id, $_POST,'3');
 

@@ -1,7 +1,7 @@
 <?
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/autoring.class.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/db.class.php'); 
+require_once (CLASS_PATH.'/autoring.class.php');
+require_once (CLASS_PATH.'/db.class.php'); 
 define('DB_HOST_TURBOSMS',"94.249.146.189");
 define('DB_NAME_TURBOSMS',"users");
 

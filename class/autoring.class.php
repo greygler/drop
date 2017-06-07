@@ -39,7 +39,7 @@ class Autoring {
 	public function user_group($group_id) // Узнаем текущий ID группы пользователя
 		{
 			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-			$result = mysql_query("SELECT * FROM users_group WHERE id_group={$group_id}");
+			$result = mysql_query("SELECT * FROM users_group WHERE id_group='{$group_id}'");
 			$myrow = mysql_fetch_array($result);
 			
 			return $myrow;
@@ -47,8 +47,8 @@ class Autoring {
 		
 	public function save_group($id, $group_id) // Изменяем номер группы пользователя
 		{
-			$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-			$result = mysql_query("UPDATE users SET users_group={$group_id}  WHERE id={$id}" );
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			$result = mysql_query("UPDATE users SET users_group='{$group_id}'  WHERE id='{$id}'" );
 						
 			//return $myrow;
 		}
@@ -76,6 +76,14 @@ class Autoring {
 			return md5(time());
 		}
 		
+	public function update_key($id) // Создаем новый ключ и записываем его в базу
+		{
+			$drop_key=autoring::create_key();
+			$result = mysql_query("UPDATE users SET drop_key='{$drop_key}'  WHERE id='{$id}'");
+			//return "UPDATE users SET drop_key='{$drop_key}' WHERE id='{$id}'";
+			if ($result) return $drop_key; else return "Error!";
+			//return $drop_key; 
+		}
 		
 	public function set_base($email, $password, $name) // Добавляем в базу
 		{
@@ -170,14 +178,18 @@ class Autoring {
 	public function del_sms_code($id)
 		{
 			$result = mysql_query("UPDATE users SET sms=''  WHERE id='{$id}'");
+			//$result = mysql_query("UPDATE users SET v_phone='' WHERE id='{$id}'");
+			//$_SESSION['v_phone']='';
 			$_SESSION['sms']='';
 		}
 		
 	public function verify_sms($id, $v_phone)
 		{
-			$result = mysql_query("UPDATE users SET v_phone='{$v_phone}' WHERE id='{$id}'");
+			$bd="UPDATE users SET v_phone='{$v_phone}' WHERE id='{$id}'";
+			$result = mysql_query($bd);
+			//if ($result) echo("Save! UPDATE users SET v_phone='{$v_phone}' WHERE id='{$id}'");
 			$_SESSION['v_phone']=$v_phone;
-			
+			return $result;
 		}
 	
 	public function filling_profile() // Заполнен ли профиль

@@ -1,6 +1,6 @@
 <?
 if (($_SESSION['users_group']>0) AND ($_SESSION['users_group']<5)) {
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/pagination.class.php');
+require_once (CLASS_PATH.'/pagination.class.php');
 $groups=autoring::groups();
 $count_users=db::cound_bd('users');
 ?>
@@ -15,7 +15,7 @@ $count_users=db::cound_bd('users');
 <? $limit=pagination::pagin($_GET,$count_users, $view_pages); 	?>
 
 	
- <script src="/js/users.php"></script>	
+ <script src="<?= JS_PATH ?>/users.php"></script>	
 <form>
 <table class="table table-striped" >
 <thead>

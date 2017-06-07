@@ -35,17 +35,14 @@ function active_drop(id) {
 		 	
  	    $.ajax({
           type: 'POST',
-          url: '/action/active_drop.php',
+          url: '<?= ACTION_PATH ?>/active_drop.php',
           data: {
 			  drop_active: active,
 			  id : id
 		  },
-          success: function(data) {
-			//alert (data);
-		  $('.active_drop').html(data);
-									
-								
-          },
+        success: function(data) {
+			$('.active_drop').html(data);
+		},
           error:  function(xhr, str){
 	    alert('Возникла ошибка: ' + xhr.responseCode);
           }
@@ -54,27 +51,21 @@ function active_drop(id) {
 	
 function new_code(id)
 {
-	//alert (id);
-	//$("#drop_key").val('345345345345');
+	$('#refresh_code').addClass('fa-spin');
 	$.ajax({
           type: 'POST',
-          url: '/action/new_key.php',
-          data: {
-			   id: id
-		  },
-          success: function(data) {
-			
-			$("#drop_key").val(data);
-		 					
-          },
+          url: '<?= ACTION_PATH ?>/new_key.php',
+          data: {id: id},
+          success: function(data) { $("#drop_key").val(data); $('#refresh_code').removeClass('fa-spin');},
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+			alert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
+		
 }
 </script>
 
-<h3 class="text-center"><span class="fa fa-calculator fa-lg"></span><strong>Статистика </strong></h3><br>
+<h3 class="text-center"><span class="fa fa-cogs fa-lg"></span> <strong>Настройки</strong></h3><br>
 <form action="javascript:void(null);" onsubmit="new_code(<?= $_SESSION['id'] ?>)" >
 <dl class="dl-horizontal">
   <dt>Автоматическая<br>передача заказа:</dt>
@@ -87,9 +78,11 @@ function new_code(id)
    <div class="input-group">
   <input id="drop_key" style="cursor: text;" type="text" class="form-control" value="<?= $_SESSION['drop_key'] ?>"  readonly>
   <span class="input-group-btn">
-        <button id="new_drop_code"  title="Пересоздать токен" class="btn btn-default" type="submit"><i class="fa fa-refresh fa-spin fa-lg fa-fw"></i></button>
+        <button id="new_drop_code"  title="Пересоздать токен" class="btn btn-default" type="submit"><i id="refresh_code" class="fa fa-refresh fa-lg fa-fw"></i></button>
       </span>
+	 
   </div>
+   <span class="help-block">Внимание! После изменения токена могут не приниматься заказы, в которых указан старый токен!</span>
   </dd>
  
   </dl>

@@ -2,16 +2,16 @@
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 date_default_timezone_set(TIME_ZONE);
 require_once ($_SERVER['DOCUMENT_ROOT'].'/'.LAST_TIME_FILE);
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/db.class.php'); 
+require_once (CLASS_PATH.'/db.class.php'); 
 $db_result=db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/autoring.class.php'); 
+require_once (CLASS_PATH.'/autoring.class.php'); 
 if (!autoring::is_autoring()) header("Location: login/");
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/systems.class.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/favicon.class.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/functions.class.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/lpcrm.class.php'); 
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/drop.class.php');
-require_once ($_SERVER['DOCUMENT_ROOT'].'/class/users.class.php');
+require_once (CLASS_PATH.'/systems.class.php');
+require_once (CLASS_PATH.'/favicon.class.php');
+require_once (CLASS_PATH.'/functions.class.php');
+require_once (CLASS_PATH.'/lpcrm.class.php'); 
+require_once (CLASS_PATH.'/drop.class.php');
+require_once (CLASS_PATH.'/users.class.php');
 drop::update_data();	
 					
 
@@ -25,7 +25,7 @@ $no_favicon=true;
 <?= systems::top_menu(); ?>
 <?= systems::side_menu(); ?>
 	<div class="container">
-	<? require_once ($_SERVER['DOCUMENT_ROOT'].'/pages/'.$type); ?>
+	<? require_once (PAGE_PATH.$type); ?>
 	</div>
 <?= systems::exit_modal(); ?>
 <? if ($_SESSION['users_group']>=5) echo systems::support_modal(); ?>

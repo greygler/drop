@@ -1,5 +1,6 @@
 <?
- require_once ($_SERVER['DOCUMENT_ROOT'].'/class/pagination.class.php');
+if (($_SESSION['users_group']>0) AND ($_SESSION['users_group']<5)) {
+ require_once (CLASS_PATH.'/pagination.class.php');
  if ($_GET['cat']!="") $where="cat={$_GET['cat']}";
  if ($_GET['subcat']!="") $where="subcat={$_GET['subcat']}";
 $count_products=db::cound_bd('products', $where);
@@ -13,7 +14,7 @@ function product_form(id) {
  	 
         $.ajax({
           type: 'POST',
-          url: '/action/update_active.php',
+          url: '<?= ACTION_PATH ?>/update_active.php',
           data:
 		  {
 			  id : id,
@@ -109,4 +110,4 @@ while ($myrow = mysql_fetch_array($result));
 	
 </table>
 </form>
-<? $limit=pagination::pagin($_GET,$count_products, $view_pages); 	?>
+<? $limit=pagination::pagin($_GET,$count_products, $view_pages); 	}?>
