@@ -29,6 +29,7 @@ define('CLASS_PATH',ABS_PATH.'/class'); // Серверный  путь для c
 define('IMG_NEWS_PATH',SITE_ADDR.'/img_news/'); // Абсолютный путь для новостийных картинок
 define('IMG_NEWS_NAME','noimg.jpg'); // Новостийная картинка по умолчанию
 define('IMG_PRODUCT_PATH',SITE_ADDR.'/img_product/'); // Абсолютный путь для картинок с продуктом
+define('IMG_PROD_PATH',ABS_PATH.'/img_product/'); // Серверный путь для картинок с продуктом
 define('IMG_PRODUCT_NAME','noimg.png'); // Картинка продукта по умолчанию
 
 define('SKYPE','Skype'); // Skype техподдержки

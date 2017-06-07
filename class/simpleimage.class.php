@@ -94,5 +94,21 @@ require ('class/SimleImage.class.php');
       imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
       $this->image = $new_image;
    }
+   
+   public function img_ext($file_type)
+	{
+	switch ($file_type) {
+    case "image/jpeg":
+        return "jpg";
+        break;
+    case "image/png":
+        return "png";
+        break;
+     case "image/gif":
+        return "gif";
+        break;
+	}
+
+	}
 }
 ?>

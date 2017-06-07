@@ -95,6 +95,12 @@ class drop{
 			$result = mysql_query ("UPDATE products SET active='{$active}' WHERE id='{$id}'");
 			if ($result == 'true') return 'ok'; else return 'error';
 		}
+		
+		public function new_image($id, $image) // Обновление картинки товара
+		{
+			$result = mysql_query ("UPDATE products SET pic='{$image}' WHERE id='{$id}'");
+			if ($result == 'true') return 'ok'; else return 'error';
+		}
 	
 	public function products($id, $name, $model, $description, $price, $spec_price, $cat, $subcat) // Обновление базы товаров. Если нет - добавляем
 	{

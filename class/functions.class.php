@@ -233,6 +233,8 @@ public function Last_enter($last_enter, $device, $ip, $city, $region, $country, 
 	return $block;
 	
 }
+
+
  
 }
 ?>
