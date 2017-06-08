@@ -46,15 +46,18 @@ if ($_SESSION['user_group']<5) echo('<script src="'.JS_PATH.'/product.php"></scr
 		<form id="product_form_<?= $myrow['id'] ?>" action="javascript:void(null);" method="post" enctype="multipart/form-data" onsubmit="new_image(<?= $myrow['id'] ?>)">
 		<tr >
 		<td valign="middle"><?= $myrow['id']; ?></td><? if ($myrow['pic']!="") $img_name=$myrow['pic']; else $img_name=IMG_PRODUCT_NAME ?>
-		<td valign="middle"><img id="img_<?= $myrow['id']; ?>" class="img_product img-rounded img-responsive" src="<?= IMG_PRODUCT_PATH.$img_name ?>">
+		<td valign="middle"><img id="img_<?= $myrow['id']; ?>" class="img_product img-rounded img-responsive fleft" src="<?= IMG_PRODUCT_PATH.$img_name ?>">
 		<? if ($_SESSION['user_group']<5) { ?> 
-		 <div class="input-group">
+		 <div id="new-img-form_<?= $myrow['id']; ?>" class="input-group hide">
  		<input required id="new-img_<?= $myrow['id'] ?>" class="form-control" type="file" accept="image/*">
 		<span class="input-group-btn">
-        <button id="ref-button_<?= $myrow['id'] ?>" class="btn btn-default" type="submit"><i id="refresh_code_<?= $myrow['id']; ?>" class="fa fa-refresh fa-lg fa-fw"></i></button>
+        <button title="Обновить картинку товара" id="ref-button_<?= $myrow['id'] ?>" class="btn btn-default" type="submit"><i id="refresh_code_<?= $myrow['id']; ?>" class="fa fa-refresh fa-lg fa-fw"></i></button>
 		</span>
 		</div>
-		<? } ?>
+		<a title="Поменять картинку" id="new_img_but_<?= $myrow['id'] ?>" onclick="hide_form(<?= $myrow['id'] ?>)" class="btn btn-default fleft"><i id="hide-ref-code_<?= $myrow['id']; ?>" class="fa fa-refresh fa-lg fa-fw"></i></a>
+		<? if (IMG_PRODUCT_PATH.$img_name!=IMG_PRODUCT_PATH.IMG_PRODUCT_NAME) { ?>
+		<br><a title="Удалить картинку" id="del_img_but_<?= $myrow['id'] ?>" onclick="del_img(<?= $myrow['id'] ?>)" class="btn btn-default"><i id="hide-ref-code_<?= $myrow['id']; ?>" class="fa fa-cut fa-lg fa-fw"></i></a>
+		<? } } ?>
 		</td>
 		<td valign="middle"><? 
 		$cat_name=drop::category($myrow['cat']);

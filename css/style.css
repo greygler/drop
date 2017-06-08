@@ -173,3 +173,6 @@ thead .badge{
 	transition: 1s ease;	
 	color:yellow !important;
 }
+.fleft{
+	float: left;
+}

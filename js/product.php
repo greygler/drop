@@ -68,4 +68,34 @@ function product_form(id) {
 		
 }
 
+	function hide_form(id)
+	{
+		$('#new_img_but_'+id).addClass('hide');
+		$('#del_img_but_'+id).addClass('hide');
+		$('#img_'+id).removeClass('fleft');
+		$('#new-img-form_'+id).removeClass('hide');
+	}
+	
+	function del_img(id)
+	{
+		 $.ajax({
+          type: 'POST',
+          url: '<?= ACTION_PATH ?>/del_image.php',
+          data:
+		  {
+			  id : id,
+			  pic_name : $("#img_"+id).attr("src"),
+			  
+		  },
+          success: function(data) { 
+		 // alert(data);
+		 $('#del_img_but_'+id).addClass('hide');
+		  $("#img_"+id).attr("src",data);
+		    },
+          error:  function(xhr, str){
+			alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+
 <? } else echo ("Слоны идут нахер!"); ?>
