@@ -16,19 +16,79 @@ public function stata()
   <dt>Всего продаж:</dt>
   <dd><button type="button" class="btn btn-default btn-block"><?= $_SESSION['total_sale'] ?></button></dd>
   <dt>Из них успешных:</dt>
-  <dd><button type="button" class="btn  <? if ($_SESSION['sale_ok']<0) echo('btn-danger text_white'); else if ($_SESSION['sale_ok']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>  btn-block"><? if ($_SESSION['sale_ok']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['sale_ok']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['sale_ok'] ?></button></dd>
-  <dt></dt><dd><button type="button"  <? if ($_SESSION['balance']<MIN_PAY) echo('disabled="disabled"'); ?> class="btn <? if ($_SESSION['balance']>0) echo('btn-primary'); else echo('btn-danger') ?> btn-block user-buttom" ><? if (($_SESSION['balance']<MIN_PAY) AND ($_SESSION['balance']>0)) echo('Выплата не доступна!'); else if ($_SESSION['balance']>0) echo('Заказать выплату'); else echo('Отрицательный баланс!') ?></button><? if ($_SESSION['balance']>0) echo('<span class="help-block">Минимальная сумма выплат - '.MIN_PAY.' '.CURRENCY.'</span>'); else echo('<span class="help-block">Дальнейшая работа только по предоплате<br>или после погашения задолженности!</span>'); ?><a data-toggle="modal" data-target="#rules_modal" href="#">Правила работы с системой <?= TITLE ?></a>
+  <dd><button  type="button" class="btn  <? if ($_SESSION['sale_ok']<0) echo('btn-danger text_white'); else if ($_SESSION['sale_ok']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>  btn-block"><? if ($_SESSION['sale_ok']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['sale_ok']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['sale_ok'] ?></button></dd>
+  <dt></dt><dd><button data-toggle="modal" data-target="#order-pay_modal" type="button"  <? 
+  if (($_SESSION['balance']<MIN_PAY) OR ($_SESSION['order_pay']>=MIN_PAY))  echo('disabled="disabled"'); ?> class="btn <? if ($_SESSION['balance']>0) echo('btn-primary'); else echo('btn-danger') ?> btn-block user-buttom" ><? if (($_SESSION['balance']<MIN_PAY) AND ($_SESSION['balance']>0)) echo('Выплата не доступна!'); else if (($_SESSION['balance']>0) AND ($_SESSION['order_pay']<1)) echo('Заказать выплату'); else 
+  if ($_SESSION['order_pay']>1) echo ('Заказана выплата '.$_SESSION['order_pay'].'&#160;'.CURRENCY); else if ($_SESSION['balance']<0)
+  echo('Отрицательный баланс!') ?></button><? if ($_SESSION['balance']>0) echo('<span class="help-block">Минимальная сумма выплат - '.MIN_PAY.' '.CURRENCY.'</span>'); else echo('<span class="help-block">Дальнейшая работа только по предоплате<br>или после погашения задолженности!</span>'); ?><a data-toggle="modal" data-target="#rules_modal" href="#">Правила работы с системой <?= TITLE ?></a>
    </dd>
   </dl>
+	<?
+}
+
+public function order_pay()
+{
+	?>
+	<script>
+function order_pay(id){	
+	   $.ajax({
+          type: 'POST',
+          url: '<?= ACTION_PATH ?>/update_profile.php',
+          data: msg,
+          success: function(data) {
+			
+		  if (data=='ok') {
+			  var user_name = $('#user_name_input').val()
+			  $('.user_name').html(user_name);
+			  
+			  $('#form_ok').modal('show');
+
+		  } else $('.results_form').html(data);
+									
+								
+          },
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+}
+	</script>
+
+<div class="modal fade" id="order-pay_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+	 <form id="data_form" class="form-signin" action="javascript:void(null);" onsubmit="order_pay(<?= $_SESSION['id']; ?>)">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Заказ выплаты, <?= CURRENCY ?></h4>
+      </div>
+	  <div class="modal-body">
+      
+	   <input type="hidden" name='id' value="<?= $_SESSION['id'] ?>">
+	   <div class="input-group">
+  <span class="input-group-addon"><?= CURRENCY ?></span>
+ 	   <input type="number" class="form-control text-right" name="order_pay" value="<?= (int)$_SESSION['balance'] ?>">
+	   <span class="input-group-addon">.00</span>
+</div>
+	  
+      </div>
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <button type="submit" class="btn btn-primary">Заказать</button>
+      </div>
+	   </form>
+    </div>
+  </div>
+</div>
 	<?
 }
 
 public function profile()
 {
 	?>
-	<script src="/js/user.php"></script>
-<script src="/js/user_email.php"></script>
- <script src="/js/user_phone.php"></script>
+	<script src="<?= JS_PATH ?>/user.php"></script>
+<script src="<?= JS_PATH ?>/user_email.php"></script>
+ <script src="<?= JS_PATH ?>/user_phone.php"></script>
 	<h3 class="text-center"><span class="fa fa-address-card-o fa-lg"></span> Профиль:</h3>
 <form id="data_form" class="form-signin" action="javascript:void(null);" onsubmit="data_form()">
 <dl class="dl-horizontal">

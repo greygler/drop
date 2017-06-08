@@ -21,7 +21,9 @@ $count_users=db::cound_bd('users');
 <thead>
 	<tr valign="middle">
 		<th><a title="Сортировка по ID" href="<?= Pagination::pagelink_desc($_GET, 'order', 'id') ?>"><strong>ID</strong> 
-<span class="badge pull-left"><?= Pagination::sort_symbol($_GET,'order','id', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>
+<span class="badge"><?= Pagination::sort_symbol($_GET,'order','id', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>&#160;&#160;|&#160;&#160; 
+<a title="Сортировка по заказам выплат" href="<?= Pagination::pagelink_desc($_GET, 'order', 'order_pay','1') ?>"><strong>Pay</strong> 
+<span class="badge"><?= Pagination::sort_symbol($_GET,'order','order_pay', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>
 		
 </th>
 		<th><a title="Сортировка по имени" href="<?= Pagination::pagelink_desc($_GET, 'order', 'name') ?>"><strong>Имя</strong> 
@@ -47,11 +49,14 @@ $myrow = mysql_fetch_array($result);
 do
 { ?>
 	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
-		<td valign="middle"><?= $myrow['id'] ?></td>
+		<td valign="middle"><?= $myrow['id'] ?>
+		<? if ($myrow['order_pay']>0) echo('&#160;<span class="badge"><a title="Пользователь '.$myrow['name'].' заказал выплату '.$myrow['order_pay'].'&#160;'.CURRENCY.'" data-fancybox data-src="'.ACTION_PATH.'/user_data.php?id='.$myrow['id'].'>" href="javascript:;"><i class="fa fa-money" aria-hidden="true"></i>
+'.$myrow['order_pay'].'&#160;'.CURRENCY.'</a></span>'); ?>
+		</td>
 		<td class="users_href" valign="middle">
 		
 		<a id="btn_user-<?= $myrow['id']?>" type="button" class="btn btn-block <? if ($myrow['users_group']==0) echo('btn-danger text_white'); else 
-		if ($myrow['balance']<0) echo ('btn-warning'); else	echo ('btn-default') ?>" title="Подробнее о пользователе <?= $myrow['name'] ?>" data-fancybox data-src="action/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><div id="fa-user-<?= $myrow['id'] ?>" class="text-left <? if ($myrow['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['name'] ?></div></a>
+		if ($myrow['balance']<0) echo ('btn-warning'); else	echo ('btn-default') ?>" title="Подробнее о пользователе <?= $myrow['name'] ?>" data-fancybox data-src="<?= ACTION_PATH ?>/user_data.php?id=<?= $myrow['id']?>" href="javascript:;"><div id="fa-user-<?= $myrow['id'] ?>" class="text-left <? if ($myrow['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$myrow['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['name'] ?></div></a>
 		
 		</td>
 		<td valign="middle"> 

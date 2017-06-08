@@ -7,16 +7,18 @@ public function  pagelink($params) // Формируем Get-строку для
  return $link; 
 }
 
-public function pagelink_desc($params, $param, $element)
+public function pagelink_desc($params, $param, $element, $desc="")
  // Формируем GET-строку  для ссылки из массива $params, добавляя елемент $params['param']=$element
  // При повторном вызове устанавливаем или убираем параметр DESC
  
 {
+	
 if ($params[$param]==$element){
 		if ($params['desc']!='') $params['desc']=''; else $params['desc']='1';
 	}
 	
 $params[$param]=$element;
+if ($desc!="") $params['desc']=1;
 	return Pagination::pagelink($params);
 }
 

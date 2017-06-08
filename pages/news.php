@@ -31,7 +31,7 @@
 <div class="col-sm-6 col-md-6 col-lg-6 panel panel-default">
 
 <?= users::stata(); ?>
-
+<? if ($_SESSION['balance']>MIN_PAY) echo users::order_pay(); ?>
 </div>
 </div>
 		
