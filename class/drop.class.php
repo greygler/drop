@@ -96,6 +96,12 @@ class drop{
 			if ($result == 'true') return 'ok'; else return 'error';
 		}
 		
+	public function order_pay($id, $summ, $method) // Запрос выплаты
+		{
+			$result = mysql_query ("UPDATE users SET order_pay='{$summ}', order_pay_method='{$method}' WHERE id='{$id}'");
+			if ($result == 'true') return 'ok'; else return 'error';
+		}
+		
 		public function new_image($id, $image) // Обновление картинки товара
 		{
 			$result = mysql_query ("UPDATE products SET pic='{$image}' WHERE id='{$id}'");

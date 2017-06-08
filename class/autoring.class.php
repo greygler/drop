@@ -226,6 +226,18 @@ class Autoring {
 			if ($is_verify_email AND $is_verify_phone )  return true;  else return false;
 		}
 		
+	public function pay_method($where="")
+	{
+		$result = mysql_query("SELECT * FROM pay_method {$where}");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+		$pay_method[$myrow['id']]=$myrow['name'];
+		}
+		while ($myrow = mysql_fetch_array($result));
+		return $pay_method;
+	}
+		
 	public function logout() // выход
 		{
 			$_SESSION = array();
