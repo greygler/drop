@@ -46,7 +46,9 @@ if ($_SESSION['user_group']<5) echo('<script src="'.JS_PATH.'/product.php"></scr
 		<form id="product_form_<?= $myrow['id'] ?>" action="javascript:void(null);" method="post" enctype="multipart/form-data" onsubmit="new_image(<?= $myrow['id'] ?>)">
 		<tr >
 		<td valign="middle"><?= $myrow['id']; ?></td><? if ($myrow['pic']!="") $img_name=$myrow['pic']; else $img_name=IMG_PRODUCT_NAME ?>
-		<td valign="middle"><img id="img_<?= $myrow['id']; ?>" class="img_product img-rounded img-responsive fleft" src="<?= IMG_PRODUCT_PATH.$img_name ?>">
+		<td valign="middle">
+		<a title="Кликните для увеличения картинки" href="<?= IMG_PRODUCT_PATH.$img_name ?>" data-fancybox="images" data-caption="<?= $myrow['name']; ?>">
+		<img id="img_<?= $myrow['id']; ?>" class="img_product img-rounded img-responsive fleft" src="<?= IMG_PRODUCT_PATH.$img_name ?>"></a>
 		<? if ($_SESSION['user_group']<5) { ?> 
 		 <div id="new-img-form_<?= $myrow['id']; ?>" class="input-group hide">
  		<input required id="new-img_<?= $myrow['id'] ?>" class="form-control" type="file" accept="image/*">
