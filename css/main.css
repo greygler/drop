@@ -151,7 +151,7 @@ nav {
 		#sideNav.showFullMenu {
 			left:0;
 			width: 311px;
-			z-index: 22;			
+			z-index: 122;			
 		}
 
 			#sideNav.showFullMenu ul ul li {

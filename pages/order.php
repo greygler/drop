@@ -1,16 +1,34 @@
-<div class="page-header">
-		<h1>Заказы</h1>
-		</div>
-<table border="1" class="table-responsive table-striped" id="table1">
+
+		<h1></h1>
+		<ul class="nav nav-tabs">
+		<?	
+$result = mysql_query("SELECT * FROM status");
+$myrow = mysql_fetch_array($result);
+do 
+{
+if ($myrow['style']!='') {$style=$myrow['style'];$color="white";} else $style="btn-default"
+
+?>
+
+<li><a style="color: <?= $color ?>" class="<?= $style ?>" href="#"><?= $myrow['name'] ?></a></li>
+<?
+$color="";
+}
+while ($myrow = mysql_fetch_array($result));
+?>
+  
+</ul>
+		
+		
+		
+
+<table class="table table-responsive table-striped" id="table1">
 <thead>
 	<tr>
-		<th>Order_id</th>
-		<th >Страна</th>
-		<th>Телефон</th>
-		<th>Имя</th>
+		<th>Дата, Order_id</th>
+		<th><i class="fa fa-user" aria-hidden="true"></i> Имя,<br><i class="fa fa-phone" aria-hidden="true"></i> Телефон</th>
 		<th>Коммент</th>
-		<th>Наименование</th>
-		<th>Колличество\Цена</th>
+		<th>Наименование, Колличество\Цена</th>
 		<th>Сайт</th>
 		<th>ip</th>
 		<th>Адрес</th>
@@ -29,13 +47,13 @@
 		do
 	{ ?>
 		<tr>
-		<td><?= $myrow['order_id'] ?></td>
-		<td><i class="flag-<?= $myrow['country'] ?>"></i></td>
-		<td><?= $myrow['phone'] ?></td>
-		<td><?= $myrow['name'] ?></td>
+		<td><?= date("d.m.Y H:i:s", $myrow['order_time']); ?><br>
+		<?= $myrow['order_id'] ?></td>
+		<td><i class="fa fa-phone" aria-hidden="true"></i> <i class="flag-<?= $myrow['country'] ?>"></i>  <?= $myrow['phone'] ?><br><i class="fa fa-user" aria-hidden="true"></i> <?= $myrow['bayer_name'] ?>
+		</td>
+		
 		<td><?= $myrow['comment'] ?></td>
-		<td>Наименование</td>
-		<td>Колличество\Цена</td>
+		<td>Товар: <strong><?= $myrow['product_id'] ?></strong><br><?= $myrow['count'] ?> шт. * <?= $myrow['price'] ?> <?= CURRENCY ?><br>Заказ: <strong><?= $myrow['count']*$myrow['price'] ?> <?= CURRENCY ?></strong><br>Апрув: <strong><?= $myrow['count']*$myrow['price'] ?> <?= CURRENCY ?></strong></td>
 		<td><?= $myrow['site'] ?></td>
 		<td><?= $myrow['ip'] ?></td>
 		<td>Адрес</td>

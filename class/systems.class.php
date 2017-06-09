@@ -408,6 +408,10 @@ public function footer($geobase="")
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
 <script src="<?= JS_PATH ?>/search.php"></script>
 
+
+
+
+
 <? 
 $filling_profile=autoring::filling_profile();
 $is_verify_profile=autoring::is_verify_profile();

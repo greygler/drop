@@ -8,7 +8,13 @@ $count_products=db::cound_bd('products', $where);
 if ($where!='') $where="WHERE ".$where;
 if ($_SESSION['user_group']<5) echo('<script src="'.JS_PATH.'/product.php"></script>')
 ?>
+<style>
+/* table               { border-collapse: collapse; width: 100%; margin-top: 109px; }
+td                  { border: 1px solid #ccc; padding: 10px; }
 
+thead               { width: 100%; position: fixed; height: 109px; top: 150px;
+                      } */
+</style>
 	
 
 <div class="page-header">

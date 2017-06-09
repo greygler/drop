@@ -67,7 +67,7 @@ class drop{
 		if ($count>0) return true; else return false;
 	}
 	
-	public function category($id) // Возвращяем название категории по ID
+	public function category($id) // Возвращaем название категории по ID
 	{
 		if (drop::is_categories($id)) 
 		{
@@ -134,6 +134,24 @@ class drop{
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
+	public function is_status($id) // Проверяем наличие статуса в базе
+	{
+		$count=db::cound_bd('status', "id='{$id}'");
+		if ($count>0) return true; else return false;
+		
+	}
+	
+	public function statuses_base($id, $name) // Добавляем статусы в базу
+	{
+		if (drop::is_status($id)) 
+			$result = mysql_query ("UPDATE status SET name='{$name}' WHERE id='{$id}'");
+		
+		else
+			$result = mysql_query ("INSERT INTO status (id, name) VALUES ('{$id}', '{$name}')");
+		
+		if ($result == 'true') return 'ok'; else return 'error';
+	}
+	
 	public function subcat_base($id, $name, $parent) //Обновление базы субкатегорий. Если нет - добавляем
 	{
 		if (drop::is_subcategories($id)) 
@@ -150,12 +168,21 @@ class drop{
 				if (time()-LAST_TIME_CATEGORY>UPDATE_TIME) {
 				$categories=lp_crm::getCategories(CRM,CRM_KEY);
 				$subcategories=lp_crm::subCategories($categories);
+				$status=lp_crm::getStatuses(CRM,CRM_KEY);
 				if ($categories['status']=='ok') {
 					foreach ($categories['data'] as $key => $value)
 						$cat_status[]= drop::cat_base($key, $value['name']);
 					foreach ($subcategories as $key => $value)
 						$subcat_status[]=drop::subcat_base($key, $value['name'], $value['parent']);
 					}
+				
+				if ($status['status']=='ok'){
+					foreach($status['data'] as $key => $value) drop::statuses_base($key, $value);
+				}
+				
+					
+					
+					
 				drop::last_time('c');
 			}
 			
