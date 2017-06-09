@@ -17,7 +17,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
           url: '/verify/phone/session_phone.php',
           data: msg,
           success: function(data) {
-			 alert(data);
+			// alert(data);
 			 if (data=='ok'){
 			$('#phone_group').removeClass('has-warning');
 			$('#phone_group').addClass('has-success');
@@ -86,7 +86,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 			//alert(data);
 		  if (data!='') {$('.novphone').html('SMS отправлено.');
 		   $('#phide3').removeClass('hide');
-		  phide3
+		 // phide3
 		  $('.vphonelink').html('Отправить повторно');
 		 // $('#phone_num').hide();
         $('#phone_num').attr("disabled","disabled");
@@ -114,7 +114,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
           url: '/verify/phone/sms_ok.php',
           data: msg,
           success: function(data) {
-			 alert(data);
+			// alert(data);
 		  if (data=='ok') {$('.verify_help').html('Телефон успешно верифицирован!');
 		   $('#verify_fg').addClass('has-success');
 		   $('#verify_fg').addClass('has-feedback');

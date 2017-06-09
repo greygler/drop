@@ -55,6 +55,12 @@ class drop{
 		 
 	 }
 	 
+	 public function one_product($id){ // Продукт по ID
+		 $result = mysql_query("SELECT * FROM products WHERE id='{$id}'");
+			$myrow = mysql_fetch_array($result);
+			return $myrow;
+	 }
+	 
 	public function is_categories($id) // Есть ли такая категория в базе
 	{
 		$count=db::cound_bd('categories', "id='{$id}'");

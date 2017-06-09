@@ -43,7 +43,7 @@ if ($_SESSION['user_group']<5) echo('<script src="'.JS_PATH.'/product.php"></scr
 	//echo $db;
 	$result = mysql_query($db);
 		$myrow = mysql_fetch_array($result);
-		do { ?>
+		do if (($_SESSION['users_group']<5) OR ($myrow['active']!=0)) { ?>
 		<form id="product_form_<?= $myrow['id'] ?>" action="javascript:void(null);" method="post" enctype="multipart/form-data" onsubmit="new_image(<?= $myrow['id'] ?>)">
 		<tr >
 		<td valign="middle"><?= $myrow['id']; ?></td><? if ($myrow['pic']!="") $img_name=$myrow['pic']; else $img_name=IMG_PRODUCT_NAME ?>
@@ -72,10 +72,7 @@ if ($_SESSION['user_group']<5) echo('<script src="'.JS_PATH.'/product.php"></scr
 			?>
 		
 		</td>
-		<td valign="middle"><a id="button_<?= $myrow['id']; ?>" type="button" class="btn btn-block <? if ($myrow['active']!='1') echo('btn-default'); else echo('btn-info');  ?>" href="#" title="<? if ($myrow['description']!="") echo("Краткое описание:\n");else echo("Краткое описание отсутствует"); ?><?= $myrow['description']; 
-		
-		?>">
-		<div class="text-left"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <strong><?= $myrow['name']; ?></strong> 
+		<td valign="middle"><a data-fancybox data-src="/action/one_product.php?id=<?= $myrow['id']; ?>" id="button_<?= $myrow['id']; ?>" type="button" class="btn btn-block <? if ($myrow['active']!='1') echo('btn-default'); else echo('btn-info');  ?>" href="javascript:;"title="<?= $myrow['name']; ?>"><div class="text-left"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <strong><?= $myrow['name']; ?></strong> 
 		 <small><?= $myrow['model']; ?></small></div> </a>
 		 <? if ($myrow['manufacturer']!="") echo("<i class=\"fa fa-industry\" aria-hidden=\"true\"></i> Производитель: {$myrow['manufacturer']}"); ?> </td>
 		<td valign="middle">
