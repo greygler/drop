@@ -145,7 +145,7 @@ public function profile()
    <? if (($_SESSION['phone']=="") OR (!autoring::is_verify_phone()))  $hide="hide"; ?>
   <span id="phide1" class="<?= $hide ?> help-block control-label"><small class="novphone">
   <? if ($_SESSION['sms']!="") echo "SMS отправлено."; else echo("Телефон не верифицирован!");?></small>
-  <a id="phide3" <? if ($_SESSION['sms']=="") echo ('class="hide"')?> data-toggle="modal" data-target="#sms_ok" href="#"><small><?= $_SESSION['sms'] ?>Ввести код из SMS</small></a>
+  <a id="phide3" <? if ($_SESSION['sms']=="") echo ('class="hide"')?> data-toggle="modal" data-target="#sms_ok" href="#"><small><?= $_SESSION['sms']; ?>Ввести код из SMS</small></a>
  | <a data-toggle="modal" data-target="#verify_phone" href="#"><small class="vphonelink"><? if ($_SESSION['sms']!="") echo "Отправить повторно"; else echo("Верифицировать");?></small></a></span>
   <span id="phide2" class="glyphicon <? if (autoring::is_verify_phone($_SESSION)) echo('glyphicon-warning-sign'); else echo('glyphicon-ok');?>
      form-control-feedback"></span>
@@ -161,7 +161,8 @@ public function profile()
   <dt><div class="results_form"></div></dt>
   <dd><button type="submit" class="btn btn-primary btn-block user-buttom"><span class="pull-left"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
  Сохранить</button></dd>
-</dl>
+<input type="hidden" value="<?= $_SESSION['id'] ?>" name="id">
+
 </form>
 	<?
 }
@@ -260,6 +261,7 @@ public function modal_phone()
 		<div id="verify_fg" class=" form-group "> <!-- has-success has-feedback -->
 		<input id="code_sms" type="text" class="sms form-control" required placeholder="Код из СМС" name="code_sms">
 		<input id="v_phone" type="hidden" name="v_phone" value="<?= $_SESSION['phone']?>">
+		<input type="hidden" value="<?= $_SESSION['id'] ?>" name="id">
 		<span id="fc-ok" class="glyphicon <? if ($_SESSION['sms']!="") echo ("hide") ?> glyphicon-ok form-control-feedback"></span>
 		<span id="fc-no" class="glyphicon <? if ($_SESSION['sms']!="") echo ("hide") ?> glyphicon-remove form-control-feedback"></span>
 		<span class="verify_help help-block"></span>

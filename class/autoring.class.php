@@ -126,12 +126,21 @@ class Autoring {
 			
 		}
 		
-	public function update_phone($id, $phone) // Замена пароля
+	public function del_sms_code($id)
+		{
+			$result = mysql_query("UPDATE `".DB_NAME."`.`users` SET sms=''  WHERE `users`.`id`={$id}");
+			$result = mysql_query("UPDATE `".DB_NAME."`.`users` SET v_phone='' WHERE `users`.`id`={$id}");
+			$_SESSION['v_phone']='';
+			$_SESSION['sms']='';
+		}	
+		
+	public function update_phone($id, $phone) // Замена телефонного номера
 		{
 			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
-			
-			$result = mysql_query("UPDATE users SET phone='{$phone}' WHERE id={$id}" );
-						
+			autoring::del_sms_code($id);
+			$result = mysql_query("UPDATE `".DB_NAME."`.`users` SET `phone`='{$phone}' WHERE `users`.`id`={$id}");
+			//echo("UPDATE `".DB_NAME."`.`users` SET `phone`='{$phone}' WHERE `users`.`id`={$id}"."<br>");
+			$_SESSION['phone']=$_POST['phone'];			
 			
 		}
 		
@@ -175,21 +184,16 @@ class Autoring {
 			return $sms;
 		}
 		
-	public function del_sms_code($id)
-		{
-			$result = mysql_query("UPDATE users SET sms=''  WHERE id='{$id}'");
-			//$result = mysql_query("UPDATE users SET v_phone='' WHERE id='{$id}'");
-			//$_SESSION['v_phone']='';
-			$_SESSION['sms']='';
-		}
-		
+	
+	
+	
 	public function verify_sms($id, $v_phone)
 		{
-			$bd="UPDATE users SET v_phone='{$v_phone}' WHERE id='{$id}'";
+			$bd="UPDATE `".DB_NAME."`.`users` SET v_phone='{$v_phone}' WHERE `users`.`id`={$id}";
 			$result = mysql_query($bd);
 			//if ($result) echo("Save! UPDATE users SET v_phone='{$v_phone}' WHERE id='{$id}'");
 			$_SESSION['v_phone']=$v_phone;
-			return $result;
+			if ($result == 'true') return "ok"; else "error";
 		}
 	
 	public function filling_profile() // Заполнен ли профиль
@@ -203,7 +207,7 @@ class Autoring {
 	public function is_verify_phone() // Верифицирован ли телефон
 		{
 			//echo ("<script>alert('Тел {$_SESSION['phone']}')</script>");
-			if ($_SESSION['phone']!=$_SESSION['v_phone'])  
+			if (($_SESSION['phone']!=$_SESSION['v_phone']) OR ($_SESSION['phone']=="") ) 
 			{//echo ("<script>alert('Телефоны {$_SESSION['phone']} и {$_SESSION['v_phone']} не равны')</script>");
 		return true;} else 
 		{//echo ("<script>alert('Телефоны равны')</script>"); 

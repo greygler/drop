@@ -6,8 +6,10 @@ require_once (CLASS_PATH.'/db.class.php');
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/autoring.class.php'); 
 require_once (CLASS_PATH.'/turbosms_db.class.php'); 
-$sms=autoring::sms_code($_SESSION['id']);
-autoring::verify_sms($_SESSION['id'], '');
+$sms=autoring::sms_code($_POST['id']);
+//autoring::verify_sms($_POST['id'], $_POST["phone"]);
+//print_r($_POST);
 ?>
-SMS <?= $sms ?> на номер<br><strong><?= $_SESSION["phone"] ?></strong><br>отправлена!
+
+SMS <?= $sms ?> на номер<br><strong><?= $_POST["phone"] ?></strong><br>отправлена!
 <? } ?>

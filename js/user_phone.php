@@ -8,14 +8,16 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
   function nohide_vphone() {
 	  
 	 var phone_num=$("#phone_num").val();
+	  var msg   = $('#data_form').serialize();
+	 //alert(phone_num);
 	 if (phone_num!=""){
-		 var msg   = $('#data_form').serialize();
+		
 		 $.ajax({
           type: 'POST',
           url: '/verify/phone/session_phone.php',
           data: msg,
           success: function(data) {
-			// alert(data);
+			 alert(data);
 			 if (data=='ok'){
 			$('#phone_group').removeClass('has-warning');
 			$('#phone_group').addClass('has-success');
@@ -25,6 +27,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 			$('#phide2').addClass('glyphicon-ok');
 			 }
 			 else{
+				//  $('#phone_num').attr("disabled","disabled");
 				$('.novphone').html('Телефон не верифицирован!');
 				$('.vphonelink').html('Верифицировать');
 				$('#is_sms')[0].reset();
@@ -49,20 +52,32 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		  });
 		   }
 	 else {
+		 
+		 $.ajax({
+          type: 'POST',
+          url: '/verify/phone/session_phone.php',
+          data: msg,
+          success: function(data) {
+			  
 		 $('#phide1').addClass('hide');
-		 $('#phide2').addClass('hide');
+		 //$('#phide2').addClass('hide');
 		 $('#phone_group').addClass('has-warning');
 		 $('#phone_group').removeClass('has-success');
 		 $('#phide2').removeClass('glyphicon-ok');  
-		 
-		}
+		 $('#phide2').addClass('glyphicon-warning-sign'); 
+		},
+		 error:  function(xhr, str){
+		  alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+		  });
+		 }
   
 	
   }
  
   function verify_phone() {
 		 $('#verify_phone').modal('hide');
- 	  var msg   = $('#verify_phone').serialize();
+ 	  var msg   = $('#data_form').serialize();
         $.ajax({
           type: 'POST',
           url: '/verify/phone/sendsms.php',

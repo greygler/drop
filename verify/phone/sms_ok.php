@@ -8,8 +8,10 @@ require_once (CLASS_PATH.'/autoring.class.php');
 
 //echo "-".$_SESSION['sms']."-".$_POST['code_sms']."-";
 if ($_SESSION['sms']==$_POST['code_sms']) {
-	autoring::del_sms_code($_SESSION['id']); 
-	if (autoring::verify_sms($_SESSION['id'], $_POST['v_phone'])) echo ("ok"); else echo("error #1");
+	autoring::del_sms_code($_POST['id']); 
+	$get_user=autoring::get_user($_POST['id']);
+	$ver_sms=autoring::verify_sms($_POST['id'], $get_user['phone']);
+	echo $ver_sms;
 	}
 else echo("error #2");
 }
