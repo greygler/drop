@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 10 2017 г., 16:11
+-- Время создания: Июн 10 2017 г., 22:38
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `fa_symbol` varchar(50) NOT NULL,
+  `phone` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
@@ -57,11 +58,11 @@ CREATE TABLE IF NOT EXISTS `contact` (
 -- Дамп данных таблицы `contact`
 --
 
-INSERT INTO `contact` (`id`, `name`, `fa_symbol`) VALUES
-(1, 'Skype', 'fa-skype '),
-(2, 'Viber', 'fa-tty '),
-(3, 'Telegram', 'fa-telegram'),
-(4, 'WhatsApp', 'fa-whatsapp');
+INSERT INTO `contact` (`id`, `name`, `fa_symbol`, `phone`) VALUES
+(1, 'Skype', 'fa-skype ', 0),
+(2, 'Viber', 'fa-tty ', 1),
+(3, 'Telegram', 'fa-telegram', 0),
+(4, 'WhatsApp', 'fa-whatsapp', 1);
 
 -- --------------------------------------------------------
 
@@ -304,18 +305,21 @@ CREATE TABLE IF NOT EXISTS `pay_method` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   `active` tinyint(1) NOT NULL,
+  `cart` varchar(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Дамп данных таблицы `pay_method`
 --
 
-INSERT INTO `pay_method` (`id`, `name`, `active`) VALUES
-(1, 'Карта Приват-банка', 1),
-(2, 'WMU', 1),
-(3, 'WMR', 0),
-(4, 'WMZ', 0);
+INSERT INTO `pay_method` (`id`, `name`, `active`, `cart`) VALUES
+(1, 'Карта Приват-банка', 1, 'c'),
+(2, 'WMU', 1, 'u'),
+(3, 'WMR', 0, 'r'),
+(4, 'WMZ', 0, 'z'),
+(5, 'Яндекс-деньги', 0, '0'),
+(6, 'Qiwi', 0, '0');
 
 -- --------------------------------------------------------
 
@@ -479,7 +483,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `registration`, `users_group`, `name`, `email`, `v_email`, `phone`, `v_phone`, `sms`, `contact`, `pay_method`, `password`, `drop_key`, `active_drop`, `balance`, `total_balance`, `order_pay`, `order_pay_method`, `sale`, `total_sale`, `sale_ok`, `last_time`, `ipv4`, `country`, `region`, `city`, `agent`, `device`, `last_enter`) VALUES
-(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'igor.sayutin', 'WMU34234234345345', '1c40671124502abb891ece8b9674dba3', 'cee7fee8f7c25b0726184946aeb756cf', 0, '1500.00', '2800.00', '1500.00', 1, 0, 12, 12, '1497079585', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1497017990";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
+(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'a:4:{i:1;s:5:"ddxfg";i:2;s:18:"+38(000) 000-00-00";i:3;s:8:"y78khbjk";i:4;s:18:"+38(000) 000-00-00";}', 'a:2:{i:1;s:19:"9867-8678-6786-7867";i:2;s:19:"yuiy78y7yiu67i867yi";}', '1c40671124502abb891ece8b9674dba3', 'cee7fee8f7c25b0726184946aeb756cf', 0, '1500.00', '2800.00', '0.00', 1, 0, 12, 12, '1497079585', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1497017990";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
 (2, '1495644961', 2, 'Вадим', 'slogger1990@gmail.com', '', '', '', '', '', '', 'c7e70f8844321ca123b4839bd581f644', 'a428b2b328cf4397b62b173eb6c0c10f', 0, '100.00', '200.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (4, '1495691400', 1, 'Артур', 'new-day2012@mail.ru', '', '', '', '', '', '', '4aa026d492e2645669254e7c655cc3ac', '3d20280a6888ea60528bf5b2c5d7fe90', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (5, '1495877000', 2, 'Panakshev', 'vpanakshev1@mail.ua', '', '', '', '', '', '', '778e7d704a943d8654ad8883154c2b84', '31c8ed1f2e7496a59f5cb525263eca66', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
