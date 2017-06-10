@@ -102,6 +102,7 @@ foreach  ($pay_method as $key => $value) { ?>
 public function profile()
 {
 	?>
+	
 	<script src="<?= JS_PATH ?>/user.php"></script>
 <script src="<?= JS_PATH ?>/user_email.php"></script>
  <script src="<?= JS_PATH ?>/user_phone.php"></script>
@@ -111,7 +112,7 @@ public function profile()
   <dt></dt>
 <dd><button  type="button"   data-toggle="modal" data-target="#update_password" class="btn btn-danger user-buttom"><span class="pull-left fa fa-key" aria-hidden="true"></span>Cменить пароль</button></dd><div class="update_pass_results"></div>
 
-<dt>Имя:</dt>
+<dt>Имя: <em>*</em></dt>
   <dd>
  <div class="form-group">
   <input id="user_name_input" class="form-control" placeholder="Ваше имя" type="text" required name="name" value="<?= $_SESSION['name'] ?>">
@@ -124,7 +125,7 @@ public function profile()
   
 
   
-  <dt>E-mail:</dt>
+  <dt>E-mail: <em>*</em></dt>
   <dd>
   <div class="form-group <? if  (autoring::is_verify_email()) echo('has-warning'); else echo('has-success'); ?> has-feedback">
   <input class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>" disabled>
@@ -138,7 +139,7 @@ public function profile()
   
  
   </dd>
-  <dt>Phone:</dt>
+  <dt>Phone: <em>*</em></dt>
   <dd>
   <div id="phone_group" class="form-group <? if (autoring::is_verify_phone($_SESSION)) echo('has-warning'); else echo('has-success'); ?> has-feedback">
   <input id="phone_num" class="form-control phone" type="text" name="phone" value="<?= $_SESSION['phone'] ?>" <? if ($_SESSION['send_sms']=='ok') echo('disabled'); ?> onchange="nohide_vphone()"> 
@@ -154,16 +155,52 @@ public function profile()
 
    </div>
    </dd>
-  <dt>Skype:</dt>
-  <dd> <div class="form-group"><input class="form-control" type="text" name="skype" value="<?= $_SESSION['skype'] ?>"></div></dd>
-  <dt>Счет:</dt>
-  <dd> <div class="form-group"><input class="form-control" type="text" name="wm" value="<?= $_SESSION['wm'] ?>"></div></dd>
-  <dt><div class="results_form"></div></dt>
+   
+   <?
+   $contact=unserialize($_SESSION['contact']);
+ $result = mysql_query("SELECT * FROM contact");
+$myrow = mysql_fetch_array($result);
+do
+{
+	if ($myrow['phone']=="1") $class="phone";
+	?>
+	<dt><?= $myrow['name'] ?>:</dt>
+  <dd> <div class="form-group"><input id="c<?= $myrow['id'] ?>" class="form-control <?= $class ?>" type="text" name="contact[<?= $myrow['id'] ?>]" value="<?= $contact[$myrow['id']] ?>"></div></dd>
+  <?
+$class="";
+}
+while ($myrow = mysql_fetch_array($result));
+?>
+
+
+   <?
+   $pay_method=unserialize($_SESSION['pay_method']);
+ $result = mysql_query("SELECT * FROM pay_method");
+$myrow = mysql_fetch_array($result);
+do
+{
+	if ($myrow['active']=="0") $dis="disabled";
+	if ($myrow['cart']=="c") $class="pcart";
+	if ($myrow['cart']=="u") $class="wmu";
+	if ($myrow['cart']=="r") $class="wmr";
+	if ($myrow['cart']=="z") $class="wmz";
+	?>
+	<dt><?= $myrow['name'] ?>:</dt>
+  <dd> <div class="form-group"><input id="p<?= $myrow['id'] ?>" class="form-control <?= $class ?>" <?= $dis ?> type="text" name="pay_method[<?= $myrow['id'] ?>]" value="<?= $pay_method[$myrow['id']] ?>"></div></dd>
+  <?
+$dis="";$class="";
+}
+while ($myrow = mysql_fetch_array($result));
+?>  
+  
+  
+   <dt><div class="results_form"></div></dt>
   <dd><button type="submit" class="btn btn-primary btn-block user-buttom"><span class="pull-left"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
  Сохранить</button></dd>
 <input type="hidden" value="<?= $_SESSION['id'] ?>" name="id">
-
+</dl>
 </form>
+
 	<?
 }
 

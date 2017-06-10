@@ -160,6 +160,7 @@ class Autoring {
 			foreach($profile as $key => $value) $command.="{$key}='{$value}',";
 			$command = substr($command, 0, -1);
 			$bd="UPDATE users SET {$command}  WHERE id={$id}";
+			echo $bd;
 			$result = mysql_query($bd);
 						
 			
@@ -176,8 +177,9 @@ class Autoring {
 	
 	public function sms_code($id)
 		{
+			$smscode=rand(111, 999)."-".date("s")."-".str_pad($id, 3, rand(11, 99), STR_PAD_LEFT);
 			
-		if ($_SESSION['sms']!="") $sms=$_SESSION['sms']; else {$sms="444-44-444";
+		if ($_SESSION['sms']!="") $sms=$_SESSION['sms']; else {$sms=$smscode;
 			$result = mysql_query("UPDATE users SET sms='{$sms}'  WHERE id='{$id}'");
 			}
 			$_SESSION['sms']=$sms;

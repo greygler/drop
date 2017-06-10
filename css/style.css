@@ -208,3 +208,8 @@ thead .badge{
 .btn_left{
 	text-align: left !important;
 }
+.form-signin em {
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}

@@ -78,7 +78,13 @@ define('UTM_CAMPAIGN','');
 define('DB_HOST', 'localhost'); 	// Адрес базы данных, может называться localhost
 define('DB_NAME', 'drop'); 	// Название базы данных
 define('DB_LOGIN', 'drop'); 	// Логин базы данных
-define('DB_PASS', 'drop'); 	// Пароль базы данных
+define('DB_PASS', 'drop'); 	// Пароль базы данных 
+?>
+<?
+/* define('DB_HOST', 'localhost'); 	// Адрес базы данных, может называться localhost
+define('DB_NAME', 'u12568_info'); 	// Название базы данных
+define('DB_LOGIN', 'u12568_info'); 	// Логин базы данных
+define('DB_PASS', 'DsRr^79bw?lJ'); 	// Пароль базы данных */
 ?>
 <?
 /* define('DB_HOST', 'sql303.0fees.us'); 	// Адрес базы данных, может называться localhost

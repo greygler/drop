@@ -39,7 +39,7 @@ function data_form() {
           url: '<?= ACTION_PATH ?>/update_profile.php',
           data: msg,
           success: function(data) {
-			
+			alert(data)
 		  if (data=='ok') {
 			  var user_name = $('#user_name_input').val()
 			  $('.user_name').html(user_name);

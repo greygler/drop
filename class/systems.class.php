@@ -124,12 +124,12 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 	<nav>
 		<ul>
 			<li><a href="#" class="icon icon-menu" id="btn-menu">Menu</a></li>
-			<li><a title="Перечень заказов и продаж" href="?type=order"><div class="hidden-xs">Заказы</div><div class="visible-xs"><i class="fa fa-shopping-cart fa-2x"></i>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Перечень заказов и продаж" href="?type=order"><div class="hidden-xs">Заказы</div><div class="visible-xs"><i class="fa fa-shopping-cart fa-2x"></i>
 </div></a></li>
-			<li><a  title="Личный кабинет пользователя" href="?type=user"><div class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
+			<li><a  data-toggle="tooltip" data-placement="bottom" title="Личный кабинет пользователя" href="?type=user"><div class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
 </div></a></li>
           <? if ($_SESSION['users_group']>=5) echo('<li class="visible-xs"><a data-toggle="modal" data-target="#support" href="#"><span class="help fa fa-support fa-2x"></span></a></li>');
-		   else echo('<li><a title="Управление пользователями системы &#171;'.TITLE.'&#187;" href="?type=users"><i class="visible-xs fa fa-users fa-2x"></i><div class="hidden-xs">Пользователи</div></a></li>'); ?>
+		   else echo('<li><a data-toggle="tooltip" data-placement="bottom" title="Управление пользователями системы &#171;'.TITLE.'&#187;" href="?type=users"><i class="visible-xs fa fa-users fa-2x"></i><div class="hidden-xs">Пользователи</div></a></li>'); ?>
 			 
 		</ul>
 		<div id="user" class="row  hidden-xs">
@@ -168,8 +168,8 @@ public function side_menu()
 			<input type="text"  list="search_result" placeholder="Поиск товара" name="product" class="search" /></span></a>
 			 </form></li> 
 			<!-- <ul class="search_result drop_color"></ul> -->
-			<li><a title="Главная страница системы &#171;<?= TITLE ?>&#187;" href="/" class="icon icon-home"><span>Главная</span></a></li>
-			<li><a title="Каталог всех товаров, всех категорий, представленных в системе &#171;<?= TITLE ?>&#187; для продаж.<?= "\n" ?>Актуальность &#9200; <?= date("d.m.Y H:i:s", LAST_TIME_PRODUCT) ?>" href="?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Главная страница системы &#171;<?= TITLE ?>&#187;" href="/" class="icon icon-home"><span>Главная</span></a></li>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог всех товаров, всех категорий, представленных в системе &#171;<?= TITLE ?>&#187; для продаж.<?= "\n" ?>Актуальность &#9200; <?= date("d.m.Y H:i:s", LAST_TIME_PRODUCT) ?>" href="?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
 				<ul>
 				<? 
 				
@@ -177,7 +177,7 @@ public function side_menu()
 					$myrow = mysql_fetch_array($result);
 					do
 					{
-						echo ('<li><a title="Каталог товаров категории &#171;'.$myrow['name'].'&#187;'."\n".'Актуальность категорий &#9200; '.date("d.m.Y H:i:s", LAST_TIME_CATEGORY).'" href="?type=products&cat='.$myrow['id'].'"><span><i class="fa fa-check-square-o" aria-hidden="true"></i> '.$myrow['name'].'</span></a>'."</li>\n");
+						echo ('<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог товаров категории &#171;'.$myrow['name'].'&#187;'."\n".'Актуальность категорий &#9200; '.date("d.m.Y H:i:s", LAST_TIME_CATEGORY).'" href="?type=products&cat='.$myrow['id'].'"><span><i class="fa fa-check-square-o" aria-hidden="true"></i> '.$myrow['name'].'</span></a>'."</li>\n");
 					
 					}
 					while ($myrow = mysql_fetch_array($result));
@@ -383,7 +383,7 @@ public function footer($geobase="")
    <center><small><a data-toggle="modal" data-target="#rules_modal" href="#">Правила предоставления услуг</a></small></center>
    </div>
    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
-   <span>&copy; 2015-<?= date("Y")?> Igor Sayutin</span>
+   <span>&copy;&#032;&#050;&#048;&#049;&#053;&#045;<?= date("Y")?>&#032;&#071;&#114;&#101;&#121;&#071;&#108;&#101;&#114;</span>
    </div>
   </div>
   
@@ -399,6 +399,10 @@ public function footer($geobase="")
 <script src="<?= JS_PATH ?>/jquery.maskedinput.js"></script>
 <script type="text/javascript"> jQuery(function($){$(".phone").mask("<?= MASK_PHONE ?>");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".sms").mask("\999-99-999");}); </script>
+<script type="text/javascript"> jQuery(function($){$(".pcart").mask("\9999-9999-9999-9999");}); </script>
+<script type="text/javascript"> jQuery(function($){$(".wmu").mask("\U999999999999");}); </script>
+<script type="text/javascript"> jQuery(function($){$(".wmr").mask("\R999999999999");}); </script>
+<script type="text/javascript"> jQuery(function($){$(".wmz").mask("\Z999999999999");}); </script>
 <script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
 <script src="<?= JS_PATH ?>/control-modal.js"></script>
 <script src="<?= JS_PATH ?>/gnmenu.php"></script>
@@ -407,13 +411,8 @@ public function footer($geobase="")
 <script src="<?= JS_PATH ?>/bootstrap-switch.min.js"></script>
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
 <script src="<?= JS_PATH ?>/search.php"></script>
-<script type="text/javascript">
-	$("[data-fancybox]").fancybox({
-		 'afterClose'          : function() {
-                                  parent.location.reload(true);
-                                  }
-	});
-</script>
+<script type="text/javascript">$("[data-fancybox]").fancybox({'afterClose': function() {parent.location.reload(true);}});</script>
+<script>$(function () {$('[data-toggle="tooltip"]').tooltip()})</script>
 <? 
 $filling_profile=autoring::filling_profile();
 $is_verify_profile=autoring::is_verify_profile();

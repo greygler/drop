@@ -17,7 +17,7 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 <div class="col-sm-6 col-md-6 col-lg-6 text_white"><h4 class="text-left">
 <span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y H:i:s", $_SESSION['registration']); ?></h4></div>
 <div class="col-sm-6 col-md-6 col-lg-6 text_white">
-<h4 class="text-right"><span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <?= $_SESSION['name_group'] ?></h3></div>
+<h4 class="text-right"><span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <?= $_SESSION['name_group'] ?></h4></div>
 
 
 <div class="col-sm-6 col-md-6 col-lg-6 panel panel-default panel_user">
@@ -78,7 +78,7 @@ function new_code(id)
    <div class="input-group">
   <input id="drop_key" style="cursor: text;" type="text" class="form-control" value="<?= $_SESSION['drop_key'] ?>"  readonly>
   <span class="input-group-btn">
-        <button id="new_drop_code"  title="Пересоздать токен" class="btn btn-default" type="submit"><i id="refresh_code" class="fa fa-refresh fa-lg fa-fw"></i></button>
+        <button id="new_drop_code"  data-toggle="tooltip" data-placement="bottom" title="Пересоздать токен" class="btn btn-default" type="submit"><i id="refresh_code" class="fa fa-refresh fa-lg fa-fw"></i></button>
       </span>
 	 
   </div>
