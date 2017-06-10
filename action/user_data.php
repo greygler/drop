@@ -1,10 +1,10 @@
 <? session_start();
-require_once ('../config.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
-require_once ("../class/db.class.php"); 
+require_once (CLASS_PATH.'/db.class.php'); 
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/favicon.class.php');
-require_once ("../class/autoring.class.php"); 
+require_once (CLASS_PATH.'/autoring.class.php'); 
 
 if (!autoring::is_autoring()) header("Location: ../login/");
 require_once (CLASS_PATH.'/systems.class.php');

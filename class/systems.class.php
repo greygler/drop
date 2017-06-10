@@ -407,11 +407,13 @@ public function footer($geobase="")
 <script src="<?= JS_PATH ?>/bootstrap-switch.min.js"></script>
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
 <script src="<?= JS_PATH ?>/search.php"></script>
-
-
-
-
-
+<script type="text/javascript">
+	$("[data-fancybox]").fancybox({
+		 'afterClose'          : function() {
+                                  parent.location.reload(true);
+                                  }
+	});
+</script>
 <? 
 $filling_profile=autoring::filling_profile();
 $is_verify_profile=autoring::is_verify_profile();

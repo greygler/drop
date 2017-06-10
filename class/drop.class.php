@@ -22,7 +22,7 @@ class drop{
 		return $myrow['id'];
 	}
 	
-	public function search($product)
+	public function search($product) // Ищем продукт
 	{
 		$result = mysql_query("SELECT * from products WHERE name LIKE '%{$product}%'");
 		return $result;
@@ -163,6 +163,28 @@ class drop{
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 
+	public function refresh_img($id, $img_name)
+	
+	
+	{ ?> 
+		 <div id="new-img-form_<?= $id ?>" class="input-group hide">
+ 		<input required id="new-img_<?= $id ?>" class="form-control" type="file" accept="image/*">
+		<span class="input-group-btn">
+        <button title="Обновить картинку товара" id="ref-button_<?= $id ?>" class="btn btn-default" type="submit"><i id="refresh_code_<?= $id; ?>" class="fa fa-refresh fa-lg fa-fw"></i></button>
+		</span>
+		</div>
+		<a title="Поменять картинку" id="new_img_but_<?= $id ?>" onclick="hide_form(<?= $id ?>)" class="btn btn-default fleft"><i id="hide-ref-code_<?= $id; ?>" class="fa fa-refresh fa-lg fa-fw"></i></a>
+		<? if (IMG_PRODUCT_PATH.$img_name!=IMG_PRODUCT_PATH.IMG_PRODUCT_NAME) { ?>
+		<br><a title="Удалить картинку" id="del_img_but_<?= $id ?>" onclick="del_img(<?= $id; ?>)" class="btn btn-default"><i id="hide-ref-code_<?= $id; ?>" class="fa fa-cut fa-lg fa-fw"></i></a>
+		<? } 
+		
+		} 
+	
+	
+	
+	
+	
+	
 	public function update_data()
 		{
 				if (time()-LAST_TIME_CATEGORY>UPDATE_TIME) {

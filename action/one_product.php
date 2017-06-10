@@ -1,14 +1,14 @@
 <? session_start();
-require_once ('../config.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
-require_once ("../class/db.class.php"); 
+require_once (CLASS_PATH.'/db.class.php'); 
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/favicon.class.php');
-require_once ("../class/autoring.class.php"); 
-require_once ("../class/drop.class.php"); 
+require_once (CLASS_PATH.'/autoring.class.php'); 
+require_once (CLASS_PATH.'/drop.class.php'); 
 if (!autoring::is_autoring()) header("Location: ../login/");
 require_once (CLASS_PATH.'/systems.class.php');
-
+if ($_SESSION['user_group']<5) echo('<script src="'.JS_PATH.'/product.php"></script>');
 
 $product=drop::one_product($_GET['id']);
  if ($product['pic']!="") $img_name=$product['pic']; else $img_name=IMG_PRODUCT_NAME;
@@ -23,7 +23,11 @@ $subcat_name=drop::subcategory($product['subcat']);
 </div>
 
 <div class="col-sm-5 col-md-5 col-lg-5"><center>
-<img class="img-rounded img-responsive" src="<?= IMG_PRODUCT_PATH.$img_name ?>" alt="<?= $product['name']?>"><br>
+<form id="product_form_<?= $_GET['id'] ?>" action="javascript:void(null);" method="post" enctype="multipart/form-data" onsubmit="new_image(<?= $_GET['id'] ?>)">
+<img  id="img_<?= $_GET['id']; ?>" class="img-rounded img-responsive <? if ($_SESSION['users_group']<5)  echo "fleft"; ?> img_op" src="<?= IMG_PRODUCT_PATH.$img_name ?>" alt="<?= $product['name']?>">
+<?  if ($_SESSION['users_group']<5)  echo drop::refresh_img($_GET['id'], $img_name); ?>
+</form>
+
 <button title="" type="button" class="btn btn-default btn-block">
 <? if ($product['active']!=1) echo "Не продается" ?>
 		<i class="pull-left fa fa-tag" aria-hidden="true"></i>Цена продажи: <strong><?= $product['price']; ?> <?= CURRENCY ?></strong></button>
@@ -40,10 +44,12 @@ $subcat_name=drop::subcategory($product['subcat']);
 </div>
 
 </div>
+
 <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
     <script src="<?= JS_PATH ?>/gnmenu.js"></script>
 	<script src="<?= JS_PATH ?>/jquery.fancybox.min.js"></script>
+
   </body>
 </html>
 <? } else echo ("Слоны идут нахер!"); ?>

@@ -17,6 +17,7 @@ thead               { width: 100%; position: fixed; height: 109px; top: 150px;
 </style>
 	
 
+
 <div class="page-header">
 		<h1>товары</h1>
 		</div>
@@ -56,17 +57,7 @@ thead               { width: 100%; position: fixed; height: 109px; top: 150px;
 		<td valign="middle">
 		<a title="Кликните для увеличения картинки" href="<?= IMG_PRODUCT_PATH.$img_name ?>" data-fancybox="images" data-caption="<?= $myrow['name']; ?>">
 		<img id="img_<?= $myrow['id']; ?>" class="img_product img-rounded img-responsive fleft" src="<?= IMG_PRODUCT_PATH.$img_name ?>"></a>
-		<? if ($_SESSION['users_group']<5) { ?> 
-		 <div id="new-img-form_<?= $myrow['id']; ?>" class="input-group hide">
- 		<input required id="new-img_<?= $myrow['id'] ?>" class="form-control" type="file" accept="image/*">
-		<span class="input-group-btn">
-        <button title="Обновить картинку товара" id="ref-button_<?= $myrow['id'] ?>" class="btn btn-default" type="submit"><i id="refresh_code_<?= $myrow['id']; ?>" class="fa fa-refresh fa-lg fa-fw"></i></button>
-		</span>
-		</div>
-		<a title="Поменять картинку" id="new_img_but_<?= $myrow['id'] ?>" onclick="hide_form(<?= $myrow['id'] ?>)" class="btn btn-default fleft"><i id="hide-ref-code_<?= $myrow['id']; ?>" class="fa fa-refresh fa-lg fa-fw"></i></a>
-		<? if (IMG_PRODUCT_PATH.$img_name!=IMG_PRODUCT_PATH.IMG_PRODUCT_NAME) { ?>
-		<br><a title="Удалить картинку" id="del_img_but_<?= $myrow['id'] ?>" onclick="del_img(<?= $myrow['id'] ?>)" class="btn btn-default"><i id="hide-ref-code_<?= $myrow['id']; ?>" class="fa fa-cut fa-lg fa-fw"></i></a>
-		<? } } ?>
+		<? if ($_SESSION['users_group']<5)  echo drop::refresh_img($myrow['id'], $img_name); ?>
 		</td>
 		<td valign="middle"><? 
 		$cat_name=drop::category($myrow['cat']);
@@ -78,7 +69,7 @@ thead               { width: 100%; position: fixed; height: 109px; top: 150px;
 			?>
 		
 		</td>
-		<td valign="middle"><a data-fancybox data-src="/action/one_product.php?id=<?= $myrow['id']; ?>" id="button_<?= $myrow['id']; ?>" type="button" class="btn btn-block <? if ($myrow['active']!='1') echo('btn-default'); else echo('btn-info');  ?>" href="javascript:;"title="<?= $myrow['name']; ?>"><div class="text-left"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <strong><?= $myrow['name']; ?></strong> 
+		<td valign="middle"><a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $myrow['id']; ?>" id="button_<?= $myrow['id']; ?>" type="button" class="fancybox btn btn-block <? if ($myrow['active']!='1') echo('btn-default'); else echo('btn-info');  ?>" href="javascript:;" title="<?= $myrow['name']; ?>"><div class="text-left"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <strong><?= $myrow['name']; ?></strong> 
 		 <small><?= $myrow['model']; ?></small></div> </a>
 		 <? if ($myrow['manufacturer']!="") echo("<i class=\"fa fa-industry\" aria-hidden=\"true\"></i> Производитель: {$myrow['manufacturer']}"); ?> </td>
 		<td valign="middle">

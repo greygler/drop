@@ -189,3 +189,22 @@ thead .badge{
 .fleft{
 	float: left;
 }
+.img_op{
+	margin-right: 10px;
+	margin-bottom: 20px;
+}
+.dl-order dt {
+     width: 20px !important;
+}
+.dl-order dd {
+    margin-left: 30px !important;
+}
+.dl-name dd{
+	width: 135px !important;
+}
+.sprice{
+	color: blue;
+}
+.btn_left{
+	text-align: left !important;
+}

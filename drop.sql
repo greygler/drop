@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 09 2017 г., 22:25
+-- Время создания: Июн 10 2017 г., 16:11
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `enter_log` (
   `agent` varchar(256) NOT NULL,
   `device` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=120 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=121 ;
 
 --
 -- Дамп данных таблицы `enter_log`
@@ -205,7 +205,8 @@ INSERT INTO `enter_log` (`id`, `user_id`, `last_time`, `ipv4`, `country`, `regio
 (116, 51, '1496994243', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
 (117, 1, '1497015193', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
 (118, 51, '1497015219', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
-(119, 1, '1497017990', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0);
+(119, 1, '1497017990', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(120, 1, '1497079585', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0);
 
 -- --------------------------------------------------------
 
@@ -288,10 +289,10 @@ CREATE TABLE IF NOT EXISTS `order_tab` (
 --
 
 INSERT INTO `order_tab` (`id`, `user_id`, `order_id`, `order_time`, `status`, `country`, `bayer_name`, `phone`, `product_id`, `price`, `count`, `profit`, `comment`, `site`, `ip`, `delivery_adress`, `utm_source`, `utm_medium`, `utm_term`, `utm_content`, `utm_campaign`) VALUES
-(1, 36, '2147483647', '1496159000', 3, 'UA', 'тест-игорь', 'dfsdfsdfsdf', 0, '0.00', 0, '0.00', '', 'hernya', '127.0.0.1', '', '', '', '', '', ''),
-(2, 36, '2147483648', '1496159300', 3, 'UA', 'тест-игорь', 'dfsdfsdfsdf', 0, '0.00', 0, '0.00', '', 'hernya', '127.0.0.1', '', '', '', '', '', ''),
-(3, 36, '2147483649', '1496159345', 3, 'UA', 'тест-игорь', 'dfsdfsdfsdf', 0, '0.00', 0, '0.00', '', 'hernya', '127.0.0.1', '', '', '', '', '', ''),
-(4, 36, '2147483650', '1496159650', 3, 'UA', 'тест-игорь', 'dfsdfsdfsdf', 0, '0.00', 0, '0.00', '', 'hernya', '127.0.0.1', '', '', '', '', '', '');
+(1, 36, '2147483647', '1496159000', 3, 'UA', 'тест-игорь', '+38(000) 000-00-00', 1, '1500.00', 1, '10.00', '', 'hernya', '127.0.0.1', '', 'utm_source', '', 'utm_term', 'utm_content', 'utm_campaign'),
+(2, 36, '2147483648', '1496159300', 3, 'UA', 'тест-игорь', '+38(000) 000-00-00', 2, '500.00', 2, '20.00', '', 'hernya', '127.0.0.1', '', 'utm_source', 'utm_medium', '', '', 'utm_campaign'),
+(3, 7, '2147483649', '1496159345', 3, 'UA', 'тест-вася', '+38(000) 000-00-00', 3, '500.00', 1, '-70.00', '', 'hernya', '127.0.0.1', '', 'utm_source', 'utm_medium', '', 'utm_content', 'utm_campaign'),
+(4, 36, '2147483650', '1496159650', 3, 'UA', 'тест-игорь', '+38(000) 000-00-00', 4, '20.00', 1, '0.00', '', 'hernya', '127.0.0.1', '', 'utm_source', '', 'utm_term', '', 'utm_campaign');
 
 -- --------------------------------------------------------
 
@@ -342,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 --
 
 INSERT INTO `products` (`id`, `pic`, `name`, `model`, `description`, `manufacturer`, `cat`, `subcat`, `price`, `spec_price`, `active`) VALUES
-(1, '', 'Видерегистратор FULL HD  K6000', 'K6000', 'Камера: 5 мп\r\nМаксимальное разрешение видео: 1920х1080\r\n2.7-дюймовый экран\r\nУгол обзора 140°\r\nВстроенный датчик движения\r\n4х цифровой зум\r\nG-сенсор \r\nВстроенная литиевая баттарея\r\nВозможность использования в качестве WEB-камеры\r\nПоддержка карт памяти до 32 Гб\r\nВ комплекте: кронштейн-присоска на лобовое стекло, автомобильный адаптер питания, USB-кабель, инструкция \r\nЦвет: черный', 0, 2, 0, '1074.00', '0.00', 1),
+(1, '1ec6d1aa6eed9c971fa9b23be7f78883.png', 'Видерегистратор FULL HD  K6000', 'K6000', 'Камера: 5 мп\r\nМаксимальное разрешение видео: 1920х1080\r\n2.7-дюймовый экран\r\nУгол обзора 140°\r\nВстроенный датчик движения\r\n4х цифровой зум\r\nG-сенсор \r\nВстроенная литиевая баттарея\r\nВозможность использования в качестве WEB-камеры\r\nПоддержка карт памяти до 32 Гб\r\nВ комплекте: кронштейн-присоска на лобовое стекло, автомобильный адаптер питания, USB-кабель, инструкция \r\nЦвет: черный', 0, 2, 0, '1074.00', '0.00', 1),
 (2, '', 'браслет Power Balance', '', '', 0, 1, 3, '299.00', '0.00', 1),
 (3, '', 'botomax', '', '', 0, 1, 3, '359.00', '0.00', 1),
 (4, '', 'AQUAPHOB (ТЕСТ)', '', 'aquaphobcomua@gmail.com', 0, 1, 3, '0.00', '0.00', 1),
@@ -478,7 +479,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `registration`, `users_group`, `name`, `email`, `v_email`, `phone`, `v_phone`, `sms`, `contact`, `pay_method`, `password`, `drop_key`, `active_drop`, `balance`, `total_balance`, `order_pay`, `order_pay_method`, `sale`, `total_sale`, `sale_ok`, `last_time`, `ipv4`, `country`, `region`, `city`, `agent`, `device`, `last_enter`) VALUES
-(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'igor.sayutin', 'WMU34234234345345', '1c40671124502abb891ece8b9674dba3', 'cee7fee8f7c25b0726184946aeb756cf', 0, '1500.00', '2800.00', '1500.00', 1, 0, 12, 12, '1497017990', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1497015193";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
+(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'igor.sayutin', 'WMU34234234345345', '1c40671124502abb891ece8b9674dba3', 'cee7fee8f7c25b0726184946aeb756cf', 0, '1500.00', '2800.00', '1500.00', 1, 0, 12, 12, '1497079585', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1497017990";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
 (2, '1495644961', 2, 'Вадим', 'slogger1990@gmail.com', '', '', '', '', '', '', 'c7e70f8844321ca123b4839bd581f644', 'a428b2b328cf4397b62b173eb6c0c10f', 0, '100.00', '200.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (4, '1495691400', 1, 'Артур', 'new-day2012@mail.ru', '', '', '', '', '', '', '4aa026d492e2645669254e7c655cc3ac', '3d20280a6888ea60528bf5b2c5d7fe90', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (5, '1495877000', 2, 'Panakshev', 'vpanakshev1@mail.ua', '', '', '', '', '', '', '778e7d704a943d8654ad8883154c2b84', '31c8ed1f2e7496a59f5cb525263eca66', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),

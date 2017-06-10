@@ -51,6 +51,7 @@ public function  pagin($get_params, $count_records, $view_pages )
 // Передаем содержимое $_GET, общее колличество записей и массив колличества отображаемых страниц
 // Возвращаем массив с первым номером, с которого начинается выборка ['begin'] и колличеством отображаемых полей ['count'] 
 {
+if ($get_params['type']=="") $get_params['type']="news";
 if ($get_params['page_no']!="") $page_no=$get_params['page_no']; else $page_no=1; 
 if (($get_params['pages']!="") AND ($get_params['pages']!='all'))  $limit=$get_params['pages']; 
 else 
