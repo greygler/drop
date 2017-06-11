@@ -1,31 +1,33 @@
-
-		<h1></h1>
+<h1></h1>
+<section id="order_tabs">
 		<ul class="nav nav-tabs">
 		<?	
 $result = mysql_query("SELECT * FROM status");
 $myrow = mysql_fetch_array($result);
 do 
 {
-if ($myrow['style']!='') {$style=$myrow['style'];$color="white";} else $style="btn-default"
+if ($myrow['style']!='') {$style=$myrow['style'];} else $style="btn-info";
+if ($myrow['id']==$_GET['status']) {$li_style.="active"; $symbol1="V <strong><u>";$symbol2="</u></strong>"; }
+//else {$span1="<em>"; $span2="</em>";}
 
 ?>
 
-<li><a style="color: <?= $color ?>" class="<?= $style ?>" href="#"><?= $myrow['name'] ?></a></li>
+<li class="<?= $li_style ?>" ><?= $span1 ?><a  class="<?= $style ?> white_link" href="?type=order&status=<?= $myrow['id'] ?>"><?= $symbol1.$myrow['name'].$symbol2 ?></a><?= $span2 ?></li>
 <?
-$color="";
+$symbol2="";$symbol1="";$style="";$li_style="";$span1=""; $span2="";
 }
 while ($myrow = mysql_fetch_array($result));
 ?>
   
 </ul>
-		
+</section>		
 		
 		
 
 <table class="table table-responsive table-striped table-bordered" >
 <thead>
 	<tr>
-	<? if ($_SESSION['user_group']<5) {
+	<? if ($_SESSION['users_group']<5) {
 		$groups=autoring::groups();
 	echo('<th>id, Имя пользователя</th>');} ?>
 		
@@ -41,7 +43,7 @@ while ($myrow = mysql_fetch_array($result));
 	<tbody >
 	<?
 	db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
-	$result = mysql_query("SELECT * FROM order_tab ORDER BY order_id DESC");
+	$result = mysql_query("SELECT * FROM order_tab WHERE status='3' ORDER BY order_id DESC ");
 	$myrow = mysql_fetch_array($result);
 		do
 	{ $product=drop::one_product($myrow['product_id']);
@@ -49,7 +51,7 @@ while ($myrow = mysql_fetch_array($result));
 	?>
 		<tr>
 		<? 
-		if ($_SESSION['user_group']<5) {
+		if ($_SESSION['users_group']<5) {
 			$user=autoring::get_user($myrow['user_id']);  ?>
 	<!--	echo("<td>{$myrow['user_id']}. {$user['name']}</td>");} ?> -->
 		<td>
@@ -73,7 +75,7 @@ while ($myrow = mysql_fetch_array($result));
 		<td><?= $myrow['comment'] ?></td>
 		<td>
 		<dl class="dl-horizontal dl-order">
-		<dt><i class="fa fa-shopping-cart sprice" aria-hidden="true"></i></dt><dd><a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $myrow['product_id']; ?>" href="javascript:;javascript:window.location.reload();"><strong><?= $product['name']; ?></strong></dd>
+		<dt><i class="fa fa-shopping-cart sprice" aria-hidden="true"></i></dt><dd><a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $myrow['product_id']; ?>" href="javascript:;javascript:window.location.reload();"><strong><?= $product['name']; ?></strong></a></dd>
 		<dt><i class="fa fa-tag sprice" aria-hidden="true"></i></dt><dd><a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $myrow['product_id']; ?>" href="javascript:;"><?= $product['price']; ?> <?= CURRENCY ?></a></dd>
 		<dt><i class="fa fa-barcode" aria-hidden="true"></i></dt><dd><strong><?= $myrow['count'] ?> шт.</strong> <small><i class="fa fa-times" aria-hidden="true"></i></small> <strong> <?= $myrow['price'] ?> <?= CURRENCY ?></strong> </dd>
 		<dt><i class="fa fa-check-square-o" aria-hidden="true"></i></dt><dd><strong><?= $myrow['count']*$myrow['price'] ?> <?= CURRENCY ?></strong></dd>

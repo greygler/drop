@@ -134,6 +134,20 @@ class drop{
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
+	
+	
+	public function subcat_base($id, $name, $parent) //Обновление базы субкатегорий. Если нет - добавляем
+	{
+		if (drop::is_subcategories($id)) 
+			$result = mysql_query ("UPDATE subcategories SET name='{$name}', parent='{$parent}' WHERE id='{$id}'");
+			
+		else 
+			$result = mysql_query ("INSERT INTO subcategories (id, name, parent) VALUES ('{$id}', '{$name}', '{$parent}')");
+			
+		if ($result == 'true') return 'ok'; else return 'error';
+	}
+
+	
 	public function is_status($id) // Проверяем наличие статуса в базе
 	{
 		$count=db::cound_bd('status', "id='{$id}'");
@@ -152,17 +166,28 @@ class drop{
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
-	public function subcat_base($id, $name, $parent) //Обновление базы субкатегорий. Если нет - добавляем
-	{
-		if (drop::is_subcategories($id)) 
-			$result = mysql_query ("UPDATE subcategories SET name='{$name}', parent='{$parent}' WHERE id='{$id}'");
-			
-		else 
-			$result = mysql_query ("INSERT INTO subcategories (id, name, parent) VALUES ('{$id}', '{$name}', '{$parent}')");
-			
-		if ($result == 'true') return 'ok'; else return 'error';
-	}
-
+	 public function one_status($id, $status) // Собираем колличество заказов в статусe по ID
+	 {
+		 $count_status=db::cound_bd("order_tab", $where="user_id='{$id}' AND status='{$status}'");
+		 return $count_status;
+	 }
+	 
+	 public function statuses($id) // Собираем колличество заказов в статусах по ID
+	 {
+		$result = mysql_query("SELECT * FROM status");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+			$count_status[$myrow[id]]=drop::one_status($id, $myrow[id]);
+			$_SESSION['status'][$myrow[id]]=$count_status[$myrow[id]];
+		
+		}
+		while ($myrow = mysql_fetch_array($result));
+		 
+		 return $count_status;
+	 }
+	 
+	 
 	public function refresh_img($id, $img_name)
 	
 	

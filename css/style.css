@@ -176,6 +176,7 @@ thead a:hover {
 	transition: 1s ease;	
 	color:yellow !important;
 }
+
 thead .badge{
 	background-color: #333;
 }
@@ -213,3 +214,14 @@ thead .badge{
   font-style: normal;
   color: #f00;
 }
+/* 
+#order_tabs em a{
+	color: white !important;
+}
+#order_tabs em a:hover {
+	-webkit-transition: 1s ease;
+	-moz-transition: 1s ease;			
+	-ms-transition: 1s ease;						
+	transition: 1s ease;	
+	color:yellow !important;
+} */

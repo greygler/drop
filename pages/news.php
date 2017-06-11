@@ -10,7 +10,7 @@ if ($myrow['style']!='') {$style=$myrow['style'];$color="white";} else $style="b
 
 ?>
 
-<a href="" style="min-width: 175px;color:<?= $color ?>" type="button" class="btn <?= $style ?>"><?= $myrow['name'] ?><br><h3><strong>0</strong></h3></a>
+<a href="?type=order&status=<?= $myrow['id']; ?>" style="min-width: 175px;color:<?= $color ?>" type="button" class="btn <?= $style ?>"><?= $myrow['name'] ?><br><h3><strong><?= $_SESSION['status'][$myrow['id']] ?></strong></h3></a>
 <?
 $color="";
 }

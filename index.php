@@ -13,7 +13,7 @@ require_once (CLASS_PATH.'/lpcrm.class.php');
 require_once (CLASS_PATH.'/drop.class.php');
 require_once (CLASS_PATH.'/users.class.php');
 drop::update_data();	
-					
+$status=drop::statuses($_SESSION['id']);				
 
 
  

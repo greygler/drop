@@ -118,7 +118,7 @@ public function registration()
 	
 public function top_menu()
 { 
-$new_order=4;
+$new_order=$_SESSION['status']['3'];
 if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!=0) $color_balance="green";
 ?>
 	<nav>
@@ -142,7 +142,7 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 		<font color="<?= $color_balance ?>">
 		<span class="fa fa-money fa-lg" ></span> <strong><?= $_SESSION['balance'] ?> <?= CURRENCY ?>. </strong></font>
 		<? if ($new_order>0) {$color_order="red"; ?>
-		<a href="?type=order&orders=new">
+		<a href="?type=order&status=3">
 		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></strong></font></a> <? } ?> 
 		</div>
 		</div>
