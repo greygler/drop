@@ -72,13 +72,16 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 	<!--	echo("<td>{$myrow['user_id']}. {$user['name']}</td>");} ?> -->
 		<td>
 		<a id="btn_user-<?= $myrow['user_id']?>" type="button" class="btn btn-block <? if ($user['users_group']==0) echo('btn-danger text_white'); else 
-		if ($user['balance']<0) echo ('btn-warning'); else	echo ('btn-default') ?>" data-toggle="tooltip" data-placement="bottom" title="Подробнее о пользователе <?= $user['name'] ?>" data-fancybox data-src="<?= ACTION_PATH ?>/user_data.php?id=<?= $myrow['user_id']?>" href="javascript:;"><div id="fa-user-<?= $myrow['user_id'] ?>" class="text-left <? if ($user['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$user['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['user_id'] ?>. <?= $user['name'] ?></div></a></td> <? } ?>
+		if ($user['balance']<0) echo ('btn-warning'); else	echo ('btn-default') ?>" data-toggle="tooltip" data-placement="bottom" title="Подробнее о пользователе <?= $user['name'] ?>" data-fancybox data-src="<?= ACTION_PATH ?>/user_data.php?id=<?= $myrow['user_id']?>" href="javascript:;"><div id="fa-user-<?= $myrow['user_id'] ?>" class="text-left <? if ($user['users_group']==0) echo('text_white'); else echo ('drop_color') ?>"><span class="badge"> <span class="fa <?= $groups[$user['users_group']]['fa_user'] ?>"></span></span> <?= $myrow['user_id'] ?>. <?= $user['name'] ?></div></a></td> <? }  ?>
 		<td>
 		<dl class="dl-horizontal dl-order">
 		<dt><i class="fa fa-calendar" aria-hidden="true"></i></dt><dd><?= date("d.m.Y", $myrow['order_time']); ?></dd>
 		<dt><i class="fa fa-clock-o" aria-hidden="true"></i></dt><dd><?= date("H:i:s", $myrow['order_time']); ?></dd>
 		<dt><i class="fa fa-briefcase" aria-hidden="true"></i></dt><dd><?= $myrow['order_id'] ?></dd>
-		</dl></td>
+		</dl>
+	<?  if ($myrow['lp-crm']!='1') echo('<button title="Передать заказ для обработки" class="btn btn-danger btn-block"><i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i></button>'); ?>
+
+		</td>
 		<td>
 		<a href="" type="button" class="btn btn-default btn_left">
 		<dl class="dl-horizontal dl-order dl-name">
