@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 10 2017 г., 22:38
+-- Время создания: Июн 11 2017 г., 23:24
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `enter_log` (
   `agent` varchar(256) NOT NULL,
   `device` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=121 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
 
 --
 -- Дамп данных таблицы `enter_log`
@@ -207,7 +207,18 @@ INSERT INTO `enter_log` (`id`, `user_id`, `last_time`, `ipv4`, `country`, `regio
 (117, 1, '1497015193', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
 (118, 51, '1497015219', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
 (119, 1, '1497017990', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
-(120, 1, '1497079585', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0);
+(120, 1, '1497079585', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0),
+(121, 1, '1497176911', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(122, 51, '1497177000', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(123, 1, '1497182477', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(124, 51, '1497182588', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(125, 1, '1497186629', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(126, 51, '1497186811', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(127, 40, '1497187020', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(128, 1, '1497187643', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4', 0),
+(129, 1, '1497187685', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4', 0),
+(130, 10, '1497188579', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4', 0),
+(131, 51, '1497190033', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4', 0);
 
 -- --------------------------------------------------------
 
@@ -264,6 +275,7 @@ CREATE TABLE IF NOT EXISTS `order_tab` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `order_id` varchar(12) NOT NULL,
+  `lp-crm` tinyint(1) NOT NULL,
   `order_time` varchar(11) NOT NULL,
   `status` int(11) NOT NULL,
   `country` varchar(2) NOT NULL,
@@ -277,6 +289,11 @@ CREATE TABLE IF NOT EXISTS `order_tab` (
   `site` varchar(100) NOT NULL,
   `ip` varchar(20) NOT NULL,
   `delivery_adress` varchar(256) NOT NULL,
+  `delivery_index` varchar(10) NOT NULL,
+  `delivery` varchar(30) NOT NULL,
+  `ttn` varchar(25) NOT NULL,
+  `ttn_status` varchar(25) NOT NULL,
+  `delivery_date` varchar(20) NOT NULL,
   `utm_source` varchar(50) NOT NULL,
   `utm_medium` varchar(50) NOT NULL,
   `utm_term` varchar(50) NOT NULL,
@@ -289,11 +306,11 @@ CREATE TABLE IF NOT EXISTS `order_tab` (
 -- Дамп данных таблицы `order_tab`
 --
 
-INSERT INTO `order_tab` (`id`, `user_id`, `order_id`, `order_time`, `status`, `country`, `bayer_name`, `phone`, `product_id`, `price`, `count`, `profit`, `comment`, `site`, `ip`, `delivery_adress`, `utm_source`, `utm_medium`, `utm_term`, `utm_content`, `utm_campaign`) VALUES
-(1, 36, '2147483647', '1496159000', 3, 'UA', 'тест-игорь', '+38(000) 000-00-00', 1, '1500.00', 1, '10.00', '', 'hernya', '127.0.0.1', '', 'utm_source', '', 'utm_term', 'utm_content', 'utm_campaign'),
-(2, 36, '2147483648', '1496159300', 3, 'UA', 'тест-игорь', '+38(000) 000-00-00', 2, '500.00', 2, '20.00', '', 'hernya', '127.0.0.1', '', 'utm_source', 'utm_medium', '', '', 'utm_campaign'),
-(3, 7, '2147483649', '1496159345', 3, 'UA', 'тест-вася', '+38(000) 000-00-00', 3, '500.00', 1, '-70.00', '', 'hernya', '127.0.0.1', '', 'utm_source', 'utm_medium', '', 'utm_content', 'utm_campaign'),
-(4, 36, '2147483650', '1496159650', 3, 'UA', 'тест-игорь', '+38(000) 000-00-00', 4, '20.00', 1, '0.00', '', 'hernya', '127.0.0.1', '', 'utm_source', '', 'utm_term', '', 'utm_campaign');
+INSERT INTO `order_tab` (`id`, `user_id`, `order_id`, `lp-crm`, `order_time`, `status`, `country`, `bayer_name`, `phone`, `product_id`, `price`, `count`, `profit`, `comment`, `site`, `ip`, `delivery_adress`, `delivery_index`, `delivery`, `ttn`, `ttn_status`, `delivery_date`, `utm_source`, `utm_medium`, `utm_term`, `utm_content`, `utm_campaign`) VALUES
+(1, 51, '6786457687', 1, '1496159000', 3, 'UA', 'тест-вася11', '380000000011', 1, '1500.00', 1, '10.00', '', 'hernya', '127.0.0.1', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', 'utm_source', '', 'utm_term', 'utm_content', 'utm_campaign'),
+(2, 51, '767687686', 1, '1496159300', 3, 'UA', 'тест-вася2', '380000000002', 2, '1000.00', 2, '20.00', '', 'hernya', '127.0.0.1', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', 'utm_source', 'utm_medium', '', '', 'utm_campaign'),
+(3, 7, '7678678678', 0, '1496159345', 3, 'UA', 'тест-вася3', '+38(000) 000-00-03', 3, '500.00', 1, '-70.00', '', 'hernya', '127.0.0.1', '', '', '', '', '', '', 'utm_source', 'utm_medium', '', 'utm_content', 'utm_campaign'),
+(4, 51, '876786786', 1, '1496159650', 11, 'UA', 'тест-вася4', '380000000004', 4, '20.00', 1, '0.00', 'Какой-то комментарий', 'hernya', '127.0.0.1', 'г. Мухосральск', '', 'Курьер Киев', '78987987987', '', '2017-06-18 00:00:00', 'utm_source', '', 'utm_term', '', 'utm_campaign');
 
 -- --------------------------------------------------------
 
@@ -307,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `pay_method` (
   `active` tinyint(1) NOT NULL,
   `cart` varchar(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Дамп данных таблицы `pay_method`
@@ -483,13 +500,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `registration`, `users_group`, `name`, `email`, `v_email`, `phone`, `v_phone`, `sms`, `contact`, `pay_method`, `password`, `drop_key`, `active_drop`, `balance`, `total_balance`, `order_pay`, `order_pay_method`, `sale`, `total_sale`, `sale_ok`, `last_time`, `ipv4`, `country`, `region`, `city`, `agent`, `device`, `last_enter`) VALUES
-(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'a:4:{i:1;s:5:"ddxfg";i:2;s:18:"+38(000) 000-00-00";i:3;s:8:"y78khbjk";i:4;s:18:"+38(000) 000-00-00";}', 'a:2:{i:1;s:19:"9867-8678-6786-7867";i:2;s:19:"yuiy78y7yiu67i867yi";}', '1c40671124502abb891ece8b9674dba3', 'cee7fee8f7c25b0726184946aeb756cf', 0, '1500.00', '2800.00', '0.00', 1, 0, 12, 12, '1497079585', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1497017990";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
+(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'a:4:{i:1;s:5:"ddxfg";i:2;s:18:"+38(000) 000-00-00";i:3;s:8:"y78khbjk";i:4;s:18:"+38(000) 000-00-00";}', 'a:2:{i:1;s:19:"9867-8678-6786-7867";i:2;s:19:"yuiy78y7yiu67i867yi";}', '1c40671124502abb891ece8b9674dba3', 'cee7fee8f7c25b0726184946aeb756cf', 0, '1500.00', '2800.00', '0.00', 1, 0, 12, 12, '1497187685', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1497187643";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:117:"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4";s:6:"device";s:1:"0";}'),
 (2, '1495644961', 2, 'Вадим', 'slogger1990@gmail.com', '', '', '', '', '', '', 'c7e70f8844321ca123b4839bd581f644', 'a428b2b328cf4397b62b173eb6c0c10f', 0, '100.00', '200.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (4, '1495691400', 1, 'Артур', 'new-day2012@mail.ru', '', '', '', '', '', '', '4aa026d492e2645669254e7c655cc3ac', '3d20280a6888ea60528bf5b2c5d7fe90', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (5, '1495877000', 2, 'Panakshev', 'vpanakshev1@mail.ua', '', '', '', '', '', '', '778e7d704a943d8654ad8883154c2b84', '31c8ed1f2e7496a59f5cb525263eca66', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (6, '1496221566', 3, 'webmasterCRM', 'test1234@binka.me', '', '', '', '', '', '', 'e10adc3949ba59abbe56e057f20f883e', '7a7c71c8e9ac0b782a11f7ace1fb3353', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1496221889', '178.213.0.225', 'UA', 'Днепропетровская область', 'Кривой Рог', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0, 'a:7:{s:4:"ipv4";s:13:"178.213.0.225";s:9:"last_time";s:10:"1496221566";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:5:"agent";s:114:"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";s:6:"device";s:1:"0";}'),
 (7, '1495644820', 6, 'Просто Вася', 'dxfg2@qwe.ert', '', '', '', '', '', '', 'd58e3582afa99040e27b92b13c8f2280', '35f95c819e9b6bd6464a7fab6898b5f3', 0, '-20.00', '50.00', '0.00', 0, 3, 6, 3, '1496258763', '88.135.228.244', 'UA', 'Днепропетровская область', 'Кривой Рог', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0, 'a:7:{s:4:"ipv4";s:14:"88.135.228.244";s:9:"last_time";s:10:"1496258527";s:7:"country";s:2:"UA";s:4:"city";s:19:"Кривой Рог";s:6:"region";s:47:"Днепропетровская область";s:5:"agent";s:102:"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";s:6:"device";s:1:"0";}'),
-(10, '1495724487', 5, 'szdgfzsgdg', 'dxfg21@qwe.ert', '0', '', '0', '', '', '', 'sdfsdf', '', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
+(10, '0', 1, 'Николай', 'nic@nic.nic', 'nic@nic.nic', '', '0', '', '', '', '2e404807bfb60b1e6b61ca840a7f7dc7', '', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1497188579', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4', 0, 'a:7:{s:4:"ipv4";s:0:"";s:9:"last_time";s:0:"";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:5:"agent";s:0:"";s:6:"device";s:1:"0";}'),
 (11, '1495724487', 5, 'dfgdfgsdgsdfg', 'dxfg10@qwe.ert', '0', '', '0', '', '', '', 'ghfghfgh', '', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (12, '1495724487', 5, 'szdgfzsgdg', 'dxfg27@qwe.ert', '0', '', '0', '', '', '', 'sdfsdf', '', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (13, '1495724487', 5, 'dfgdfgsdgsdfg', 'dxfg10@qwe.ert', '0', '', '0', '', '', '', 'ghfghfgh', '', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
@@ -519,13 +536,13 @@ INSERT INTO `users` (`id`, `registration`, `users_group`, `name`, `email`, `v_em
 (37, '1495984300', 1, 'Открытый SSH-ключ', 'dxfg54@qwe.ert', '0', '+38(050) 123-45-60', '+38(050) 123-45-60', '', 'Super_Skype', 'U3234234234234', '202cb962ac59075b964b07152d234b70', 'ec23a01df3b7e172adbfe6efa092d509', 0, '-25.00', '-1230.00', '0.00', 0, 3, 8, -4, '1496994229', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1496841587";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
 (38, '1496079345', 5, 'тест-игорь', 'dxfg58@qwe.ert', '0', '', '0', '', '', '', '202cb962ac59075b964b07152d234b70', 'e75a9c78e2dee5dd3e7b6ea57745d8a5', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (39, '1496132914', 5, 'sdrdrgdfg', 'dxfg545@qwe.ert', '0', '', '0', '', '', '', '202cb962ac59075b964b07152d234b70', 'c89f5b801e7f32a710dcfc62a2322c2b', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
-(40, '1496132950', 5, 'sdrdrgdfg', 'dxfg546@qwe.ert', 'dxfg546@qwe.ert', '+38(045) 654-65-45', '+38(045) 654-65-45', '', '', '', '202cb962ac59075b964b07152d234b70', '9f6ff36f6d0a94878e1315a51941f072', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1496841571', 'localhost', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1496839509";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
+(40, '1496132950', 5, 'sdrdrgdfg', 'dxfg546@qwe.ert', 'dxfg546@qwe.ert', '+38(045) 654-65-45', '+38(045) 654-65-45', '', '', '', '202cb962ac59075b964b07152d234b70', '9f6ff36f6d0a94878e1315a51941f072', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1497187020', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1496841571";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
 (41, '1496133012', 5, 'sdrdrgdfg', 'dxfg547@qwe.ert', '0', '', '0', '', '', '', '202cb962ac59075b964b07152d234b70', 'a624f86779630e2d8b38aa3f529ea1a1', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1496133012', 'localhost', 'AA', '', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, ''),
 (42, '1496556313', 6, 'Просто Вася', 'dxfg549@qwe.ert', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70', '9d7cb3f151e08b84cdc1c5ddf06e7087', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1496556313', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, ''),
 (43, '1496585101', 6, 'тест-игорь', 'dxfg5467@qwe.ert', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70', '26c689bec410f36a618512af73834648', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1496585101', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, ''),
 (44, '1496585246', 6, 'sdrdrgdfg', 'dxfg548@qwe.ert', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70', '91f4c0830d9ad20bd42c2325a94c03a3', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1496585246', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, ''),
 (45, '1496585279', 6, '45y7gddfg', 'dxfg546645@qwe.ert', '', '', '', '', '', '', '202cb962ac59075b964b07152d234b70', 'b6ea912bb19d975c1981a0e4bec33d5f', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '1496585279', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, ''),
-(51, '1495724487', 6, '45y7gddfg', 'dxfg@qwe.ert', '0', '+38(078) 987-98-97', '+38(078) 987-98-97', '', 'Skype_user', 'U2232123123123', '202cb962ac59075b964b07152d234b70', '85e4dfee1a6ad74b851a3263967eb379', 0, '7.00', '120.00', '1.00', 0, 1, 5, 3, '1497015219', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1496994243";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
+(51, '1495724487', 6, '45y7gddfg', 'dxfg@qwe.ert', '0', '+38(078) 987-98-97', '+38(078) 987-98-97', '', 'Skype_user', 'U2232123123123', '202cb962ac59075b964b07152d234b70', '85e4dfee1a6ad74b851a3263967eb379', 0, '7.00', '120.00', '1.00', 0, 1, 5, 3, '1497190033', 'localhost', 'AA', 'Не определен', 'Не определен', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4', 0, 'a:7:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1497186811";s:7:"country";s:2:"AA";s:4:"city";s:23:"Не определен";s:6:"region";s:23:"Не определен";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
 (52, '1495724706', 7, '45y7gddfg5', 'dxfg1@qwe.ert', '0', '', '0', '', '', '', '202cb962ac59075b964b07152d234b70', '2fb7b5f574ac3caaca8eb3f5d085ae99', 0, '-20.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (53, '1495725483', 2, 'wqeqwe', 'dxfg3@qwe.ert', '0', '', '0', '', '', '', '202cb962ac59075b964b07152d234b70', 'ed9dd85f95caf38432d5fe3a8558aa02', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),
 (54, '1495726261', 2, 'wqeqew', 'dxfg4@qwe.ert', '0', '', '0', '', '', '', '202cb962ac59075b964b07152d234b70', '68b1e5a482a4522677e32719daf1ea73', 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, '', '', '', '', '', '', 0, ''),

@@ -22,7 +22,7 @@ class drop{
 		return $myrow['id'];
 	}
 	
-	public function search($product) // Ищем продукт
+	public function search($product) // Ищем продукт по названию
 	{
 		$result = mysql_query("SELECT * from products WHERE name LIKE '%{$product}%'");
 		return $result;
@@ -47,6 +47,25 @@ class drop{
 
 	}
 	
+	
+	public function update_order($order_id)
+	{
+		
+	}
+
+	public function last_order()
+	{
+		$result = mysql_query("SELECT order_id FROM order_tab WHERE `lp-crm`!='0' ORDER BY id DESC LIMIT 100");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+		$last_order[]=$myrow['order_id'];
+		}
+		while ($myrow = mysql_fetch_array($result));
+		return $last_order;
+	}
+	
+	
 	public function is_product($id) // Есть ли в базе товар с таким ID
 	 {
 		//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
@@ -60,6 +79,13 @@ class drop{
 			$myrow = mysql_fetch_array($result);
 			return $myrow;
 	 }
+	 
+	 public function one_order($id){ // Заказ по ID
+		 $result = mysql_query("SELECT * FROM order_tab WHERE id='{$id}'");
+			$myrow = mysql_fetch_array($result);
+			return $myrow;
+	 }
+	 
 	 
 	public function is_categories($id) // Есть ли такая категория в базе
 	{
@@ -96,7 +122,7 @@ class drop{
 		else return false;
 	}
 	
-	public function product_active($id, $active) // Обновление автивности товара
+	public function product_active($id, $active) // Обновление активности товара
 		{
 			$result = mysql_query ("UPDATE products SET active='{$active}' WHERE id='{$id}'");
 			if ($result == 'true') return 'ok'; else return 'error';
@@ -185,6 +211,13 @@ class drop{
 		while ($myrow = mysql_fetch_array($result));
 		 
 		 return $count_status;
+	 }
+	 
+	 public function lpcrm($id, $ok)
+	 {
+		 
+		 $result = mysql_query ("UPDATE `order_tab` SET `lp-crm`='{$ok}' WHERE id='{$id}'");
+			if ($result == 'true') return 'ok'; else return 'error';
 	 }
 	 
 	 

@@ -36,7 +36,7 @@ class Autoring {
 		}
 		
 		
-	public function user_group($group_id) // Узнаем текущий ID группы пользователя
+	public function user_group($group_id) // Забираем информацию о группе пользователя по ID пользователя
 		{
 			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$result = mysql_query("SELECT * FROM users_group WHERE id_group='{$group_id}'");

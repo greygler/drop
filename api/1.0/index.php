@@ -1,9 +1,9 @@
 <?
 if (!empty($_POST)) {
-	require ($_SERVER['DOCUMENT_ROOT'].'/config.php');
-	require (CLASS_PATH.'/db.class.php');
-	require (CLASS_PATH.'/lpcrm.class.php'); 
-	require (CLASS_PATH.'/drop.class.php'); 
+	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
+	require_once (CLASS_PATH.'/db.class.php');
+	require_once (CLASS_PATH.'/lpcrm.class.php'); 
+	require_once (CLASS_PATH.'/drop.class.php'); 
 	$user_id=drop::get_id($_POST['key']);
 	$result=drop::new_order($user_id, $_POST,'3');
 
@@ -40,7 +40,9 @@ $products = urlencode(serialize($products_list));
     'utm_content'     => $_POST['utm_content'], // utm_content    
     'utm_campaign'    => $_POST['utm_campaign'] // utm_campaign
 );
-	//$out=json_encode(lp_crm::getcurl(CRM, 'addNewOrder.html', $data));
+	$out=lp_crm::getcurl(CRM, 'addNewOrder.html', $data);
+	print_r($out);
+	if ($out['status']='ok') {drop::lpcrm($_POST['row_id'], '1');
 	//echo $out;
 }
 else

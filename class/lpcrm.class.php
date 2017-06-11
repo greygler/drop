@@ -68,6 +68,19 @@ class LP_CRM
 		return $out_data;
 	}
 	
+	public function getOrdersByID($crm, $key,$order_id_array) // Забираем инфу о заказах
+	{
+		$order_id = implode(",", $order_id_array);
+		$data = array(
+			'key' => $key, 
+			'order_id'	=> $order_id,		
+		);
+ 
+		$out_data = lp_crm::getcurl($crm, 'getOrdersByID', $data);
+		return $out_data;
+		
+	}
+	
 	
 }
 ?>

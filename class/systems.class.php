@@ -135,7 +135,7 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 		<div id="user" class="row  hidden-xs">
 		<div id="data_user"> 
 		 <div class="inform  text-right col-md-1 col-lg-1 visible-lg visible-md"><span class="fa <?= $_SESSION['fa_logo'] ?> fa-3x"></span> </div>
-		<div class="inform users_data col-sm-3 col-md-3 col-lg-4"> <span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <span class="user_name"><?= $_SESSION['name'] ?></span><a data-toggle="modal" data-target="#logmodal" class="visible-lg visible-md" href="#"> <i class="fa fa-power-off fa-lg"></i> Выход</a> 
+		<div class="inform users_data col-sm-3 col-md-3 col-lg-5"> <span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <span class="user_name"><?= $_SESSION['name'] ?></span><a data-toggle="modal" data-target="#logmodal" class="visible-lg visible-md" href="#"> <i class="fa fa-power-off fa-lg"></i> Выход</a> 
 		
 		<a data-toggle="modal" data-target="#logmodal" id="logout-xs" class="inform visible-sm" href="#"> <i class="fa fa-power-off fa-lg"></i></a>
 		<br>
@@ -146,7 +146,7 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></strong></font></a> <? } ?> 
 		</div>
 		</div>
-		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-5"><address><a href="tel:'.SKYPE.'"><span class="fa fa-skype fa-lg"></span> '.SKYPE.'</a><br><a href="tel:'.PHONE.'"><span class="fa fa-phone fa-lg"></span> '.PHONE.'</a></address></div>'); ?>
+		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-4"><address><a href="tel:'.SKYPE.'"><span class="fa fa-skype fa-lg"></span> '.SKYPE.'</a><br><a href="tel:'.preg_replace('![^0-9]+!', '', PHONE).'"><span class="fa fa-phone fa-lg"></span> '.PHONE.'</a></address></div>'); ?>
 		
 		</div>
 		
@@ -210,7 +210,7 @@ public function support_modal()
       </div>
       <div class="modal-body">
         <p><address><a href="tel:<?= SKYPE ?>">
-		<span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br><a href="tel:<?= PHONE ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a></address></p>
+		<span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br><a href="tel:<?= preg_replace('![^0-9]+!', '', PHONE); ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a></address></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>

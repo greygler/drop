@@ -1,5 +1,37 @@
 <h1></h1>
 <div>
+<script>
+function upload(id, row_id)
+{
+	$('.upload_'+row_id).html('<i class="fa fa-refresh fa-spin fa-lg fa-fw"></i>');
+	
+	 $.ajax({
+          type: 'POST',
+          url: '<?= ACTION_PATH ?>/update_lpcrm.php',
+          data: {
+			  id : id,
+			  row_id : row_id
+		  },
+        success: function(data) {
+			alert(data);
+			if (data=='ok'){
+			$('#upload_button_'+row_id).removeClass('btn-danger');
+			$('#upload_button_'+row_id).addClass('btn-primary');
+			$('.upload_'+row_id).html('<i class="fa fa-check fa-lg" aria-hidden="true"></i>');
+			$('#upload_button_'+row_id).attr("disabled","disabled");
+			}
+			else {
+			$('.upload_'+row_id).html('<i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>');
+			$('#upload_button_'+row_id).attr("disabled","disabled");
+			}
+		},
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	
+}
+</script>
 <?
 if ($_GET['status']!="") $get_status=$_GET['status']; else $get_status=3;
 
@@ -49,7 +81,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<th>Коммент</th>
 		<th>Заказ</th>
 		<th>Сайт</th>
-		<th>Адрес</th>
+		<th>Доставка</th>
 		<th>UTM-метки</th>
 	</tr>
 	</thead>
@@ -78,9 +110,11 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<dt><i class="fa fa-calendar" aria-hidden="true"></i></dt><dd><?= date("d.m.Y", $myrow['order_time']); ?></dd>
 		<dt><i class="fa fa-clock-o" aria-hidden="true"></i></dt><dd><?= date("H:i:s", $myrow['order_time']); ?></dd>
 		<dt><i class="fa fa-briefcase" aria-hidden="true"></i></dt><dd><?= $myrow['order_id'] ?></dd>
-		</dl>
-	<?  if ($myrow['lp-crm']!='1') echo('<button title="Передать заказ для обработки" class="btn btn-danger btn-block"><i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i></button>'); ?>
-
+		
+	<?  if ($myrow['lp-crm']!='1') 
+		if ($_SESSION['users_group']<5) echo ('<p class="text-center"><span class="fa-stack fa-lg"><i class="fa fa-cloud-upload fa-stack-1x"></i> <i class="fa fa-ban fa-stack-2x text-danger"></i></span></p>');
+		else echo('<button id="upload_button_'.$myrow['id'].'" onclick="upload('.$_SESSION['id'].','.$myrow['id'].')" title="Передать заказ для обработки" class="btn btn-danger btn-block"><div class="upload_'.$myrow['id'].'"><i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i></div></button>'); ?>
+</dl>
 		</td>
 		<td>
 		<a href="" type="button" class="btn btn-default btn_left">
@@ -105,7 +139,19 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<i style="<?= $style ?>" class="fa <?= $label ?>" aria-hidden="true"></i></dt><dd><strong style="<?= $style ?>"><?= $myrow['profit'] ?> <?= CURRENCY ?></strong></dd></dl></td>
 		<td><a target="_blank" href="http://<?= $myrow['site'] ?>"><i class="fa fa-globe" aria-hidden="true"></i> <?= $myrow['site'] ?></a></td>
 		
-		<td>Адрес</td>
+		<td>
+		<dl class="dl-horizontal dl-order">
+		<? if ($myrow['delivery_adress']!="")  { if ($myrow['delivery_index']!="") $delivery_index=$myrow['delivery_index'].', ';
+		echo ('<dt><i class="fa fa-map-marker" aria-hidden="true"></i></dt><dd>'.$delivery_index.$myrow['delivery_adress'].'</dd>'); }?>
+		<? if ($myrow['delivery']!="") echo ('<dt><i class="fa fa-truck" aria-hidden="true"></i></dt><dd>'.$myrow['delivery'].'</dd>');?>
+		
+		<? if (($myrow['delivery_date']!='0000-00-00 00:00:00') AND ($myrow['delivery_date']!='')) echo ('<dt><i class="fa fa-clock-o" aria-hidden="true"></i></dt><dd>'.$myrow['delivery_date'].'</dd>');  ?>
+		<? if ($myrow['ttn']!="") echo ('<dt><i class="fa fa-file-text" aria-hidden="true"></i></dt><dd>'.$myrow['ttn'].'</dd>'); ?>
+		<? if ($myrow['ttn_status']!="") echo('<dt><i class="fa fa-check-square" aria-hidden="true"></i></dt><dd>'.$myrow['ttn_status'].'</dd>'); ?>
+		</dl>
+		
+		
+		</td>
 		<td>
 		<dl class="dl-horizontal">
 		<? if ($myrow['utm_source']!="") echo("<dt><strong>utm_source:</strong></dt> <dd>{$myrow['utm_source']}</dd>"); ?>
