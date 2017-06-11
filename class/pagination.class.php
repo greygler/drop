@@ -45,7 +45,21 @@ public function sort_symbol($params, $param, $element, $symbol, $symbol_desc)
 return $sort_symbol;
 }
 
-
+public function limit_pagin($get_params, $count_records, $view_pages )
+{
+	if ($get_params['type']=="") $get_params['type']="news";
+if ($get_params['page_no']!="") $page_no=$get_params['page_no']; else $page_no=1; 
+if (($get_params['pages']!="") AND ($get_params['pages']!='all'))  $limit=$get_params['pages']; 
+else 
+	if ($get_params['pages']!='all')
+	$limit=$view_pages['0']; else $limit=$count_records;
+$count_pages=ceil($count_records/$limit);
+if ($page_no==1) $begin=0; else $begin=(($page_no-1)*$limit);
+$limit_array['begin']=$begin;
+$limit_array['count']=$limit;
+return $limit_array;
+	
+}
 
 public function  pagin($get_params, $count_records, $view_pages ) 
 // Передаем содержимое $_GET, общее колличество записей и массив колличества отображаемых страниц

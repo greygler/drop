@@ -1,18 +1,28 @@
 <h1></h1>
+<div>
+<?
+if ($_GET['status']!="") $get_status=$_GET['status']; else $get_status=3;
+
+ require_once (CLASS_PATH.'/pagination.class.php'); 
+$limit=pagination::limit_pagin($_GET,$_SESSION['status'][$get_status], $view_pages); 	?>
+</div>
 <section id="order_tabs">
 		<ul class="nav nav-tabs">
 		<?	
+		
 $result = mysql_query("SELECT * FROM status");
 $myrow = mysql_fetch_array($result);
 do 
 {
 if ($myrow['style']!='') {$style=$myrow['style'];} else $style="btn-info";
-if ($myrow['id']==$_GET['status']) {$li_style.="active"; $symbol1="V <strong><u>";$symbol2="</u></strong>"; }
+if ($myrow['id']==$get_status) {$li_style="active"; $symbol1="<i class=\"fa fa-check\" aria-hidden=\"true\"></i>
+ <strong><u>";$symbol2="</u></strong>"; $this_status=$myrow['name']; }
 //else {$span1="<em>"; $span2="</em>";}
+if ($_SESSION['status'][$myrow['id']]<1) $li_style="disabled";
 
 ?>
 
-<li class="<?= $li_style ?>" ><?= $span1 ?><a  class="<?= $style ?> white_link" href="?type=order&status=<?= $myrow['id'] ?>"><?= $symbol1.$myrow['name'].$symbol2 ?></a><?= $span2 ?></li>
+<li class="<?= $li_style ?>" ><?= $span1 ?><a  class="<?= $style ?> white_link" href="?type=order&status=<?= $myrow['id'] ?>"><?= $symbol1.$myrow['name'].$symbol2 ?> (<?= $_SESSION['status'][$myrow['id']] ?>)</a><?= $span2 ?></li>
 <?
 $symbol2="";$symbol1="";$style="";$li_style="";$span1=""; $span2="";
 }
@@ -29,7 +39,10 @@ while ($myrow = mysql_fetch_array($result));
 	<tr>
 	<? if ($_SESSION['users_group']<5) {
 		$groups=autoring::groups();
-	echo('<th>id, Имя пользователя</th>');} ?>
+		
+	echo('<th>id, Имя пользователя</th>');}
+else $where_id=" AND user_id='{$_SESSION['id']}'";
+	?>
 		
 		<th>Дата, Order_id</th>
 		<th><i class="fa fa-user" aria-hidden="true"></i> Имя, <i class="fa fa-phone" aria-hidden="true"></i> Телефон,<br>IP-адрес</th>
@@ -42,8 +55,11 @@ while ($myrow = mysql_fetch_array($result));
 	</thead>
 	<tbody >
 	<?
-	db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
-	$result = mysql_query("SELECT * FROM order_tab WHERE status='3' ORDER BY order_id DESC ");
+	if (($_SESSION['status'][$get_status] > 0) OR ($_SESSION['users_group']<5)) {
+		$db="SELECT * FROM order_tab WHERE (status='{$get_status}'{$where_id}) ORDER BY order_id DESC LIMIT {$limit['begin']}, {$limit['count']}";
+		//echo $db;
+	$result = mysql_query($db);
+	
 	$myrow = mysql_fetch_array($result);
 		do
 	{ $product=drop::one_product($myrow['product_id']);
@@ -101,6 +117,9 @@ while ($myrow = mysql_fetch_array($result));
 
 	}
 while ($myrow = mysql_fetch_array($result));
+} else echo('<tr><td colspan="7"><h3 align="center">Нет заказов со статусом "<strong>'.$this_status.'</strong>" </h3></td></tr>');
+
 ?>
 <tbody>
 	</table>
+<? $limit=pagination::pagin($_GET,$_SESSION['status'][$get_status], $view_pages); 	?>
