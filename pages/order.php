@@ -1,37 +1,6 @@
 <h1></h1>
 <div>
-<script>
-function upload(id, row_id)
-{
-	$('.upload_'+row_id).html('<i class="fa fa-refresh fa-spin fa-lg fa-fw"></i>');
-	
-	 $.ajax({
-          type: 'POST',
-          url: '<?= ACTION_PATH ?>/update_lpcrm.php',
-          data: {
-			  id : id,
-			  row_id : row_id
-		  },
-        success: function(data) {
-			alert(data);
-			if (data=='ok'){
-			$('#upload_button_'+row_id).removeClass('btn-danger');
-			$('#upload_button_'+row_id).addClass('btn-primary');
-			$('.upload_'+row_id).html('<i class="fa fa-check fa-lg" aria-hidden="true"></i>');
-			$('#upload_button_'+row_id).attr("disabled","disabled");
-			}
-			else {
-			$('.upload_'+row_id).html('<i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>');
-			$('#upload_button_'+row_id).attr("disabled","disabled");
-			}
-		},
-          error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
-          }
-        });
-	
-}
-</script>
+<script src="<?= JS_PATH ?>/order.php"></script>
 <?
 if ($_GET['status']!="") $get_status=$_GET['status']; else $get_status=3;
 
@@ -77,7 +46,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 	?>
 		
 		<th>Дата, Order_id</th>
-		<th><i class="fa fa-user" aria-hidden="true"></i> Имя, <i class="fa fa-phone" aria-hidden="true"></i> Телефон,<br>IP-адрес</th>
+		<th><i class="fa fa-user" aria-hidden="true"></i> Имя, <i class="fa fa-phone" aria-hidden="true"></i> Телефон,<br><i class="fa fa-envelope-o" aria-hidden="true"></i> E-mail, <i class="fa fa-flag" aria-hidden="true"></i> IP-адрес</th>
 		<th>Коммент</th>
 		<th>Заказ</th>
 		<th>Сайт</th>
@@ -121,6 +90,9 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<dl class="dl-horizontal dl-order dl-name">
 		<dt><i class="fa fa-user" aria-hidden="true"></i></dt><dd><?= $myrow['bayer_name'] ?></dd>
 		<dt><i class="fa fa-phone" aria-hidden="true"></i></dt><dd><?= $myrow['phone'] ?></dd>
+		<? if ($myrow['email']!="") { ?> 
+		<dt><i class="fa fa-envelope" aria-hidden="true"></i></dt><dd><?= $myrow['email'] ?></dd> <? } ?>
+
 		<dt><i class="flag-<?= $myrow['country'] ?>"></i></dt><dd><?= $myrow['ip'] ?></dd>
 		</dl></a>
 		</td>

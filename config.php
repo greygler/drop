@@ -49,6 +49,7 @@ define('UPDATE_PRODUCT',true); // Разрешение обновления пр
 define('UPDATE_TIME','3600'); // Период обновления данных из LP-CRM
 define('LAST_TIME_FILE','last_time.php'); // Период обновления данных из LP-CRM
 define('ACTIVE_PRODUCT','1'); // Новый продукт изначально 1 - активный, 0 - не активный
+define('DEFAULT_ID','1'); // Id, на кого заказ, если KEY не обнаружен
 
 define('MASK_PHONE_UA','\+38(0*9) 999-99-99'); // Маска номера телефона Украина
 define('MASK_PHONE_RU','\+7(*99) 999-99-99'); // Маска номера телефона Россия

@@ -1,11 +1,15 @@
 <?
+session_start();
 if (!empty($_POST)) {
 	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once (CLASS_PATH.'/db.class.php');
+	require_once (CLASS_PATH.'/autoring.class.php');
 	require_once (CLASS_PATH.'/lpcrm.class.php'); 
 	require_once (CLASS_PATH.'/drop.class.php'); 
 	db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
-	$user_id=drop::get_id($_POST['key']);
+	if (db::cound_bd('users', "drop_key='{$_POST['key']}'")>0) $user=drop::get_id($_POST['key']); else $user=autoring::get_user(DEFAULT_ID);
+	$groups=autoring::user_group($user['users_group']);
+	print_r($groups);
 	$order=$_POST;
 	$products = unserialize(urldecode($_POST['products'])); 
 	foreach($products as $key => $value){
@@ -21,16 +25,16 @@ if (!empty($_POST)) {
 	  $profit=$profit+$prof;
 	  
 	}
-	echo ("общ. cумма покупки {$total}<br>");
+	//echo ("общ. cумма покупки {$total}<br>");
 	$order['total']=$total;
-	echo ("общ. профит {$profit}<br>");
+	//echo ("общ. профит {$profit}<br>");
 	$order['profit']=$profit;
-	$result=drop::new_order($user_id, $order,'3');
+	$result=drop::new_order($user['id'], $order,'3');
 
 	echo $result;
 	
-	echo time();
-	
+
+	if ($user['active_drop']=='1'){
  
 	$data = array(
     'key'             => CRM_KEY, //Ваш секретный токен
@@ -46,19 +50,17 @@ if (!empty($_POST)) {
     'ip'              => $_POST['ip'],  // IP адрес покупателя
     'delivery'        => CRM_DELIVERY,        // способ доставки (id в CRM)
     'delivery_adress' => $_POST['delivery_adress'], // адрес доставки
-    'payment'         => CRM_PAYMENT,          // вариант оплаты (id в CRM)
-    'utm_source'      => $user_id,  // utm_source 
-    'utm_medium'      => $_POST['utm_medium'],  // utm_medium 
-    'utm_term'        => $_POST['utm_term'],    // utm_term   
-    'utm_content'     => $_POST['utm_content'], // utm_content    
-    'utm_campaign'    => $_POST['utm_campaign'] // utm_campaign
+    'payment'         => $groups['payment'],          // вариант оплаты (id в CRM)
+    'utm_source'      => TITLE,  // utm_source 
+    'utm_medium'      => 'Id: '.$user['id'],  // utm_medium 
+    'utm_term'        => 'Имя: '.$user['name'],    // utm_term   
+    'utm_content'     => 'Phone: '.$user['phone'], // utm_content    
+    'utm_campaign'    => 'Email: '.$user['email'] // utm_campaign
 );
-	//$out=lp_crm::getcurl(CRM, 'addNewOrder.html', $data);
+	$out=lp_crm::getcurl(CRM, 'addNewOrder.html', $data);
 	print_r($out);
-	if ($out['status']=='ok') drop::lpcrm($_POST['row_id'], '1');
-	//echo $out;
-
-}
-else
-	header("Location: / ");
+	if ($out['status']=='ok') drop::lpcrm_order_id($_POST['order_id'], '1');
+	echo $out;
+	}
+} else	header("Location: / ");
 ?>

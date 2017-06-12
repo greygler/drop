@@ -27,43 +27,7 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 
 <div id="stat_block" class="col-sm-6 col-md-6 col-lg-6 panel panel-default panel_user">
 
-<script>
-function active_drop(id) {
-	
-	if ($('#checkbox').is(':checked')) 
-		var active='1'; else var active='0';
-		 	
- 	    $.ajax({
-          type: 'POST',
-          url: '<?= ACTION_PATH ?>/active_drop.php',
-          data: {
-			  drop_active: active,
-			  id : id
-		  },
-        success: function(data) {
-			$('.active_drop').html(data);
-		},
-          error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
-          }
-        });
-	}
-	
-function new_code(id)
-{
-	$('#refresh_code').addClass('fa-spin');
-	$.ajax({
-          type: 'POST',
-          url: '<?= ACTION_PATH ?>/new_key.php',
-          data: {id: id},
-          success: function(data) { $("#drop_key").val(data); $('#refresh_code').removeClass('fa-spin');},
-          error:  function(xhr, str){
-			alert('Возникла ошибка: ' + xhr.responseCode);
-          }
-        });
-		
-}
-</script>
+ <script src="<?= JS_PATH ?>/stat.php"></script>
 
 <h3 class="text-center"><span class="fa fa-cogs fa-lg"></span> <strong>Настройки</strong></h3><br>
 <form action="javascript:void(null);" onsubmit="new_code(<?= $_SESSION['id'] ?>)" >
@@ -88,9 +52,7 @@ function new_code(id)
   </dl>
 </form>
 
-<a class="btn btn-default btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">
-История авторизаций
-		</a>
+<a class="btn btn-default btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">История авторизаций</a>
 
 </div>
 

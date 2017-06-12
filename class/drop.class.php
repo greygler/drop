@@ -19,7 +19,7 @@ class drop{
 		//db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 		$result = mysql_query("SELECT * FROM users WHERE drop_key='{$key}'");
 		$myrow = mysql_fetch_array($result);
-		return $myrow['id'];
+		return $myrow;
 	}
 	
 	public function search($product) // Ищем продукт по названию
@@ -217,6 +217,13 @@ class drop{
 	 {
 		 
 		 $result = mysql_query ("UPDATE `order_tab` SET `lp-crm`='{$ok}' WHERE id='{$id}'");
+			if ($result == 'true') return 'ok'; else return 'error';
+	 }
+	 
+	  public function lpcrm_order_id($order_id, $ok)
+	 {
+		 
+		 $result = mysql_query ("UPDATE `order_tab` SET `lp-crm`='{$ok}' WHERE order_id='{$order_id}'");
 			if ($result == 'true') return 'ok'; else return 'error';
 	 }
 	 
