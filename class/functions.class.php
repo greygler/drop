@@ -239,9 +239,6 @@ public function device($device, $agent)
 	$device_array['device']=func::device_name($device);
 	$device_array['os']=func::getOS($agent);
 	$device_array['browser']=func::user_browser($agent);
-	
-
-	
 	return $device_array;
 	
 }

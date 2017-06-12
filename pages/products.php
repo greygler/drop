@@ -92,4 +92,6 @@ while ($myrow = mysql_fetch_array($result));
 	
 </table>
 
-<? $limit=pagination::pagin($_GET,$count_products, $view_pages); //	}?>
+<? $limit=pagination::pagin($_GET,$count_products, $view_pages); //	}
+$refresh="yes";
+?>

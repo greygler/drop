@@ -15,11 +15,11 @@ require_once (CLASS_PATH.'/functions.class.php');
 <?= systems::head(); ?>
 <div class="container container_user_data">
 <div class="page-header">
-		<h1 style="margin: 0px 0 10px 0;"><small>Пользователь: </small><strong><?= $user['name']?></strong><small>, id: <?= $_GET['id'] ?></small></h1>
+		<h1 style="margin: 0px 0 10px 0;"><small>История входов, id: <?= $_GET['id'] ?></small></h1>
 </div>
 <? 
 $count_logs=db::cound_bd('enter_log',"user_id='{$_GET['id']}'");
-$limit=pagination::pagin($_GET, $count_logs, $view_pages,'user_logs.php'); 	?>
+$limit=pagination::pagin($_GET, $count_logs, $view_pages,$_SERVER['PHP_SELF']); 	?>
 <table class="table table-striped" >
 <thead>
 	<tr valign="middle">
@@ -71,7 +71,7 @@ $limit=pagination::pagin($_GET, $count_logs, $view_pages,'user_logs.php'); 	?>
 	
 	<tbody>
 	</table>
-<? $limit=pagination::pagin($_GET, $count_logs, $view_pages); 	?>
+<? $limit=pagination::pagin($_GET, $count_logs, $view_pages,$_SERVER['PHP_SELF']); 	?>
 
 </div>
 

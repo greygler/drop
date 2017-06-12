@@ -87,6 +87,11 @@ function new_code(id)
  
   </dl>
 </form>
+
+<a class="btn btn-default btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">
+История авторизаций
+		</a>
+
 </div>
 
 

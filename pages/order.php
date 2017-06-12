@@ -94,7 +94,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 	
 	$myrow = mysql_fetch_array($result);
 		do
-	{ $product=drop::one_product($myrow['product_id']);
+	{ 
 	
 	?>
 		<tr>
@@ -128,15 +128,37 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<td><?= $myrow['comment'] ?></td>
 		<td>
 		<dl class="dl-horizontal dl-order">
-		<dt><i class="fa fa-shopping-cart sprice" aria-hidden="true"></i></dt><dd><a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $myrow['product_id']; ?>" href="javascript:;javascript:window.location.reload();"><strong><?= $product['name']; ?></strong></a></dd>
-		<dt><i class="fa fa-tag sprice" aria-hidden="true"></i></dt><dd><a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $myrow['product_id']; ?>" href="javascript:;"><?= $product['price']; ?> <?= CURRENCY ?></a></dd>
-		<dt><i class="fa fa-barcode" aria-hidden="true"></i></dt><dd><strong><?= $myrow['count'] ?> шт.</strong> <small><i class="fa fa-times" aria-hidden="true"></i></small> <strong> <?= $myrow['price'] ?> <?= CURRENCY ?></strong> </dd>
-		<dt><i class="fa fa-check-square-o" aria-hidden="true"></i></dt><dd><strong><?= $myrow['count']*$myrow['price'] ?> <?= CURRENCY ?></strong></dd>
+		
+	
+		
+		<? $products = unserialize(urldecode($myrow['products'])); 
+		//print_r($products);
+		foreach($products as $key => $value){
+			if ($value['count']!="") $count=$value['count']; else $count=$value['quantity'];
+			$product=drop::one_product($value['product_id']);
+			$sum=$count*$value['price'];
+			$drop_sum=$count*$product['price'];
+			$prof=$sum-$drop_sum;
+		?>
+			<dt><?= $key ?>. </dt>
+		<dd>
+		<a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $value['product_id']; ?>" href="javascript:;javascript:window.location.reload();"><strong> <?= $product['name']; ?></strong> <small>(Цена: <?= $product['price']; ?> <?= CURRENCY ?>)</small></a></dd>
+		
+		<dt><i class="fa fa-shopping-cart sprice" aria-hidden="true"></i></dt>
+		<dd><strong><?= $count ?> шт.</strong> <small><i class="fa fa-times" aria-hidden="true"></i></small> <strong> <?= $value['price'] ?> <?= CURRENCY ?></strong> = <?= $sum ?> <?= CURRENCY ?> <span class="badge pull-right">Profit: <?= $prof ?> <?= CURRENCY ?><span> </dd>
+		
+		<? } ?>
+		
 		<dt>
 		<? if ($myrow['profit'] > 0) {$label="fa-line-chart"; $style="color: green";}
 			else if ($myrow['profit'] < 0) {$label="fa-thumbs-down"; $style="color: red";}
 			else {$label="fa-battery-empty"; $style="color: #5b6064";}	?>
-		<i style="<?= $style ?>" class="fa <?= $label ?>" aria-hidden="true"></i></dt><dd><strong style="<?= $style ?>"><?= $myrow['profit'] ?> <?= CURRENCY ?></strong></dd></dl></td>
+		<i style="<?= $style ?>" class="fa <?= $label ?>" aria-hidden="true"></i></dt>
+		<dd><strong style="<?= $style ?>"><?= $myrow['profit'] ?> <?= CURRENCY ?></strong></dd>
+		
+		</dl>
+		
+		</td>
 		<td><a target="_blank" href="http://<?= $myrow['site'] ?>"><i class="fa fa-globe" aria-hidden="true"></i> <?= $myrow['site'] ?></a></td>
 		
 		<td>
