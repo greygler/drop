@@ -194,6 +194,9 @@ thead .badge{
 	margin-right: 10px;
 	margin-bottom: 20px;
 }
+.dl-order{
+margin-bottom: 0 !important;
+}
 .dl-order dt {
      width: 20px !important;
 }

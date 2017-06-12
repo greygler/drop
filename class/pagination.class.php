@@ -1,9 +1,10 @@
 <?
 class Pagination{
 
-public function  pagelink($params) // Формируем Get-строку для ссылки из массива $params
+public function  pagelink($params, $type="") // Формируем Get-строку для ссылки из массива $params
 {
- $link='/?'.http_build_query($params);
+	
+ $link=$type.'/?'.http_build_query($params);
  return $link; 
 }
 
@@ -61,11 +62,11 @@ return $limit_array;
 	
 }
 
-public function  pagin($get_params, $count_records, $view_pages ) 
+public function  pagin($get_params, $count_records, $view_pages, $type="") 
 // Передаем содержимое $_GET, общее колличество записей и массив колличества отображаемых страниц
 // Возвращаем массив с первым номером, с которого начинается выборка ['begin'] и колличеством отображаемых полей ['count'] 
 {
-if ($get_params['type']=="") $get_params['type']="news";
+if (($get_params['type']=="") & ($type=='')) $get_params['type']="news";
 if ($get_params['page_no']!="") $page_no=$get_params['page_no']; else $page_no=1; 
 if (($get_params['pages']!="") AND ($get_params['pages']!='all'))  $limit=$get_params['pages']; 
 else 
@@ -76,13 +77,13 @@ if ($page_no==1) $begin=0; else $begin=(($page_no-1)*$limit);
 ?>
 <? if (($get_params['pages']<$count_records) AND ($count_records>$limit))  { ?>
 <ul class="pagination">
-  <li <? if ($page_no==1) {echo('class="disabled"'); $href="#";$ps=". В данном случае выбор не возможен!"; } else {$get_params['page_no']=$page_no-1; $href=Pagination::pagelink($get_params); $page_no_p=$page_no-1; $ps="&nbsp;".$page_no_p;} ?>><a href="<?= $href  ?>" title="Предыдущая страница<?= $ps; ?>">&laquo;</a></li>
+  <li <? if ($page_no==1) {echo('class="disabled"'); $href="#";$ps=". В данном случае выбор не возможен!"; } else {$get_params['page_no']=$page_no-1; $href=Pagination::pagelink($get_params, $type); $page_no_p=$page_no-1; $ps="&nbsp;".$page_no_p;} ?>><a href="<?= $href  ?>" title="Предыдущая страница<?= $ps; ?>">&laquo;</a></li>
   <? for ($i=1; $i<=$count_pages; $i++ ) { ?>
   <li <? if ($i==$page_no) {echo('class="active"'); $str="Текущая страница";} else $str="Перейти к странице {$i}"; ?>>
-  <a title="<?= $str ?>" href="<? $get_params['page_no']=$i; echo Pagination::pagelink($get_params) ?>"><?= $i ?> <span class="sr-only">(current)</span></a></li>
+  <a title="<?= $str ?>" href="<? $get_params['page_no']=$i; echo Pagination::pagelink($get_params,$type) ?>"><?= $i ?> <span class="sr-only">(current)</span></a></li>
   <? } ?>
   <!-- <li><a href="#">2 <span class="sr-only">(current)</span></a></li> -->
-  <li <? if ($page_no==$count_pages) { echo('class="disabled"'); $href="#";$ss=". В данном случае выбор не возможен!";} else{ $get_params['page_no']=$page_no+1; $href=Pagination::pagelink($get_params); $page_no_s=$page_no+1; $ss="&nbsp;".$page_no_s; }  ?>><a href="<?= $href  ?>" title="Следующая страница<?= $ss; ?>">&raquo;</a></li>
+  <li <? if ($page_no==$count_pages) { echo('class="disabled"'); $href="#";$ss=". В данном случае выбор не возможен!";} else{ $get_params['page_no']=$page_no+1; $href=Pagination::pagelink($get_params, $type); $page_no_s=$page_no+1; $ss="&nbsp;".$page_no_s; }  ?>><a href="<?= $href  ?>" title="Следующая страница<?= $ss; ?>">&raquo;</a></li>
 </ul>
 <? } else $style_form="padding-bottom: 15px"; ?>
 

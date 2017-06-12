@@ -403,6 +403,7 @@ public function footer($geobase="")
 <script type="text/javascript"> jQuery(function($){$(".wmu").mask("\U999999999999");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".wmr").mask("\R999999999999");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".wmz").mask("\Z999999999999");}); </script>
+<script type="text/javascript"> $(document).ready(function() {$('#stat_block').height($('#user_block').height());}); </script>
 <script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
 <script src="<?= JS_PATH ?>/control-modal.js"></script>
 <script src="<?= JS_PATH ?>/gnmenu.php"></script>

@@ -33,7 +33,7 @@ $count_users=db::cound_bd('users');
 		<th><a data-toggle="tooltip" data-placement="bottom" title="Сортировка по балансу" href="<?= Pagination::pagelink_desc($_GET, 'order', 'balance') ?>"><strong>Баланс</strong> 
 <span class="badge pull-left"><?= Pagination::sort_symbol($_GET,'order', 'balance', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>
 		</th>
-		
+		<th>Последняя авторизация</th>
 	</tr>
 </thead>	
 	
@@ -47,7 +47,9 @@ $result = mysql_query("SELECT * FROM users {$order_by} LIMIT {$limit['begin']}, 
 
 $myrow = mysql_fetch_array($result);
 do
-{ ?>
+{ 
+
+?>
 	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?>
 		<? if ($myrow['order_pay']>0) echo('&#160;<span class="badge"><a data-toggle="tooltip" data-placement="bottom" title="Пользователь '.$myrow['name'].' заказал выплату '.$myrow['order_pay'].'&#160;'.CURRENCY.'" data-fancybox data-src="'.ACTION_PATH.'/user_data.php?id='.$myrow['id'].'>" href="javascript:;"><i class="fa fa-money" aria-hidden="true"></i>
@@ -73,10 +75,23 @@ do
 		echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>"> <? if ($myrow['balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($myrow['balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?>
 	
 	<?= $myrow['balance'] ?> <?= CURRENCY ?></button></td>
+	<td>
+	
+	<a class="btn btn-default btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов пользователя <?= $myrow['name'] ?>" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $myrow['id']?>" href="javascript:;">
+		<dl class="dl-horizontal dl-order">
+	
+	<?
+	if ($myrow['device']!='0') $dev_symbol="fa-mobile"; else $dev_symbol="fa-desktop"; 
+	if ($myrow['last_time']!="") echo('<dt><i class="fa '.$dev_symbol.'" aria-hidden="true"></i></dt><dd>'.date("d.m.Y H.i.s", $myrow['last_time'])); else echo ("Нет данных"); echo('</dd>'); ?>
+	<? if ($myrow['city']!="") {
+		if ($myrow['country']!='AA') $flag="flag-{$myrow['country']}"; else $flag='fa fa-flag';
+		echo('<dt><i class="'.$flag.'"></i></dt><dd>г.'.$myrow['city']);}  echo('</dd>'); ?>
+	
+	</dl></a>
+	</td>
 	</tr>
 <?	
-//echo $myrow['ИМЯ_ПОЛЯ1'];
-//echo $myrow['ИМЯ_ПОЛЯ2'];
+
 }
 while ($myrow = mysql_fetch_array($result));
 ?>

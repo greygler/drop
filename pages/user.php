@@ -20,12 +20,12 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 <h4 class="text-right"><span class="fa <?= $_SESSION['fa_user']  ?> fa-lg"></span> <?= $_SESSION['name_group'] ?></h4></div>
 
 
-<div class="col-sm-6 col-md-6 col-lg-6 panel panel-default panel_user">
+<div id="user_block" class="col-sm-6 col-md-6 col-lg-6 panel panel-default panel_user">
 <?= users::profile(); ?>
 
 </div>
 
-<div class="col-sm-6 col-md-6 col-lg-6 panel panel-default panel_user">
+<div id="stat_block" class="col-sm-6 col-md-6 col-lg-6 panel panel-default panel_user">
 
 <script>
 function active_drop(id) {
