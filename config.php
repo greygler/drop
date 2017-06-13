@@ -1,6 +1,6 @@
 <?
-define('SITE_ADDR','http://drop'); // Адрес системы
-//define('SITE_ADDR','http://drop.totalh.net'); // Адрес системы
+define('SITE_ADDR','http://drop/'); // Адрес системы со слеш на конце!
+//define('SITE_ADDR','http://drop.totalh.net/'); // Адрес системы
 define('ABS_PATH',$_SERVER['DOCUMENT_ROOT']); //  Абсолютный путь на сервере
 define('TIME_ZONE','Europe/Kiev'); // Временная зона, http://php.net/manual/ru/timezones.europe.php
 define('LANG','ru'); // Язык страницы

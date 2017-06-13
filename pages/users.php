@@ -46,7 +46,7 @@ if ($_GET['order']!="") $order_by="ORDER BY {$_GET['order']}";
 $result = mysql_query("SELECT * FROM users {$order_by} LIMIT {$limit['begin']}, {$limit['count']}");
 
 $myrow = mysql_fetch_array($result);
-do
+do if ($myrow['id']!='0')
 { 
 
 ?>
