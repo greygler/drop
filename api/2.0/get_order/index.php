@@ -8,20 +8,23 @@ if (!empty($_POST)) {
 	require_once (CLASS_PATH.'/drop.class.php'); 
 	db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 	if (db::cound_bd('users', "drop_key='{$_POST['key']}'")>0) $user=drop::get_id($_POST['key']); else $user=autoring::get_user(DEFAULT_ID);
+	$take=db::cound_bd('order_tab', "(phone='{$_POST['phone']}' AND bayer_name='{$_POST['bayer_name']}' AND site='{$_POST['site']}')");
+	if ((($take>0) AND ($user['take_drop']==1)) OR ($take==0)) {
+		echo ("{$take} - {$user['take_drop']}");
 	$groups=autoring::user_group($user['users_group']);
-	print_r($groups);
+	//print_r($groups);
 	$order=$_POST;
 	$products = unserialize(urldecode($_POST['products'])); 
 	foreach($products as $key => $value){
 	  $product=drop::one_product($value['product_id']);
 	 // print_r($product); echo("<br>");
 	  $sum=$value['count']*$value['price'];
-	  echo ("Сумма заказа {$key}.{$sum}<br>");
+	 // echo ("Сумма заказа {$key}.{$sum}<br>");
 	  $total=$total+$sum;
 	  $drop_sum=$value['count']*$product['price'];
-	  echo ("Сумма покупки {$key}.{$drop_sum}<br>");
+	 // echo ("Сумма покупки {$key}.{$drop_sum}<br>");
 	  $prof=$sum-$drop_sum;
-	  echo ("Профит {$key}.{$prof}<br>");
+	//  echo ("Профит {$key}.{$prof}<br>");
 	  $profit=$profit+$prof;
 	  
 	}
@@ -31,7 +34,7 @@ if (!empty($_POST)) {
 	$order['profit']=$profit;
 	$result=drop::new_order($user['id'], $order,'3');
 
-	echo $result;
+	echo TITLE.": ".$result."<br>";
 	
 
 	if ($user['active_drop']=='1'){
@@ -61,6 +64,8 @@ if (!empty($_POST)) {
 	print_r($out);
 	if ($out['status']=='ok') drop::lpcrm_order_id($_POST['order_id'], '1');
 	echo $out;
-	}
+	} else echo (TITLE.": заказ добавлен в базу, но не передан для обработки");
+	
+} else {echo('error! Дубль');	echo ("{$take} - {$user['take_drop']}");}
 } else	header("Location: / ");
 ?>

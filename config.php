@@ -1,5 +1,5 @@
 <?
-define('SITE_ADDR','http://drop/'); // Адрес системы со слеш на конце!
+define('SITE_ADDR','http://drop/'); // Адрес системы без слеш на конце!
 //define('SITE_ADDR','http://drop.totalh.net/'); // Адрес системы
 define('ABS_PATH',$_SERVER['DOCUMENT_ROOT']); //  Абсолютный путь на сервере
 define('TIME_ZONE','Europe/Kiev'); // Временная зона, http://php.net/manual/ru/timezones.europe.php
@@ -63,7 +63,8 @@ define('CRM','testcrm');
 define('CRM_KEY','9ef4d26ea5e96179a98c8d8502cb4c34');
 define('CRM_OFFICE','3');
 define('CRM_DELIVERY','1');
-define('CRM_PAYMENT','4');
+define('CRM_DELIVERY_NAME','Новая Почта');
+
 
 // Подключение к turbosms
 define('DB_LOGIN_TURBOSMS','ArturGoraCRM');

@@ -154,6 +154,15 @@ class Autoring {
 			return $result;
 		}
 		
+	public function take_drop($id, $active) // Дубли заявок данных - да\нет
+		{
+			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			
+			$result = mysql_query("UPDATE users SET take_drop='{$active}' WHERE id={$id}" );
+						
+			return $result;
+		}
+		
 	public function update_profile($id, $profile) // Обновление профиля пользователя
 		{
 			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);

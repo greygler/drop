@@ -390,7 +390,7 @@ public function footer($geobase="")
 <?= systems::politics(); ?>
 <?= systems::rules(); ?>
 
-<script src="/js/jquery.min.js"></script> 
+<script src="<?= JS_PATH ?>/jquery.min.js"></script> 
   <!--<script src="//code.jquery.com/jquery-3.1.1.min.js"></script> -->
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->

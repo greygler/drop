@@ -5,7 +5,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 
 function active_drop(id) {
 	
-	if ($('#checkbox').is(':checked')) 
+	if ($('#checkbox_active').is(':checked')) 
 		var active='1'; else var active='0';
 		 	
  	    $.ajax({
@@ -24,9 +24,34 @@ function active_drop(id) {
         });
 	}
 	
+	
+function take_drop(id) {
+	
+	if ($('#checkbox_take').is(':checked')) 
+		var active='1'; else var active='0';
+		 	
+ 	    $.ajax({
+          type: 'POST',
+          url: '<?= ACTION_PATH ?>/take_drop.php',
+          data: {
+			  drop_take: active,
+			  id : id
+		  },
+        success: function(data) {
+			$('.take_drop').html(data);
+		},
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+	
 function new_code(id)
 {
 	$('#refresh_code').addClass('fa-spin');
+	var result = confirm('Вы действительно хотите пересоздать секретный токен?');
+	
+	if (result){
 	$.ajax({
           type: 'POST',
           url: '<?= ACTION_PATH ?>/new_key.php',
@@ -36,6 +61,9 @@ function new_code(id)
 			alert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
+		
+	}
+	else {$('#refresh_code').removeClass('fa-spin');}
 		
 }
 	

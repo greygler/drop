@@ -33,9 +33,11 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
 <form action="javascript:void(null);" onsubmit="new_code(<?= $_SESSION['id'] ?>)" >
 <dl class="dl-horizontal">
   <dt>Автоматическая<br>передача заказа:</dt>
-  <dd><input onchange='active_drop(<?= $_SESSION['id'] ?>)' id="checkbox" type="checkbox"  name="checkbox" <? if ($_SESSION['active_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_drop"><? if  ($_SESSION['active_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
-
-
+  <dd><input onchange='active_drop(<?= $_SESSION['id'] ?>)' id="checkbox_active" type="checkbox"  name="checkbox" <? if ($_SESSION['active_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_drop"><? if  ($_SESSION['active_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
+  </dd>
+   <dt>Прием<br>дублирующих заказов:</dt>
+  <dd><input onchange='take_drop(<?= $_SESSION['id'] ?>)' id="checkbox_take" type="checkbox"  name="checkbox" <? if ($_SESSION['take_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="take_drop"><? if  ($_SESSION['take_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
+   <span class="help-block"><small>Автоматическая передача дублирующих заявок возможна в случае, если это разрешено на стороне приема заказов</small></span>
   </dd>
   <dt>Секретный токен:</dt>
   <dd>
@@ -52,7 +54,7 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
   </dl>
 </form>
 
-<a class="btn btn-default btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">История авторизаций</a>
+<a class="btn btn-info btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">История авторизаций</a>
 
 </div>
 

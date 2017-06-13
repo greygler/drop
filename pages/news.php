@@ -6,11 +6,11 @@ $result = mysql_query("SELECT * FROM status");
 $myrow = mysql_fetch_array($result);
 do if ($myrow['fixed']!='0')
 {
-if ($myrow['style']!='') {$style=$myrow['style'];$color="white";} else $style="btn-default"
-
+if ($myrow['style']!='') {$style=$myrow['style'];$color="white";} else $style="btn-default";
+$all_status=drop::all_statuses();
 ?>
 
-<a href="?type=order&status=<?= $myrow['id']; ?>" style="min-width: 175px;color:<?= $color ?>" type="button" class="btn <?= $style ?>"><?= $myrow['name'] ?><br><h3><strong><?= $_SESSION['status'][$myrow['id']] ?></strong></h3></a>
+<a href="?type=order&status=<?= $myrow['id']; ?>" style="min-width: 175px;color:<?= $color ?>" type="button" class="btn <?= $style ?>"><strong><?= $myrow['name'] ?></strong><? if ($_SESSION['users_group']<5) echo("<br><small>(В т.ч. мои)</small>"); ?><br><h3><strong><? if ($_SESSION['users_group']<5) echo ("{$all_status[$myrow['id']]} <small>({$_SESSION['status'][$myrow['id']]})</small>"); else echo $_SESSION['status'][$myrow['id']];  ?></strong></h3></a>
 <?
 $color="";
 }

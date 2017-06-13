@@ -1,11 +1,24 @@
 <h1></h1>
-<div>
+
 <script src="<?= JS_PATH ?>/order.php"></script>
 <?
 if ($_GET['status']!="") $get_status=$_GET['status']; else $get_status=3;
-
+$all_status=drop::all_statuses();
  require_once (CLASS_PATH.'/pagination.class.php'); 
 $limit=pagination::limit_pagin($_GET,$_SESSION['status'][$get_status], $view_pages); 	?>
+<div class="form-group">
+<div class="form-group col-sm-2 col-md-2  col-lg-2 "> 
+<? if ($_SESSION['users_group']<5) { ?>
+<a href="/?type=order" class="btn <? if ($_GET['orders']!='my') echo ('btn-info'); else echo('btn-default'); ?> btn-block"><? if ($_GET['orders']!='my') echo ('<i class="fa fa-check" aria-hidden="true"></i>'); ?> Все заказы</a>
+ <? } ?>
+</div>
+<div class="form-group col-sm-2 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1"> 
+<? if ($_SESSION['users_group']<5) { ?>
+<a href="/?type=order&orders=my" class="btn <? if ($_GET['orders']=='my') echo ('btn-info'); else echo('btn-default'); ?> btn-block"><? if ($_GET['orders']=='my') echo ('<i class="fa fa-check" aria-hidden="true"></i>'); ?> Мои заказы</a> <? } ?>
+</div>
+<div class="form-group col-sm-2 col-md-2 col-md-offset-5 col-lg-2 col-lg-offset-5"> 
+<button data-fancybox data-src="<?= ACTION_PATH ?>/edit_order.php?edit=on" href="javascript:;" class="btn btn-default btn-block"><i class="fa fa-plus-square" aria-hidden="true"></i> Добавить заказ</button> 
+</div>
 </div>
 <section id="order_tabs">
 		<ul class="nav nav-tabs">
@@ -23,7 +36,7 @@ if ($_SESSION['status'][$myrow['id']]<1) $li_style="disabled";
 
 ?>
 
-<li class="<?= $li_style ?>" ><?= $span1 ?><a  class="<?= $style ?> white_link" href="?type=order&status=<?= $myrow['id'] ?>"><?= $symbol1.$myrow['name'].$symbol2 ?> (<?= $_SESSION['status'][$myrow['id']] ?>)</a><?= $span2 ?></li>
+<li class="<?= $li_style ?>" ><?= $span1 ?><a  class="<?= $style ?> white_link" href="?type=order<?if ($_GET['orders']=="my") echo("&orders=my") ?>&status=<?= $myrow['id'] ?>"><?= $symbol1.$myrow['name'].$symbol2 ?> (<? if (($_GET['orders']=='my') OR ($_SESSION['users_group']>=5)) echo $_SESSION['status'][$myrow['id']]; else echo $all_status[$myrow['id']] ?>)</a><?= $span2 ?></li>
 <?
 $symbol2="";$symbol1="";$style="";$li_style="";$span1=""; $span2="";
 }
@@ -38,7 +51,7 @@ while ($myrow = mysql_fetch_array($result));
 <table class="table table-responsive table-striped table-bordered" >
 <thead>
 	<tr>
-	<? if ($_SESSION['users_group']<5) {
+	<? if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) {
 		$groups=autoring::groups();
 		
 	echo('<th>id, Имя пользователя</th>');}
@@ -47,28 +60,27 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		
 		<th>Дата, Order_id</th>
 		<th><i class="fa fa-user" aria-hidden="true"></i> Имя, <i class="fa fa-phone" aria-hidden="true"></i> Телефон,<br><i class="fa fa-envelope-o" aria-hidden="true"></i> E-mail, <i class="fa fa-flag" aria-hidden="true"></i> IP-адрес</th>
-		<th>Коммент</th>
-		<th>Заказ</th>
-		<th>Сайт</th>
+		<th>Комментарий</th>
+		<th><i class="fa fa-external-link" aria-hidden="true"></i> Сайт заказа,<br><i class="fa fa-shopping-cart " aria-hidden="true"></i> Заказ: товар, цена, профит </th>
 		<th>Доставка</th>
 		<th>UTM-метки</th>
 	</tr>
 	</thead>
 	<tbody >
 	<?
-	if (($_SESSION['status'][$get_status] > 0) OR ($_SESSION['users_group']<5)) {
+	if (($_SESSION['status'][$get_status] > 0) OR (($_SESSION['users_group']<5) AND ($_GET['orders']!="my"))) {
 		$db="SELECT * FROM order_tab WHERE (status='{$get_status}'{$where_id}) ORDER BY order_id DESC LIMIT {$limit['begin']}, {$limit['count']}";
 		//echo $db;
 	$result = mysql_query($db);
 	
 	$myrow = mysql_fetch_array($result);
-		do
+		do 
 	{ 
 	
 	?>
 		<tr>
 		<? 
-		if ($_SESSION['users_group']<5) {
+		if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) {
 			$user=autoring::get_user($myrow['user_id']);  ?>
 	<!--	echo("<td>{$myrow['user_id']}. {$user['name']}</td>");} ?> -->
 		<td>
@@ -81,12 +93,15 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<dt><i class="fa fa-briefcase" aria-hidden="true"></i></dt><dd><?= $myrow['order_id'] ?></dd>
 		
 	<?  if ($myrow['lp-crm']!='1') 
-		if ($_SESSION['users_group']<5) echo ('<p class="text-center"><span class="fa-stack fa-lg"><i class="fa fa-cloud-upload fa-stack-1x"></i> <i class="fa fa-ban fa-stack-2x text-danger"></i></span></p>');
-		else echo('<button id="upload_button_'.$myrow['id'].'" onclick="upload('.$_SESSION['id'].','.$myrow['id'].')" title="Передать заказ для обработки" class="btn btn-danger btn-block"><div class="upload_'.$myrow['id'].'"><i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i></div></button>'); ?>
+		if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) echo ('<p class="text-center"><span class="fa-stack fa-lg"><i class="fa fa-cloud-upload fa-stack-1x"></i> <i class="fa fa-ban fa-stack-2x text-danger"></i></span></p>');
+		else echo('<button id="upload_button_'.$myrow['id'].'" onclick="upload('.$_SESSION['id'].','.$myrow['id'].')" title="Передать заказ для обработки" class="btn btn-danger"><div class="upload_'.$myrow['id'].'"><i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i></div></button>
+		<button data-fancybox data-src="'.ACTION_PATH.'/edit_order.php?id='.$myrow['id'].'" href="javascript:;" id="edit_button_'.$myrow['id'].'" onclick="edit('.$_SESSION['id'].','.$myrow['id'].')" title="Редактировать заказ" class="btn btn-danger"><div class="edit_'.$myrow['id'].'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div></button>
+		<button id="del_button_'.$myrow['id'].'" onclick="del('.$myrow['id'].','.$myrow['order_id'].')" title="Удалить заказ" class="btn btn-danger"><div class="del_'.$myrow['id'].'"><i class="fa fa-trash-o" aria-hidden="true"></i></div></button>
+		<div class="deldiv_'.$myrow['id'].'"></div>'); ?>
 </dl>
 		</td>
 		<td>
-		<a href="" type="button" class="btn btn-default btn_left">
+		
 		<dl class="dl-horizontal dl-order dl-name">
 		<dt><i class="fa fa-user" aria-hidden="true"></i></dt><dd><?= $myrow['bayer_name'] ?></dd>
 		<dt><i class="fa fa-phone" aria-hidden="true"></i></dt><dd><?= $myrow['phone'] ?></dd>
@@ -94,13 +109,13 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<dt><i class="fa fa-envelope" aria-hidden="true"></i></dt><dd><?= $myrow['email'] ?></dd> <? } ?>
 
 		<dt><i class="flag-<?= $myrow['country'] ?>"></i></dt><dd><?= $myrow['ip'] ?></dd>
-		</dl></a>
+		</dl>
 		</td>
 		
 		<td><?= $myrow['comment'] ?></td>
 		<td>
 		<dl class="dl-horizontal dl-order">
-		
+		<dt><i class="fa fa-external-link" aria-hidden="true"></i></dt><dd><a target="_blank" href="http://<?= $myrow['site'] ?>"> <?= $myrow['site'] ?></a></dd>
 	
 		
 		<? $products = unserialize(urldecode($myrow['products'])); 
@@ -131,7 +146,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		</dl>
 		
 		</td>
-		<td><a target="_blank" href="http://<?= $myrow['site'] ?>"><i class="fa fa-globe" aria-hidden="true"></i> <?= $myrow['site'] ?></a></td>
+		
 		
 		<td>
 		<dl class="dl-horizontal dl-order">

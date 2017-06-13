@@ -1,7 +1,7 @@
 <?
 class drop{
 	
-	public function last_time($type)
+	public function last_time($type) // Последнее время обновлений
 	{
 		$fp = fopen($_SERVER['DOCUMENT_ROOT'].'/'.LAST_TIME_FILE, 'w+');
 		flock($fp, LOCK_EX); // Блокирование файла для записи
@@ -9,14 +9,13 @@ class drop{
 		$text="<?\n\t// Обновление ".date("d.m.Y H:i:s").", Пользователь id:{$_SESSION['id']}, {$_SESSION['name']}\n\tdefine('LAST_TIME_PRODUCT','".$t1."');\n\tdefine('LAST_TIME_CATEGORY','".$t2."');\n?>";
 		
 		fwrite($fp, $text);
-		flock($fp, LOCK_UN); // Снятие блокировки
+		flock($fp, LOCK_UN); 
 		fclose($fp);
 
 	}
 	
 	public function get_id($key) // Ищем ID пользователя по ключу
 	{
-		//db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 		$result = mysql_query("SELECT * FROM users WHERE drop_key='{$key}'");
 		$myrow = mysql_fetch_array($result);
 		return $myrow;
@@ -30,7 +29,6 @@ class drop{
 
 	public function new_order($user_id, $data, $status) // Cохраняем заказ
 	{
-		//db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 		$col="user_id, order_time, status, ";
 		$values="'{$user_id}',".time().", {$status}, ";
 		foreach($data as $key => $value) if ($key!='key')
@@ -48,12 +46,7 @@ class drop{
 	}
 	
 	
-	public function update_order($order_id)
-	{
-		
-	}
-
-	public function last_order()
+	public function last_order() // забираем 100 последних заказов
 	{
 		$result = mysql_query("SELECT order_id FROM order_tab WHERE `lp-crm`!='0' ORDER BY id DESC LIMIT 100");
 		$myrow = mysql_fetch_array($result);
@@ -111,7 +104,7 @@ class drop{
 		if ($count>0) return true; else return false;
 	}
 	
-	public function subcategory($id) // Возвращяем массив субкатегории по ID
+	public function subcategory($id) // Возвращaем массив субкатегории по ID
 	{
 		if (drop::is_subcategories($id)) 
 		{
@@ -120,6 +113,12 @@ class drop{
 			return $myrow;
 		}
 		else return false;
+	}
+	
+	public function del_order($id) // Удаляем заказ
+	{
+		$result = mysql_query ("DELETE FROM order_tab WHERE id={$id}");
+		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
 	public function product_active($id, $active) // Обновление активности товара
@@ -192,13 +191,33 @@ class drop{
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
-	 public function one_status($id, $status) // Собираем колличество заказов в статусe по ID
+	 public function one_status($id, $status) // Собираем колличество заказов в одном статусe по ID пользователя
 	 {
 		 $count_status=db::cound_bd("order_tab", $where="user_id='{$id}' AND status='{$status}'");
 		 return $count_status;
 	 }
 	 
-	 public function statuses($id) // Собираем колличество заказов в статусах по ID
+	  public function status($status) // Собираем колличество всех заказов в статусe
+	 {
+		 $count_status=db::cound_bd("order_tab", $where="status='{$status}'");
+		 return $count_status;
+	 }
+	 
+	 public function all_statuses() // Собираем колличество заказов во всех статусах по всей системе
+	 {
+		$result = mysql_query("SELECT * FROM status");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+			$count_status[$myrow[id]]=drop::status($myrow[id]);
+				
+		}
+		while ($myrow = mysql_fetch_array($result));
+		 
+		return $count_status;
+	 }
+	 
+	 public function statuses($id) // Собираем колличество заказов во всех статусах по ID
 	 {
 		$result = mysql_query("SELECT * FROM status");
 		$myrow = mysql_fetch_array($result);

@@ -33,12 +33,9 @@ $order=drop::one_order($_POST['row_id']);
 );
 	$out=lp_crm::getcurl(CRM, 'addNewOrder.html', $data);
 	//print_r($out);
-	if ($out['status']='ok') {$ok=drop::lpcrm($_POST['row_id'], '1');
+	if ($out['status']=='ok') {$ok=drop::lpcrm($_POST['row_id'], '1');
 	echo($ok);}
-	else echo('error');
-
-
-
+	else echo($out['message'][0]);
 
 
 } else echo ("Слоны идут нахер!");
