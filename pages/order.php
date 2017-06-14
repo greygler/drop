@@ -61,7 +61,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<th>Дата, Order_id</th>
 		<th><i class="fa fa-user" aria-hidden="true"></i> Имя, <i class="fa fa-phone" aria-hidden="true"></i> Телефон,<br><i class="fa fa-envelope-o" aria-hidden="true"></i> E-mail, <i class="fa fa-flag" aria-hidden="true"></i> IP-адрес</th>
 		<th>Комментарий</th>
-		<th><i class="fa fa-external-link" aria-hidden="true"></i> Сайт заказа,<br><i class="fa fa-shopping-cart " aria-hidden="true"></i> Заказ: товар, цена, профит </th>
+		<th><i class="fa fa-external-link" aria-hidden="true"></i> Сайт заказа,<br><i class="fa fa-shopping-cart " aria-hidden="true"></i> Заказ: товар, цена, итого, профит </th>
 		<th>Доставка</th>
 		<th>UTM-метки</th>
 	</tr>
@@ -78,7 +78,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 	{ 
 	
 	?>
-		<tr>
+		<tr id="tr_<?= $myrow['id'] ?>">
 		<? 
 		if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) {
 			$user=autoring::get_user($myrow['user_id']);  ?>
@@ -129,19 +129,21 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		?>
 			<dt><?= $key ?>. </dt>
 		<dd>
-		<a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $value['product_id']; ?>" href="javascript:;javascript:window.location.reload();"><strong> <?= $product['name']; ?></strong> <small>(Цена: <?= $product['price']; ?> <?= CURRENCY ?>)</small></a></dd>
+		<a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $value['product_id']; ?>" href="javascript:;javascript:window.location.reload();"><strong> <?= $product['name']; ?></strong><br><small>(Цена: <?= $product['price']; ?> <?= CURRENCY ?>)</small></a></dd>
 		
 		<dt><i class="fa fa-shopping-cart sprice" aria-hidden="true"></i></dt>
-		<dd><strong><?= $count ?> шт.</strong> <small><i class="fa fa-times" aria-hidden="true"></i></small> <strong> <?= $value['price'] ?> <?= CURRENCY ?></strong> = <?= $sum ?> <?= CURRENCY ?> <span class="badge pull-right">Profit: <?= $prof ?> <?= CURRENCY ?><span> </dd>
+		<dd><strong><?= $count ?> шт.</strong> <small><i class="fa fa-times" aria-hidden="true"></i></small> <strong> <?= $value['price'] ?> <?= CURRENCY ?></strong> = <?= number_format($sum, 2, '.', '')?> <?= CURRENCY ?> <span class="badge pull-right">Profit: <?= $prof ?> <?= CURRENCY ?><span> </dd>
 		
 		<? } ?>
+		<dt>х</dt>
+		<dd><strong><?= $myrow['total'] ?> <?= CURRENCY ?></strong></dd>
 		
 		<dt>
-		<? if ($myrow['profit'] > 0) {$label="fa-line-chart"; $style="color: green";}
-			else if ($myrow['profit'] < 0) {$label="fa-thumbs-down"; $style="color: red";}
-			else {$label="fa-battery-empty"; $style="color: #5b6064";}	?>
-		<i style="<?= $style ?>" class="fa <?= $label ?>" aria-hidden="true"></i></dt>
-		<dd><strong style="<?= $style ?>"><?= $myrow['profit'] ?> <?= CURRENCY ?></strong></dd>
+			<? if ($myrow['profit'] > 0) {$label="fa-line-chart"; $style="profit_green";}
+			else if ($myrow['profit'] < 0) {$label="fa-thumbs-down"; $style="profit_red";}
+			else {$label="fa-battery-empty"; $style="profit_empty";}	?>
+		<i style="" class="fa <?= $label ?> <?= $style ?>" aria-hidden="true"></i></dt>
+		<dd><strong class="<?= $style ?>"><?= $myrow['profit'] ?> <?= CURRENCY ?></strong></dd>
 		
 		</dl>
 		
@@ -180,4 +182,5 @@ while ($myrow = mysql_fetch_array($result));
 ?>
 <tbody>
 	</table>
-<? $limit=pagination::pagin($_GET,$_SESSION['status'][$get_status], $view_pages); 	?>
+<? $limit=pagination::pagin($_GET,$_SESSION['status'][$get_status], $view_pages); 
+$refresh=="yes";	?>

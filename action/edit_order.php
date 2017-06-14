@@ -24,12 +24,21 @@ require_once (CLASS_PATH.'/systems.class.php');
  }
 //print_r($user);
 ?>
-<?= systems::head(); ?>
+<?= systems::head();
+
+if (($order!="") AND ($order['lp-crm']!=1))  echo("Редактировать можно!") ?>
+
 <div class="container container_user_data">
 <div class="page-header">
 		<h1 style="margin: 0px 0 10px 0;"><small>Заказ #<?= $order_id ?></small></h1>
 </div>
-<form>
+
+
+<script src="<?= JS_PATH ?>/edit_order.php"></script>
+	
+
+
+<form id="product-form"  action="javascript:void(null);" onsubmit="save()">
 <div>
 <div class="form-group col-sm-3 col-md-3 col-lg-3 text-left"><button class="btn btn-default"><h4 ><span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y H:i.s", $order_time); ?></h4></div>
 
@@ -62,7 +71,7 @@ require_once (CLASS_PATH.'/systems.class.php');
   <dt>Комментарий:</dt>
   <dd>
   <div class="form-group">
-  <textarea class="form-control" rows="3" value="comment"><?= $order['comment'] ?></textarea>
+  <textarea name="comment" class="form-control" rows="3" value="comment"><?= $order['comment'] ?></textarea>
 
   
   </div></dd>
@@ -81,9 +90,30 @@ require_once (CLASS_PATH.'/systems.class.php');
 <div>
 <h3 class="text-center"><span class="fa fa-shopping-cart  fa-lg"></span> <strong>Покупка:</strong></h3>
 
-<dl class="dl-horizontal dl-order">
-<?  
-		//print_r($products);
+		
+		
+		<table id="prod_tab" class="table-responsive table-striped">
+		<thead>
+
+	<tr>
+		<th rowspan="2"><a id="add_button" onclick="add_pos('prod_tab')" title="Добавить позицию" class="btn btn-info"><i class="fa fa-plus-square" aria-hidden="true"></i></div></a></th>
+		<th rowspan="2">Название, цена</th>
+		<th>Продажа</th>
+		<th>К-во</th>
+		<th>Стоим.</th>
+		<th>Profit</th>
+	</tr>
+	<tr>
+		<th><small><?= CURRENCY ?></small></th>
+		<th><small>шт.</small></th>
+		<th><small><?= CURRENCY ?></small></th>
+		<th><small><?= CURRENCY ?></small></th>
+	</tr>
+	</thead>
+	
+		<tbody> 
+		<? if ($_GET['edit']!='on') { 
+		$vsego=count($products);
 		foreach($products as $key => $value){
 			if ($value['count']!="") $count=$value['count']; else $count=$value['quantity'];
 			$product=drop::one_product($value['product_id']);
@@ -91,50 +121,82 @@ require_once (CLASS_PATH.'/systems.class.php');
 			$drop_sum=$count*$product['price'];
 			$prof=$sum-$drop_sum;
 		?>
-			<dt><?= $key ?>. </dt>
-		<dd>
-		<a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $value['product_id']; ?>" href="javascript:;javascript:window.location.reload();"><strong> <?= $product['name']; ?></strong> <small>(Цена: <?= $product['price']; ?> <?= CURRENCY ?>)</small></a></dd>
+		<tr id="del_pos_<?= $key ?>">
+		<td><a id="del_button_<?= $key ?>" onclick="del(<?= $key ?>,'<?= $product['name']; ?>',<?= $vsego ?>)" title="Удалить позицию" class="btn btn-warning"><div class="del_<?= $key ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></div></a>
+		<div class="deldiv_<?= $key ?>"></div></td>
+		<td><strong id="product_name_<?= $key ?>"><?= $product['name']; ?></strong><br><small>(Цена: <?= $product['price']; ?> <?= CURRENCY ?>)</small></td>
+		<input type="hidden" name="product_id[<?= $key ?>]" value="<?= $value['product_id'] ?>">
+		<td>
 		
-		<dt><i class="fa fa-shopping-cart sprice" aria-hidden="true"></i></dt>
-		<dd><strong><?= $count ?> шт.</strong> <small><i class="fa fa-times" aria-hidden="true"></i></small> <strong> <?= $value['price'] ?> <?= CURRENCY ?></strong> = <?= $sum ?> <?= CURRENCY ?> <span class="badge pull-right">Profit: <?= $prof ?> <?= CURRENCY ?><span> </dd>
+		<input id="price_<?= $key?>" onchange="profit(<?= $key?>,<?= $product['price']; ?>,<?= $vsego ?>)" style="max-width: 70px" type="number" class="form-conrol text-right" name="price[<?= $key ?>]" value="<?= $value['price'] ?>">
+		</td>
+		<td><input id="count_<?= $key?>" onchange="profit(<?= $key?>,<?= $product['price']; ?>,<?= $vsego ?>)" style="max-width: 50px" type="number" class="form-conrol text-right" name="count[<?= $key ?>]" value="<?= $count ?>">
+		</td>
+		<td><div class="sum_<?= $key?>"><?= number_format($sum, 2, '.', '') ?></div></td>
+		<td><div class="prof_<?= $key?>"><?= number_format($prof, 2, '.', '') ?></div></td>
+		</tr> <? } ?>
+		</tbody>
+		<? if ($order['profit'] > 0) {$label="fa-line-chart"; $style="profit_green";}
+			else if ($order['profit'] < 0) {$label="fa-thumbs-down"; $style="profit_red";}
+			else {$label="fa-battery-empty"; $style="profit_empty";}	?>
+		<tr style="background-color: lightblue">
 		
-		<? } ?>
+		<td><span id="profit_symbol" class="<?= $style ?>"><i  class="fa <?= $label ?> fa-lg" aria-hidden="true"></i></span></td>
+		<td >
+		<p align="right"><strong>Итого,</strong> <small class="vsego"><?= $key ?></small><small> поз.:</small></td>
+		<td>&nbsp;</td>
+		<td></td>
 		
-		<dt>
-		<? if ($order['profit'] > 0) {$label="fa-line-chart"; $style="color: green";}
-			else if ($order['profit'] < 0) {$label="fa-thumbs-down"; $style="color: red";}
-			else {$label="fa-battery-empty"; $style="color: #5b6064";}	?>
-		<i style="<?= $style ?>" class="fa <?= $label ?>" aria-hidden="true"></i></dt>
-		<dd><strong style="<?= $style ?>"><?= $order['profit'] ?> <?= CURRENCY ?></strong></dd>
+		<td><div class="total"><?= $order['total'] ?></div></td>
+		<td><strong id="profit_itogo" class="profit <?= $style ?>" ><?= $order['profit'] ?> </strong></td>
+	</tr>
+
+		 <? } ?>
 		
-		</dl>
+		</table>
 
 
 </div>
 <div>
 <h3 class="text-center"><span class="fa fa-shopping-cart  fa-lg"></span> <strong>Доставка:</strong></h3>
-<dl class="dl-horizontal dl-order">
-		<? if ($order['delivery_adress']!="")  { if ($order['delivery_index']!="") $delivery_index=$order['delivery_index'].', ';
-		echo ('<dt><i class="fa fa-map-marker" aria-hidden="true"></i></dt><dd>'.$delivery_index.$order['delivery_adress'].'</dd>'); }?>
-		<? if ($order['delivery']!="") echo ('<dt><i class="fa fa-truck" aria-hidden="true"></i></dt><dd>'.$order['delivery'].'</dd>');?>
+<dl class="dl-horizontal">
+				
+		<dt><i class="fa fa-map-marker" aria-hidden="true"></i> Адрес доставки:</dt><dd>
+		<div class="form-group">
+		<input type="text" class="form-control" name="delivery_adress" value="<?= $order['delivery_adress'] ?>"></div></dd>
+		<dt><i class="fa fa-truck" aria-hidden="true"></i> Способ доставки:</dt><dd><div class="form-group">
+		<button disabled class="btn btn-default btn-block"><? if ($order['delivery']!="") echo $order['delivery']; else echo CRM_DELIVERY_NAME  ?></button></div></dd>
+		<dt><i class="fa fa-clock-o" aria-hidden="true"></i> Дата, время: </dt><dd><div class="form-group"><button disabled class="btn btn-default btn-block"><? if ((($order['delivery_date']!='0000-00-00 00:00:00') AND ($order['delivery_date']!='')) AND ($_GET['edit']!='on')) echo $order['delivery_date']; else echo("Нет данных"); ?></button></div></dd>
+		<dt><i class="fa fa-file-text" aria-hidden="true"></i> ТТН: </dt><dd><div class="form-group">
+		<button disabled class="btn btn-default btn-block"><? if ($order['ttn']!="") echo ($order['ttn']); else echo("Нет данных"); ?></button></div></dd>
+		<dt><i class="fa fa-check-square" aria-hidden="true"></i> Статус ТТН: </dt><dd><button disabled class="btn btn-default btn-block"><? if ($order['ttn_status']!="") echo ($order['ttn_status']); else echo("Нет данных"); ?></button></div></dd>
 		
-		<? if (($order['delivery_date']!='0000-00-00 00:00:00') AND ($order['delivery_date']!='')) echo ('<dt><i class="fa fa-clock-o" aria-hidden="true"></i></dt><dd>'.$order['delivery_date'].'</dd>');  ?>
-		<? if ($order['ttn']!="") echo ('<dt><i class="fa fa-file-text" aria-hidden="true"></i></dt><dd>'.$order['ttn'].'</dd>'); ?>
 		<? if ($order['ttn_status']!="") echo('<dt><i class="fa fa-check-square" aria-hidden="true"></i></dt><dd>'.$order['ttn_status'].'</dd>'); ?>
 		</dl>
 </div>
 
 
-</div>
+
 <input type="hidden" name="order_time" value="<?= $order_time ?>">
 <input type="hidden" name="order_id" value="<?= $order_id ?>">
-<input type="hidden" name="order_ip" value="<?= $order_id ?>">
-<div class="form-group col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"><button class="btn btn-primary btn-block"><h4 ><span class="fa fa-save fa-lg"></span> Сохранить</h4></div>
+<input type="hidden" name="order_ip" value="<?= $order_ip ?>">
+<input id="inp_total" type="hidden" name="total" value="<?= $order['total'] ?>">
+<input id="inp_profit" type="hidden" name="form_profit" value="<?= $order['profit'] ?>">
+<div class="form-group col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"><button type="submit" class="btn btn-primary btn-block"><h4 ><span class="fa fa-save fa-lg"></span> Сохранить</h4></div>
 
-</form>
+</form></div>
 <script src="<?= JS_PATH ?>/jquery.min.js"></script> 
 <!-- <script src="//code.jquery.com/jquery-3.1.1.min.js"></script> -->
-<script type="text/javascript"> $(document).ready(function() {$('#stat_block').height($('#user_block').height());}); </script>
+<script type="text/javascript"> $(document).ready(function() 
+{	var stat_block=$('#stat_block').height();
+	var user_block=$('#user_block').height();
+	if (stat_block>user_block){var big_block=stat_block;}
+	else {var big_blok=userblock;}
+	$('#stat_block').height(big_block);
+	$('#user_block').height(big_block);
+	}); 
+
+</script>
 	<script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
 	<? if ($_GET['edit']=="on") { ?>
     <script src="<?= JS_PATH ?>/jquery.maskedinput.js"></script>

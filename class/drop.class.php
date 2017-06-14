@@ -46,6 +46,22 @@ class drop{
 	}
 	
 	
+	public function update_order($order_id, $data) // Cохраняем заказ
+	{
+	 foreach($data as $key => $value)
+		{
+			$set.="{$key}='{$value}',";
+		}
+		$set = substr($set, 0, -1);
+		$db="UPDATE order_tab  SET {$set} WHERE order_id='{$order_id}'";
+		$result = mysql_query ($db);
+		echo $db;
+		if ($result == 'true') return 'ok'; else return 'error';
+
+	}
+	
+	//$result = mysql_query ("UPDATE users SET order_pay='{$summ}', order_pay_method='{$method}' WHERE id='{$id}'");
+	
 	public function last_order() // забираем 100 последних заказов
 	{
 		$result = mysql_query("SELECT order_id FROM order_tab WHERE `lp-crm`!='0' ORDER BY id DESC LIMIT 100");
@@ -61,7 +77,7 @@ class drop{
 	
 	public function is_product($id) // Есть ли в базе товар с таким ID
 	 {
-		//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+	
 		$count=db::cound_bd('products', "id='{$id}'");
 		if ($count>0) return true; else return false;
 		 
@@ -118,6 +134,12 @@ class drop{
 	public function del_order($id) // Удаляем заказ
 	{
 		$result = mysql_query ("DELETE FROM order_tab WHERE id={$id}");
+		if ($result == 'true') return 'ok'; else return 'error';
+	}
+	
+	public function del_news($id) // Удаляем новость
+	{
+		$result = mysql_query ("DELETE FROM news WHERE id={$id}");
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
@@ -232,14 +254,14 @@ class drop{
 		 return $count_status;
 	 }
 	 
-	 public function lpcrm($id, $ok)
+	 public function lpcrm($id, $ok) // Заказ передан в LP_CRM по ID заказа
 	 {
 		 
 		 $result = mysql_query ("UPDATE `order_tab` SET `lp-crm`='{$ok}' WHERE id='{$id}'");
 			if ($result == 'true') return 'ok'; else return 'error';
 	 }
 	 
-	  public function lpcrm_order_id($order_id, $ok)
+	  public function lpcrm_order_id($order_id, $ok) // Заказ передан в LP_CRM по ORDER_ID заказа
 	 {
 		 
 		 $result = mysql_query ("UPDATE `order_tab` SET `lp-crm`='{$ok}' WHERE order_id='{$order_id}'");
@@ -247,7 +269,7 @@ class drop{
 	 }
 	 
 	 
-	public function refresh_img($id, $img_name)
+	public function refresh_img($id, $img_name) // Обноление картинки товара
 	
 	
 	{ ?> 

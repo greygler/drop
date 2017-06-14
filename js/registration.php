@@ -6,7 +6,7 @@ function call() {
 	
 	//alert($('#rules').is(':checked')); 
 		$('.no_rules').html('');
-		$('.results').html('')
+		$('.results').html('');
 		$('#emailgroup').removeClass('has-error');
 		$('#password1_group').removeClass('has-error');
 		$('#password2_group').removeClass('has-error');

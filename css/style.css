@@ -217,7 +217,15 @@ margin-bottom: 0 !important;
   font-style: normal;
   color: #f00;
 }
-
+.profit_red {
+	color:red;
+}
+.profit_green {
+	color:green;
+}
+.profit_empty{
+	color: #5b6064;
+}
 /* 
 #order_tabs em a{
 	color: white !important;

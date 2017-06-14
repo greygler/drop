@@ -1,6 +1,6 @@
 <?
-define('SITE_ADDR','http://drop/'); // Адрес системы без слеш на конце!
-//define('SITE_ADDR','http://drop.totalh.net/'); // Адрес системы
+define('SITE_ADDR','http://drop'); // Адрес системы без слеш на конце!
+//define('SITE_ADDR','http://drop.totalh.net'); // Адрес системы
 define('ABS_PATH',$_SERVER['DOCUMENT_ROOT']); //  Абсолютный путь на сервере
 define('TIME_ZONE','Europe/Kiev'); // Временная зона, http://php.net/manual/ru/timezones.europe.php
 define('LANG','ru'); // Язык страницы
@@ -31,10 +31,12 @@ define('IMG_NEWS_NAME','noimg.jpg'); // Новостийная картинка 
 define('IMG_PRODUCT_PATH',SITE_ADDR.'/img_product/'); // Абсолютный путь для картинок с продуктом
 define('IMG_PROD_PATH',ABS_PATH.'/img_product/'); // Серверный путь для картинок с продуктом
 define('IMG_PRODUCT_NAME','noimg.png'); // Картинка продукта по умолчанию
+define('IMG_PATH',SITE_ADDR.'/img/'); // Абсолютный путь для картинок
 
 define('SKYPE','Skype'); // Skype техподдержки
 define('PHONE','+38(000) 000-00-00'); // Телефон техподдержки
 define('CURRENCY','грн'); // Валюта системы
+define('COUNTRY','UA'); // Страна по умолчанию
 define('ADDRESS','OOO "ДропСервис", г. Мухосральск'); // Адрес предприятия
 define('MIN_PAY','100'); // Минимальная сумма выплат
 define('START_USER','6'); // Категория нового пользователя

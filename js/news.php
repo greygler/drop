@@ -1,6 +1,14 @@
 <?
 require_once ('../config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?> 
+function del_news(id_news)
+{
+var is_del=confirm('Удалить новость #'+id_news+'?');
+
+}
+
+
+
 (function(){ 
 // alert(screen.width);
 if (screen.width > 767) {

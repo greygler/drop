@@ -24,10 +24,10 @@ function upload(id, row_id)
 			$('#edit_button_'+row_id).attr("disabled","disabled");
 			}
 			else {
-				
+				if (data!="") var alert_text=data; else var alert_text="Нет связи. Повторите попытку позже."
 			$('.upload_'+row_id).html('<i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>');
 			$('#upload_button_'+row_id).attr("disabled","disabled");
-			alert('⚠️ Ошибка при передаче:\n'+data);
+			alert('⚠️ Ошибка при передаче:\n'+alert_text);
 			}
 		},
           error:  function(xhr, str){
@@ -35,6 +35,10 @@ function upload(id, row_id)
           }
         });
 	
+}
+function hide_del(row_id)
+{
+	$('#tr_'+row_id).addClass('hide');
 }
 
 function del(row_id, order_id)
@@ -59,6 +63,7 @@ function del(row_id, order_id)
 			$('#del_button_'+row_id).attr("disabled","disabled");
 			$('#edit_button_'+row_id).attr("disabled","disabled");
 			$('.deldiv_'+row_id).html('<font color="red">Заказ удален!</font>');
+			setTimeout(hide_del(row_id),1000);
 			}
 			else {
 				

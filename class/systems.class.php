@@ -142,7 +142,7 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 		<font color="<?= $color_balance ?>">
 		<span class="fa fa-money fa-lg" ></span> <strong><?= $_SESSION['balance'] ?> <?= CURRENCY ?>. </strong></font>
 		<? if ($new_order>0) {$color_order="red"; ?>
-		<a href="?type=order&status=3">
+		<a href="?type=order&status=3<? if ($_SESSION['users_group']<5) echo('&orders=my'); ?>">
 		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></strong></font></a> <? } ?> 
 		</div>
 		</div>
@@ -412,7 +412,8 @@ public function footer($geobase="")
 <script src="<?= JS_PATH ?>/bootstrap-switch.min.js"></script>
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
 <script src="<?= JS_PATH ?>/search.php"></script>
-<? if ($refresh=="yes") { ?>
+
+<? if (($_GET['type']=="products") OR ($_GET['type']=="order"))  { ?>
 <script type="text/javascript">$("[data-fancybox]").fancybox({'afterClose': function() {parent.location.reload(true);}});</script>
 <? } ?>
 <script>$(function () {$('[data-toggle="tooltip"]').tooltip()})</script>
