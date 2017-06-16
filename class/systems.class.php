@@ -6,8 +6,11 @@ public function head($login="", $registration="")
 {
 ?>
 <!DOCTYPE html>
-<html lang="<?= LANG ?>">
-  <head>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="ru"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="ru"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="ru"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="<?= LANG ?>"><!--<![endif]-->
+<head>
     <meta http-equiv="content-type" content="text/html; utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,12 +31,14 @@ public function head($login="", $registration="")
 	<link href="<?= CSS_PATH ?>/bootstrap-switch.min.css" rel="stylesheet">
 	<link href="<?= CSS_PATH ?>/bootstrap.min.css" rel="stylesheet">
 	<link href="<?= CSS_PATH ?>/style.css" rel="stylesheet">
+	<link href="<?= CSS_PATH ?>/error_style.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	
 	<? if ($login=="yes") {?><script src="<?= JS_PATH ?>/login.php"></script><?} ?>
 	<? if ($registration=='yes') {?><script src="<?= JS_PATH ?>/registration.php"></script><?} ?>
   </head>
@@ -124,12 +129,12 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 	<nav>
 		<ul>
 			<li><a href="#" class="icon icon-menu" id="btn-menu">Menu</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Перечень заказов и продаж" href="?type=order"><div class="hidden-xs">Заказы</div><div class="visible-xs"><i class="fa fa-shopping-cart fa-2x"></i>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Перечень заказов и продаж" href="/?type=order"><div class="hidden-xs">Заказы</div><div class="visible-xs"><i class="fa fa-shopping-cart fa-2x"></i>
 </div></a></li>
-			<li><a  data-toggle="tooltip" data-placement="bottom" title="Личный кабинет пользователя" href="?type=user"><div class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
+			<li><a  data-toggle="tooltip" data-placement="bottom" title="Личный кабинет пользователя" href="/?type=user"><div class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
 </div></a></li>
           <? if ($_SESSION['users_group']>=5) echo('<li class="visible-xs"><a data-toggle="modal" data-target="#support" href="#"><span class="help fa fa-support fa-2x"></span></a></li>');
-		   else echo('<li><a data-toggle="tooltip" data-placement="bottom" title="Управление пользователями системы &#171;'.TITLE.'&#187;" href="?type=users"><i class="visible-xs fa fa-users fa-2x"></i><div class="hidden-xs">Пользователи</div></a></li>'); ?>
+		   else echo('<li><a data-toggle="tooltip" data-placement="bottom" title="Управление пользователями системы &#171;'.TITLE.'&#187;" href="/?type=users"><i class="visible-xs fa fa-users fa-2x"></i><div class="hidden-xs">Пользователи</div></a></li>'); ?>
 			 
 		</ul>
 		<div id="user" class="row  hidden-xs">
@@ -142,7 +147,7 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 		<font color="<?= $color_balance ?>">
 		<span class="fa fa-money fa-lg" ></span> <strong><?= $_SESSION['balance'] ?> <?= CURRENCY ?>. </strong></font>
 		<? if ($new_order>0) {$color_order="red"; ?>
-		<a href="?type=order&status=3<? if ($_SESSION['users_group']<5) echo('&orders=my'); ?>">
+		<a href="/?type=order&status=3<? if ($_SESSION['users_group']<5) echo('&orders=my'); ?>">
 		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></strong></font></a> <? } ?> 
 		</div>
 		</div>
@@ -169,7 +174,7 @@ public function side_menu()
 			 </form></li> 
 			<!-- <ul class="search_result drop_color"></ul> -->
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Главная страница системы &#171;<?= TITLE ?>&#187;" href="/" class="icon icon-home"><span>Главная</span></a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог всех товаров, всех категорий, представленных в системе &#171;<?= TITLE ?>&#187; для продаж.<?= "\n" ?>Актуальность &#9200; <?= date("d.m.Y H:i:s", LAST_TIME_PRODUCT) ?>" href="?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог всех товаров, всех категорий, представленных в системе &#171;<?= TITLE ?>&#187; для продаж.<?= "\n" ?>Актуальность &#9200; <?= date("d.m.Y H:i:s", LAST_TIME_PRODUCT) ?>" href="/?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
 				<ul>
 				<? 
 				
@@ -177,7 +182,7 @@ public function side_menu()
 					$myrow = mysql_fetch_array($result);
 					do
 					{
-						echo ('<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог товаров категории &#171;'.$myrow['name'].'&#187;'."\n".'Актуальность категорий &#9200; '.date("d.m.Y H:i:s", LAST_TIME_CATEGORY).'" href="?type=products&cat='.$myrow['id'].'"><span><i class="fa fa-check-square-o" aria-hidden="true"></i> '.$myrow['name'].'</span></a>'."</li>\n");
+						echo ('<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог товаров категории &#171;'.$myrow['name'].'&#187;'."\n".'Актуальность категорий &#9200; '.date("d.m.Y H:i:s", LAST_TIME_CATEGORY).'" href="/?type=products&cat='.$myrow['id'].'"><span><i class="fa fa-check-square-o" aria-hidden="true"></i> '.$myrow['name'].'</span></a>'."</li>\n");
 					
 					}
 					while ($myrow = mysql_fetch_array($result));
@@ -187,7 +192,7 @@ public function side_menu()
 					<!-- <li><a href="#"><span>Web Development</span></a></li> -->
 				</ul>
 			</li>
-			<li><a href="?type=options" class="icon icon-options"><span>Настройки системы</span></a>
+			<li><a href="/?type=options" class="icon icon-options"><span>Настройки системы</span></a>
 				<!-- <ul>
 				<li><a href="#"><span>1</span></a></li>
 				<li><a href="#"><span>2</span></a></li>								
@@ -330,7 +335,7 @@ public function attention()
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">В следующий раз</button>
-        <a href="?type=user" type="button" class="btn btn-primary">Устранить замечания</a>
+        <a href="/?type=user" type="button" class="btn btn-primary">Устранить замечания</a>
       </div>
     </div>
   </div>

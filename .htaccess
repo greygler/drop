@@ -1,0 +1,78 @@
+RewriteEngine On
+RewriteBase /
+AddDefaultCharset UTF-8
+
+# Страницы ошибок
+# Bad Rquest
+ErrorDocument 400 /?type=400
+# Authorization Required
+ErrorDocument 401 /?type=401
+# Forbidden
+ErrorDocument 403 /?type=403
+# Not found
+ErrorDocument 404 /?type=404
+# Method Not Allowed
+ErrorDocument 405 /?type=405
+# Request Timed Out
+ErrorDocument 408 /?type=408
+# Request URI Too Long
+ErrorDocument 414 /?type=414
+# Internal Server Error
+ErrorDocument 500 /error/500.html
+# Not Implemented
+ErrorDocument 501 /error/501.html
+# Bad Gateway 
+ErrorDocument 502 /error/502.html
+# Service Unavailable 
+ErrorDocument 503 /error/503.html
+# Gateway Timeout
+ErrorDocument 504 /error/504.html
+
+#Устанавливаем e-mail адрес по-умолчанию для администратора
+ServerSignature EMail
+SetEnv SERVER_ADMIN default@domain.com
+
+#Защищаем .htaccess файл
+<files .htaccess="">
+order allow,deny
+deny from all
+</files>
+
+#Защищаем файл config.php
+<files config.php="">
+order allow,deny
+deny from all
+</files>
+
+#Добавляем срок жизни в заголовки
+<ifModule mod_headers.c>
+	#кэшировать html и htm файлы на один день
+	<FilesMatch "\.(html|htm)$">
+		Header set Cache-Control "max-age=43200"
+	</FilesMatch>
+	#кэшировать css, javascript и текстовые файлы на одну неделю
+	<FilesMatch "\.(js|css|txt)$">
+		Header set Cache-Control "max-age=604800"
+	</FilesMatch>
+	#кэшировать флэш и изображения на месяц
+	<FilesMatch "\.(flv|swf|ico|gif|jpg|jpeg|png)$">
+		Header set Cache-Control "max-age=2592000"
+	</FilesMatch>
+	#отключить кэширование
+	<FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+		Header unset Cache-Control
+	</FilesMatch>
+</IfModule>
+
+#Включаем отслеживание сим-ссылок
+Options +FollowSymLinks
+#Запускаем url_rewriting
+RewriteEngine On
+#Блокируем все ссылки, содержащие <script>
+RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+#Блокируем все скрипты, которые пытаются изменить переменные PHP Globals:
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+#Блокируем все скрипты, которые пытаются изменить переменную _REQUEST:
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+#Перенаправляем все подобные на страницу с ошибкой 403 — запрещено
+RewriteRule ^(.*)$ index.php [F,L]
