@@ -9,7 +9,7 @@
 		</p>
         
         <p>
-		Такая страница не существует. Воспользуйтесь формой поиска для нужного товара:</p>
+		<strong>Такая страница не существует.</strong></br>Воспользуйтесь формой поиска для нужного товара:</p>
 		<form action="" method="post" class="search">
   <input type="search" name="" placeholder="поиск" class="input" />
   <input type="submit" name="" value="" class="submit" />

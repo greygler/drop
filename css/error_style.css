@@ -227,7 +227,7 @@
   height: 100%;
 
   cursor: pointer;
-  background: url(https://lh4.googleusercontent.com/-b-5aBxcxarY/UAfFW9lVyjI/AAAAAAAABUg/gQtEXuPuIds/s13/go.png) 50% no-repeat;
+  background: url(../img/go.png) 50% no-repeat;
 
   /* добавляем прозрачность кнопке отправки */
   opacity: 0.5;

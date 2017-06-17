@@ -27,6 +27,12 @@ ErrorDocument 502 /error/502.html
 ErrorDocument 503 /error/503.html
 # Gateway Timeout
 ErrorDocument 504 /error/504.html
+# Version Not Supported
+ErrorDocument 505 /error/505.html
+# Insufficient Storage
+ErrorDocument 507 /error/507.html
+# Not Extended
+ErrorDocument 510 /error/510.html
 
 #Устанавливаем e-mail адрес по-умолчанию для администратора
 ServerSignature EMail
