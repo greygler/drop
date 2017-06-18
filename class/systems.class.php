@@ -31,7 +31,7 @@ public function head($login="", $registration="")
 	<link href="<?= CSS_PATH ?>/bootstrap-switch.min.css" rel="stylesheet">
 	<link href="<?= CSS_PATH ?>/bootstrap.min.css" rel="stylesheet">
 	<link href="<?= CSS_PATH ?>/style.css" rel="stylesheet">
-	<link href="<?= CSS_PATH ?>/error_style.css" rel="stylesheet">
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -168,9 +168,7 @@ public function side_menu()
 	<div id="sideNav">
 		<ul>
 			<li class="searchForm"><form action="/" ><input type="hidden" name="type" value="products">
-			<a href="#" class="icon icon-search"><span>
-			
-			<input type="text"  list="search_result" placeholder="Поиск товара" name="product" class="search" /></span></a>
+			<a href="#" class="icon icon-search"><span><input type="text"  list="search_result" placeholder="Поиск товара" name="product" class="search" /></span></a>
 			 </form></li> 
 			<!-- <ul class="search_result drop_color"></ul> -->
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Главная страница системы &#171;<?= TITLE ?>&#187;" href="/" class="icon icon-home"><span>Главная</span></a></li>

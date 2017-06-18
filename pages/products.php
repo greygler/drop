@@ -45,12 +45,13 @@ thead               { width: 100%; position: fixed; height: 109px; top: 150px;
 	if ($_GET['order']!="") $order_by="ORDER BY {$_GET['order']}";
 	if ($_GET['desc']!="") $order_by.=" DESC";
 	
-	
+	if ($count_products>0){
 	$db="SELECT * FROM products {$where} {$order_by} LIMIT {$limit['begin']}, {$limit['count']}";
 	//echo $db;
 	$result = mysql_query($db);
 		$myrow = mysql_fetch_array($result);
-		do if (($_SESSION['users_group']<5) OR ($myrow['active']!=0)) { ?>
+		
+		do if (($_SESSION['users_group']<5) OR ($myrow['active']!=0) ) { ?>
 		<form id="product_form_<?= $myrow['id'] ?>" action="javascript:void(null);" method="post" enctype="multipart/form-data" onsubmit="new_image(<?= $myrow['id'] ?>)">
 		<tr >
 		<td valign="middle"><?= $myrow['id']; ?></td><? if ($myrow['pic']!="") $img_name=$myrow['pic']; else $img_name=IMG_PRODUCT_NAME ?>
@@ -83,10 +84,10 @@ thead               { width: 100%; position: fixed; height: 109px; top: 150px;
 	</tr>
 	
 		</form>
-	<?  	} 
+	<?  	}  
 	
-while ($myrow = mysql_fetch_array($result));
-//else echo('<tr class="warning"><td colspan="5"><p>ничего нет!</p></td>	</tr>');
+	while ($myrow = mysql_fetch_array($result));  }
+else echo('<tr class="warning"><td colspan="5"><p>ничего нет!</p></td>	</tr>');
 	?>
 	</tbody>
 	

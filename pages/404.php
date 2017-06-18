@@ -1,3 +1,4 @@
+<<link href="<?= CSS_PATH ?>/error_style.css" rel="stylesheet">
 <div class="comingcontainer">
     <div class="checkbacksoon">
 		<p>
@@ -9,11 +10,13 @@
 		</p>
         
         <p>
-		<strong>Такая страница не существует.</strong></br>Воспользуйтесь формой поиска для нужного товара:</p>
-		<form action="" method="post" class="search">
-  <input type="search" name="" placeholder="поиск" class="input" />
+		<strong>Такая страница не существует.</strong></br>Воспользуйтесь формой поиска для нужного товара в боковом меню</p>
+		<!--<datalist id = "search_result404"></datalist>
+		<form action="/"  class="search404">
+		<input type="hidden" name="type" value="products">
+  <input list="search_result type="search" name="product" placeholder="поиск" class="input" />
   <input type="submit" name="" value="" class="submit" />
-</form>
+</form> -->
        
     
 	</div>

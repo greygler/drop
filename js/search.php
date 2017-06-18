@@ -12,7 +12,8 @@ $('.search').bind("change keyup input click", function() {
             data: {'product':this.value},
             response: 'text',
             success: function(data){
-                $("#search_result").html(data).fadeIn(); 
+                $("#search_result").html(data).fadeIn(); \
+				$("#search_result404").html(data).fadeIn(); 
            }
        })
     }

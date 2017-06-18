@@ -65,6 +65,7 @@ class Db
 	{
 		$db_connect="SELECT COUNT(1) FROM {$table}";
 		if ($where!="") $db_connect.=" WHERE {$where}";
+		//echo $db_connect;
 		$result = mysql_query($db_connect);
         $myrow = mysql_fetch_array($result);
 		return $myrow[0];
