@@ -371,7 +371,32 @@ public function info_balance()
 }
 
 
+public function del_news($id) // Удаляем новость
+	{
+		$result = mysql_query ("DELETE FROM news WHERE id={$id}");
+		if ($result == 'true') return 'ok'; else return 'error';
+	}
 
+public function load_news($id_news) // Находим новость по ID новости
+{
+	$result = mysql_query("SELECT * FROM news WHERE id='{$id_news}'");
+	$myrow = mysql_fetch_array($result);
+	return $myrow;
+}
+
+public function update_news($id, $timestamp, $pic, $text) // Обновление активности товара
+		{
+			$result = mysql_query ("UPDATE news SET date='{$timestamp}', pic='{$pic}', text='{$text}' WHERE id='{$id}'");
+			
+			if ($result == 'true') return 'ok'; else return 'error';
+		}
+
+public function save_news($timestamp, $pic, $text) // Обновление активности товара
+		{
+			$result = mysql_query ("INSERT INTO news (date,  pic, text) VALUES  ('{$timestamp}','{$pic}', '{$text}')");
+			
+			if ($result == 'true') return 'ok'; else return 'error';
+		}		
 
 
 public function footer($geobase="")
@@ -418,7 +443,7 @@ public function footer($geobase="")
 <script>$("[name='checkbox']").bootstrapSwitch();</script>
 <script src="<?= JS_PATH ?>/search.php"></script>
 
-<? if (($_GET['type']=="products") OR ($_GET['type']=="order"))  { ?>
+<? if (($_GET['type']=="products") OR ($_GET['type']=="order") OR ($_GET['type']=="news") OR ($_GET['type']==""))  { ?>
 <script type="text/javascript">$("[data-fancybox]").fancybox({'afterClose': function() {parent.location.reload(true);}});</script>
 <? } ?>
 <script>$(function () {$('[data-toggle="tooltip"]').tooltip()})</script>

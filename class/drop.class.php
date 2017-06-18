@@ -137,11 +137,7 @@ class drop{
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
-	public function del_news($id) // Удаляем новость
-	{
-		$result = mysql_query ("DELETE FROM news WHERE id={$id}");
-		if ($result == 'true') return 'ok'; else return 'error';
-	}
+	
 	
 	public function product_active($id, $active) // Обновление активности товара
 		{
