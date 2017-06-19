@@ -1,6 +1,6 @@
 <?
 define('SITE_ADDR','http://drop'); // Адрес системы без слеш на конце!
-//define('SITE_ADDR','http://drop.totalh.net'); // Адрес системы
+//define('SITE_ADDR','https://drop.greygler.pro'); // Адрес системы
 define('ABS_PATH',$_SERVER['DOCUMENT_ROOT']); //  Абсолютный путь на сервере
 define('TIME_ZONE','Europe/Kiev'); // Временная зона, http://php.net/manual/ru/timezones.europe.php
 define('LANG','ru'); // Язык страницы
@@ -94,11 +94,11 @@ define('DB_PASS', 'drop'); 	// Пароль базы данных
 /* define('DB_HOST', 'localhost'); 	// Адрес базы данных, может называться localhost
 define('DB_NAME', 'u12568_info'); 	// Название базы данных
 define('DB_LOGIN', 'u12568_info'); 	// Логин базы данных
-define('DB_PASS', 'DsRr^79bw?lJ'); 	// Пароль базы данных */
+define('DB_PASS', 'DsRr^79bw?lJ'); 	// Пароль базы данных 
 ?>
 <?
-/* define('DB_HOST', 'sql303.0fees.us'); 	// Адрес базы данных, может называться localhost
-define('DB_NAME', '0fe_17966322_drop'); 	// Название базы данных
-define('DB_LOGIN', '0fe_17966322'); 	// Логин базы данных
-define('DB_PASS', 'coffecoffe'); 	// Пароль базы данных */
+define('DB_HOST', 'greygler.mysql.ukraine.com.ua'); 	// Адрес базы данных, может называться localhost
+define('DB_NAME', 'greygler_drop'); 	// Название базы данных
+define('DB_LOGIN', 'greygler_drop'); 	// Логин базы данных
+define('DB_PASS', 'zmnapzaw'); 	// Пароль базы данных */
 ?>
