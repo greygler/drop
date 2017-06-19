@@ -68,7 +68,9 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 	</thead>
 	<tbody >
 	<?
-	if (($_SESSION['status'][$get_status] > 0) OR (($_SESSION['users_group']<5) AND ($_GET['orders']!="my"))) {
+     if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) $count_status=$all_status[$get_status]; 
+else $count_status=$_SESSION['status'][$get_status];
+	if ( $count_status > 0)  {
 		$db="SELECT * FROM order_tab WHERE (status='{$get_status}'{$where_id}) ORDER BY order_id DESC LIMIT {$limit['begin']}, {$limit['count']}";
 		//echo $db;
 	$result = mysql_query($db);

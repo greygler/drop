@@ -20,6 +20,13 @@ class drop{
 		$myrow = mysql_fetch_array($result);
 		return $myrow;
 	}
+
+	public function get_order_id($order_id) // Ищем ID пользователя по order_id
+	{
+		$result = mysql_query("SELECT * FROM order_tab WHERE order_id='{$order_id}'");
+		$myrow = mysql_fetch_array($result);
+		return $myrow['user_id'];
+	}
 	
 	public function search($product) // Ищем продукт по названию
 	{
@@ -60,11 +67,11 @@ class drop{
 
 	}
 	
-	//$result = mysql_query ("UPDATE users SET order_pay='{$summ}', order_pay_method='{$method}' WHERE id='{$id}'");
+
 	
-	public function last_order() // забираем 100 последних заказов
+	public function last_order() // забираем 100 последних заказов, кроме 18 (Завершено), 13(Отказ), 31 (Возврат товара)
 	{
-		$result = mysql_query("SELECT order_id FROM order_tab WHERE `lp-crm`!='0' ORDER BY id DESC LIMIT 100");
+		$result = mysql_query("SELECT order_id FROM order_tab WHERE (`lp-crm`!='0' AND `status`!='18' AND `status`!='13' AND `status`!='31') ORDER BY id DESC LIMIT 100");
 		$myrow = mysql_fetch_array($result);
 		do
 		{
@@ -145,15 +152,10 @@ class drop{
 			if ($result == 'true') return 'ok'; else return 'error';
 		}
 		
-	public function order_pay($id, $summ, $method) // Запрос выплаты
-		{
-			$date_order=time();
-			$result = mysql_query ("UPDATE users SET order_pay='{$summ}', order_pay_method='{$method}' WHERE id='{$id}'");
-			$result = mysql_query ("INSERT INTO pay_history (user_id, date_order, summ, method_pay) VALUES ('{$id}','{$date_order}','{$summ}','{$method}')");
-			if ($result == 'true') return 'ok'; else return 'error';
-		}
+
 		
-		public function new_image($id, $image) // Обновление картинки товара
+		
+	public function new_image($id, $image) // Обновление картинки товара
 		{
 			$result = mysql_query ("UPDATE products SET pic='{$image}' WHERE id='{$id}'");
 			if ($result == 'true') return 'ok'; else return 'error';
@@ -283,11 +285,16 @@ class drop{
 		<? } 
 		
 		} 
+
+	public function money_log($order_id, $user_id, $name, $summ, $comment)
+	{
+		$datetime=time();
+		$db="INSERT INTO money (datetime, user_id, order_id, name, summ, comment) VALUES ({$datetime},'{$user_id}','{$order_id}', '{$name}','{$summ}','{$comment}')";
+		$result = mysql_query ($db);
+		echo $db;
+	}
 	
-	
-	
-	
-	
+		
 	
 	public function update_data()
 		{

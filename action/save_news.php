@@ -15,29 +15,16 @@ $timestamp=strtotime($_POST['date']." ".$_POST['time_h'].":".$_POST['time_m']);
 //echo "<br>".date("d.m.Y H:i:s" , $timestamp);
 
 
-if ($FILES['img']['name']!=""){
-if($_FILES["img"]["size"] > 1024*3*1024)
-   {
-     echo ("error");
-     exit;
-   }
-  $new_file_name=md5(time()).".".SimpleImage::img_ext($_FILES["img"]["type"]);
-   // Проверяем загружен ли файл
-   if(is_uploaded_file($_FILES["img"]["tmp_name"]))
-   {
-     // Если файл загружен успешно, перемещаем его
-     // из временной директории в конечную
-     move_uploaded_file($_FILES["img"]["tmp_name"], IMG_NEWS_PATH.$new_file_name);
-    
-	new_image($_POST['id'], $new_file_name);
-	 echo($new_file_name);
-   } else {
-      echo("error");
-   }
-} 
+if ($_FILES['img']['name']!=""){$image = new SimpleImage();
+    $image->load($_FILES['img']['tmp_name']);
+    $image->resizeToWidth(150);
+	$new_file_name=md5(time()).".".SimpleImage::img_ext($_FILES["img"]["type"]);
+	$image->save(IMG_NEWS_ABS_PATH.$new_file_name);
+	echo $new_file_name;
+} else echo IMG_NEWS_NAME;
 if ($_POST['id']!="new") $return=systems::update_news($_POST['id'], $timestamp, $new_file_name, $_POST['text']);
-else $return=systems::save_news($timestamp, $new_file_name,  $_POST['text']);
+else $return=systems::save_news($timestamp, $new_file_name,  $_POST['text']); 
 //echo $return;
-echo IMG_NEWS_NAME;
+
 
 } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");

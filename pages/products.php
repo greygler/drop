@@ -72,7 +72,7 @@ thead               { width: 100%; position: fixed; height: 109px; top: 150px;
 		</td>
 		<td valign="middle"><a data-fancybox data-src="<?= ACTION_PATH ?>/one_product.php?id=<?= $myrow['id']; ?>" id="button_<?= $myrow['id']; ?>" type="button" class="fancybox btn btn-block <? if ($myrow['active']!='1') echo('btn-default'); else echo('btn-info');  ?>" href="javascript:;" title="<?= $myrow['name']; ?>"><div class="text-left"><i class="fa fa-shopping-bag" aria-hidden="true"></i> <strong><?= $myrow['name']; ?></strong> 
 		 <small><?= $myrow['model']; ?></small></div> </a>
-		 <? if ($myrow['manufacturer']!="") echo("<i class=\"fa fa-industry\" aria-hidden=\"true\"></i> Производитель: {$myrow['manufacturer']}"); ?> </td>
+		 <? if ($myrow['manufacturer']!="") echo("<i class=\"fa fa-industry\" aria-hidden=\"true\"></i> Производитель: {$myrow['manufacturer']}"); ?> <div class="text-right"><small >Стоимость расходов по доставке в обе стороны: <strong><? if (($myrow['post_pay']==0) OR ($myrow['post_pay']=="")) echo (POST_PAY." ".CURRENCY ); ?></strong></small></div></td>
 		<td valign="middle">
 		<button title="Цена продажи" type="button" class="btn btn-default btn-block">
 		<i class="pull-left fa fa-tag" aria-hidden="true"></i><?= $myrow['price']; ?> <?= CURRENCY ?></button>

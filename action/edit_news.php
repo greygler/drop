@@ -72,7 +72,9 @@ $datetime=$news['date'];
   <span class="input-group-addon"><i class="fa fa-file-image-o" aria-hidden="true"></i></span>
  <input id="news-img" class="form-control" placeholder="Картинка для новости" type="file" value="" accept="image/*">
  <span class="input-group-addon">jpg, png, gif</span>
+
  </div>
+<span class="help-block">⚠️<small>Не рекомендуется использовать PNG-картинки на прозрачной основе!</small></span>
  <div class="text-center">
  <? if ($news['pic']!="") $img_news=$news['pic'];  else $img_news=IMG_NEWS_NAME; ?>
  <img id="img_news" class="img-rounded img-responsive" src="<?= IMG_NEWS_PATH.$img_news ?>" alt=""  >

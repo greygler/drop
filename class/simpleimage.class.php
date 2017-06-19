@@ -2,7 +2,8 @@
 
  
 class SimpleImage {
-	/* Подключение:
+	/* http://sanchiz.net/blog/resizing-images-with-php 
+Подключение:
 require ('class/SimleImage.class.php');
 
 		// Изменяем размеры и сохраняем как image1.jpg

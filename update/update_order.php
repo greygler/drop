@@ -13,10 +13,11 @@ $out=lp_crm::getOrdersByID(CRM, CRM_KEY, $orders);
 if ($out['status']=='ok'){
 	
 	foreach($out['data'] as $key => $value) {
-		//echo("{$key} = {$value}<br>");
+		echo("{$key} = {$value}<br>");
 		//$products = unserialize(urldecode($value['products'])); 
 		
 	  print_r($value['products']); echo("<br>");
+		$total=0;$profit=0;
 	 foreach($value['products'] as $key_p => $value_p){
 		$product=drop::one_product($value_p['product_id']);
 		 $sum=$value_p['quantity']*$value_p['price'];
@@ -27,6 +28,7 @@ if ($out['status']=='ok'){
 		 $prof=$sum-$drop_sum;
 		 echo ("Профит {$key_p}.{$prof}<br>");
 		 $profit=$profit+$prof;
+
 	 }
 	 
 	
@@ -39,6 +41,19 @@ if ($out['status']=='ok'){
 	  echo("!<br>");
 	  echo $bd;
 		$result = mysql_query ($bd);
+
+if ($value['status']==18) {
+$user_id=drop::get_order_id($key);
+echo autoring::plus_balance($user_id, $prof);
+echo drop::money_log($key,$user_id, 1,$prof,"Продажа");
+}
+if ($value['status']==31) {
+$user_id=drop::get_order_id($key);
+
+echo autoring::minus_balance($user_id, POST_PAY);
+echo drop::money_log($key,$user_id, 0,POST_PAY,"Почтовые расходы");
+}
+
 
 if ($result == 'true')
 

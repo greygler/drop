@@ -22,7 +22,7 @@ function save_news(id)
           processData: false,
           contentType: false,
           success: function(data) { 
-		  
+		  alert(data);
 		  if (data!="error") {
 		  $("#img_news").attr("src","<?= IMG_NEWS_PATH ?>"+data);
 			//$('#ref-button_'+id).attr("disabled","disabled");	

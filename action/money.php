@@ -18,32 +18,28 @@ $user=autoring::get_user($_GET['id']);
 
 <div class="container container_user_data">
 <div class="page-header">
-		<h1 style="margin: 0px 0 10px 0;"><small>История выплат: </small><strong><?= $user['name']?></strong><small>, id: <?= $_GET['id'] ?></small></h1>
+		<h1 style="margin: 0px 0 10px 0;"><small>История движения средств: </small><strong><?= $user['name']?></strong><small>, id: <?= $_GET['id'] ?></small></h1>
 </div>
 <? } ?>
 <table class="<? if ($_GET['frame']=='no') echo('table'); else echo('table-responsive') ?> table-striped" border="1">
 <thead>
-<th>Заказ</th>
-<th>Выплата</th>
+<th>Дата</th>
 <th>Сумма</th>
-<th>Способ</th>
+<th>Order ID</th>
 <th>Комментарий</th>
 </thead>
 <tbody>
-<? $count_pay=db::cound_bd("pay_history", "user_id='{$_GET['id']}'");
+<? $count_pay=db::cound_bd("money", "user_id='{$_GET['id']}'");
 if ($count_pay>0) { 
- $pay_method=autoring::pay_method("WHERE active!=0");
- $pay_status=autoring::pay_status();
- $result = mysql_query("SELECT * FROM pay_history  WHERE user_id='{$_GET['id']}' ORDER BY `id` DESC");
+ $result = mysql_query("SELECT * FROM money  WHERE user_id='{$_GET['id']}' ORDER BY `id` DESC");
 $myrow = mysql_fetch_array($result);
 do
 {
 ?>
 <tr> 
-<td><?= date("d.m.y H.i.s", $myrow['date_order']) ?></td>
-<td><? if ($myrow['date_pay']!="") echo($pay_status[$myrow['pay_status']]."<br>".date("d.m.y H.i.s",$myrow['date_pay'])); else echo("Ожидаем") ?></td>
+<td><?= date("d.m.y H.i.s", $myrow['datetime']) ?></td>
 <td><?= $myrow['summ']; ?> <?= CURRENCY ?></td>
-<td><?= $pay_method[$myrow['method_pay']]; ?></td>
+<td><?= $myrow['order_id']; ?></td>
 <td><?= $myrow['comment']; ?></td>
 </tr>
 <? }

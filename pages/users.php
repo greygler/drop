@@ -71,10 +71,10 @@ do if ($myrow['id']!='0')
 		</select>
 		<input id="balance_<?= $myrow['id'] ?>" type="hidden" name="balance_<?= $myrow['id'] ?>" value="<?= $myrow['balance'] ?>">
 		</td>
-		<td valign="middle"><button id="btn_balance-<?= $myrow['id']?>" type="button" class="btn btn-block <? if (($myrow['users_group']==0) OR ($myrow['balance']<0)) echo('btn-danger text_white'); else if ($myrow['balance']>0)
-		echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>"> <? if ($myrow['balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($myrow['balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?>
+		<td valign="middle"><a  data-toggle="tooltip" data-placement="bottom" id="btn_balance-<?= $myrow['id']?>" type="button" class="btn btn-block <? if (($myrow['users_group']==0) OR ($myrow['balance']<0)) echo('btn-danger text_white'); else if ($myrow['balance']>0)
+		echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>" data-fancybox data-src="<?= ACTION_PATH ?>/money.php?id=<?= $myrow['id']?>&frame=no" href="javascript:;"> <? if ($myrow['balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($myrow['balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?>
 	
-	<?= $myrow['balance'] ?> <?= CURRENCY ?></button></td>
+	<?= $myrow['balance'] ?> <?= CURRENCY ?></a></td>
 	<td>
 	
 	<a class="btn btn-default btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов пользователя <?= $myrow['name'] ?>" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $myrow['id']?>" href="javascript:;">

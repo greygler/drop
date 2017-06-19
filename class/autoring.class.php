@@ -241,7 +241,7 @@ class Autoring {
 			if ($is_verify_email AND $is_verify_phone )  return true;  else return false;
 		}
 		
-	public function pay_method($where="")
+	public function pay_method($where="") // Методы выплат
 	{
 		$result = mysql_query("SELECT * FROM pay_method {$where}");
 		$myrow = mysql_fetch_array($result);
@@ -252,16 +252,78 @@ class Autoring {
 		while ($myrow = mysql_fetch_array($result));
 		return $pay_method;
 	}
+	
+	
+	public function pay_status() // Статусы выплат
+	{
+		$result = mysql_query("SELECT * FROM pay_status");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+		$pay_status[$myrow['id']]=$myrow['name'];
+		}
+		while ($myrow = mysql_fetch_array($result));
+		return $pay_status;
+	}
 		
-	public function logout() // выход
+	
+	
+	public function order_pay($id, $summ, $method) // Запрос выплаты
+		{
+			$date_order=time();
+			
+			$result = mysql_query ("INSERT INTO pay_history (user_id, date_order, summ, method_pay) VALUES ('{$id}','{$date_order}','{$summ}','{$method}')");
+			$result = mysql_query ("SELECT * FROM `pay_history` WHERE (date_order='{$date_order}' AND user_id='{$id}')");
+			$myrow = mysql_fetch_array($result);
+			$result = mysql_query ("UPDATE users SET order_pay_id='{$myrow['id']}', order_pay='{$summ}', order_pay_method='{$method}' WHERE id='{$id}'");
+			if ($result == 'true') return 'ok'; else return 'error';
+		}
+	
+	public function last_status_pay($id) // Статус выплаты по ID в истории
+		{
+			$result = mysql_query ("SELECT * FROM `pay_history` WHERE id='{$id}'");
+			$myrow = mysql_fetch_array($result);
+			$pay_status=autoring::pay_status();
+			return $pay_status[$myrow['pay_status']]; 
+		}	
+		
+		
+	public function order_pay_go($id, $summ, $status, $comment) // Выплата
+		{
+			$date_pay=time();
+			$users=autoring::get_user($id);
+			if ($status==1) $balance=$users['balance']-$summ; else {$balance=$users['balance'];$summ=$users['balance'];}
+			
+
+			$result = mysql_query ("UPDATE users SET order_pay='0.00', balance='{$balance}', order_pay_method='' WHERE id='{$id}'");
+			$result = mysql_query ("UPDATE pay_history SET date_pay='{$date_pay}', summ='{$summ}',pay_status='{$status}',comment='{$comment}' WHERE id={$users['order_pay_id']}");
+
+			$pay_status=autoring::pay_status();
+			if ($result == 'true') return $pay_status[$status]; else return 'Ошибка обновления данных';
+		}
+
+    public function plus_balance($id, $summ)
+		{
+			$users=autoring::get_user($id);
+			$balance=$users['balance']+$summ;
+			if (($users['balance']>MIN_SUMM) AND ($users['users_group']==5)) autoring::save_group($id, '6');
+			$total_balance=$users['total_balance']+$summ;
+			$result = mysql_query ("UPDATE users SET balance='{$balance}', total_balance='{$total_balance}' WHERE id='{$id}'");
+			if ($result == 'true') return 'ok'; else return 'error';
+		}
+   public function minus_balance($id, $summ)
+		{
+			$users=autoring::get_user($id);
+			$balance=$users['balance']-$summ;
+			if (($balance<0) AND (($users['users_group']!=7) OR  ($users['users_group']>5)))  autoring::save_group($id, '5');
+			$result = mysql_query ("UPDATE users SET balance='{$balance}' WHERE id='{$id}'");
+			if ($result == 'true') return 'ok'; else return 'error';
+		}
+		
+	public function logout() // выход  fa-credit-card
 		{
 			$_SESSION = array();
 			session_destroy();
 		}
-	
-	
-	
-	
-
 }
 ?>

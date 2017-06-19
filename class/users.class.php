@@ -4,23 +4,30 @@ class Users
 
 public function stata()
 {
-	?>
+?>
 	<h3 class="text-right"><span class="fa fa-calculator fa-lg"></span><strong>Статистика </strong><wbr><small>На <?= date("d.m.y H:i:s") ?></small></h3>
 <dl class="dl-horizontal">
   <dt>Текущий баланс:</dt>
-  <dd><button type="button" class="btn <? if ($_SESSION['balance']<0) echo('btn-danger text_white'); else if ($_SESSION['balance']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?> btn-block"><? if ($_SESSION['balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['balance'] ?> <?= CURRENCY ?></button></dd>
+  <dd><div class="form-group"><button type="button" class="btn <? if ($_SESSION['balance']<0) echo('btn-danger text_white'); else if ($_SESSION['balance']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?> btn-block"><? if ($_SESSION['balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['balance'] ?> <?= CURRENCY ?></button></div></dd>
   <dt>Всего заработано:</dt>
-  <dd><button type="button" class="btn <? if ($_SESSION['total_balance']<0) echo('btn-danger text_white'); else if ($_SESSION['total_balance']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?> btn-block"><? if ($_SESSION['total_balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['total_balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['total_balance'] ?> <?= CURRENCY ?></button></dd>
-  <dt>Текущие продажи:</dt>
+  <dd><div class="form-group"><button type="button" class="btn <? if ($_SESSION['total_balance']<0) echo('btn-danger text_white'); else if ($_SESSION['total_balance']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?> btn-block"><? if ($_SESSION['total_balance']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['total_balance']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['total_balance'] ?> <?= CURRENCY ?></button></div></dd>
+ <!-- <dt>Текущие продажи:</dt>
   <dd><button type="button" class="btn btn-default  btn-block"><?= $_SESSION['sale'] ?></button></dd>
   <dt>Всего продаж:</dt>
   <dd><button type="button" class="btn btn-default btn-block"><?= $_SESSION['total_sale'] ?></button></dd>
   <dt>Из них успешных:</dt>
-  <dd><button  type="button" class="btn  <? if ($_SESSION['sale_ok']<0) echo('btn-danger text_white'); else if ($_SESSION['sale_ok']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>  btn-block"><? if ($_SESSION['sale_ok']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['sale_ok']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['sale_ok'] ?></button></dd>
-  <dt></dt><dd><button id="order-pay_button" data-toggle="modal" data-target="#order-pay_modal" type="button"  <? 
-  if (($_SESSION['balance']<MIN_PAY) OR ($_SESSION['order_pay']>=MIN_PAY))  echo('disabled="disabled"'); ?> class="btn <? if ($_SESSION['balance']>0) echo('btn-primary'); else echo('btn-danger') ?> btn-block user-buttom" ><? if (($_SESSION['balance']<MIN_PAY) AND ($_SESSION['balance']>0)) echo('Выплата не доступна!'); else if (($_SESSION['balance']>0) AND ($_SESSION['order_pay']<1)) echo('Заказать выплату'); else 
+  <dd><button  type="button" class="btn  <? if ($_SESSION['sale_ok']<0) echo('btn-danger text_white'); else if ($_SESSION['sale_ok']>0) echo ('btn-success text_white'); else echo ('btn-default drop_color') ?>  btn-block"><? if ($_SESSION['sale_ok']>0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>'); else if ($_SESSION['sale_ok']!=0) echo('<span class="pull-right badge"><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>'); ?> <?= $_SESSION['sale_ok'] ?></button></dd> -->
+  <dt></dt><dd><div class="form-group"><button id="order-pay_button" data-toggle="modal" data-target="#order-pay_modal" type="button"  <? 
+  if (($_SESSION['balance']<MIN_PAY) OR ($_SESSION['order_pay']>=MIN_PAY))  echo('disabled="disabled"'); ?> class="btn <? if ($_SESSION['balance']>=0) echo('btn-primary'); else echo('btn-danger') ?> btn-block" ><? if (($_SESSION['balance']<MIN_PAY) AND ($_SESSION['balance']>=0)) echo('Выплата не доступна!'); else if (($_SESSION['balance']>0) AND ($_SESSION['order_pay']<=MIN_PAY)) echo('Заказать выплату'); else 
   if ($_SESSION['order_pay']>1) echo ('Заказана выплата '.$_SESSION['order_pay'].'&#160;'.CURRENCY); else if ($_SESSION['balance']<0)
-  echo('Отрицательный баланс!') ?></button><? if ($_SESSION['balance']>0) echo('<span class="help-block">Минимальная сумма выплат - '.MIN_PAY.' '.CURRENCY.'</span>'); else echo('<span class="help-block">Дальнейшая работа только по предоплате<br>или после погашения задолженности!</span>'); ?><a data-toggle="modal" data-target="#rules_modal" href="#">Правила работы с системой <?= TITLE ?></a>
+  echo('Отрицательный баланс!') ?></button>
+  <? if (($_SESSION['order_pay_id']!="") AND ($_SESSION['order_pay_id']!=0)) echo('<span class="help-block"><small>Последний статус выплаты: <strong>'.autoring::last_status_pay($_SESSION['order_pay_id']).'</strong></small><span>'); 
+$history_count=db::cound_bd("pay_history", "id={$_SESSION['id']}")
+?></div>
+<div class="form-group">
+<a data-toggle="tooltip" data-placement="bottom" data-fancybox data-src="<?= ACTION_PATH ?>/pay_history.php?id=<?= $_SESSION['id'] ?>&frame=no" href="javascript:;" class="btn btn-default btn-block">История выплат - <?= $history_count ?> записей</a></div>
+
+<? if ($_SESSION['balance']>0) echo('<span class="help-block">Минимальная сумма выплат - '.MIN_PAY.' '.CURRENCY.'</span>'); else echo('<span class="help-block">Дальнейшая работа только по предоплате<br>или после погашения задолженности!</span>'); ?><a data-toggle="modal" data-target="#rules_modal" href="#">Правила работы с системой <?= TITLE ?></a>
    </dd>
   </dl>
 	<?
@@ -38,7 +45,7 @@ function order_pay(id){
           url: '<?= ACTION_PATH ?>/order_pay.php',
           data: msg,
           success: function(data) {
-			alert(data);
+			//alert(data);
 		  if (data=='ok') {
 			   var order_summ = $('#order_summ').val();
 			  $('.pay_order_result').html('Заказ на выплату принят успешно');
@@ -48,7 +55,7 @@ function order_pay(id){
 			  $('#op_modal_cancel').html("Ok");
 			  
 
-		  } else $('.results_form').html(data);
+		  } else $('.pay_order_result').html(data);
 									
 								
           },
@@ -91,6 +98,104 @@ foreach  ($pay_method as $key => $value) { ?>
 	  <div class="modal-footer">
         <button id="op_modal_cancel" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
         <button id="op_modal_button" type="submit" class="btn btn-primary">Заказать</button>
+      </div>
+	   </form>
+    </div>
+  </div>
+</div>
+	<?
+}
+
+public function user_pay($user_id)
+{
+	?>
+	<script>
+function order_pay_go(id){	
+ var msg   = $('#order_form_go').serialize();
+    
+	   $.ajax({
+          type: 'POST',
+          url: '<?= ACTION_PATH ?>/user_pay_go.php',
+          data: msg,
+          success: function(data) {
+			alert(data);
+		  if (data!='error') {
+			   var order_summ = $('#order_summ').val();
+			  $('.pay_order_result').html('Присвоен статус <strong>'+data+'</strong> успешно.');
+			  $('#order-pay_button').html('Присвоен статус <strong>'+data+'</strong>');
+			  $('#op_modal_button').addClass('hide');
+			  $('#op_modal_cancel').html("Ok");
+			  $('#frame_history')[0].contentWindow.location.reload(true);
+
+		  } else $('.pay_order_result').html(data);
+									
+								
+          },
+          error:  function(xhr, str){
+	    alert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+}
+	</script>
+<? $user=autoring::get_user($_GET['id']); 
+$pay_method=autoring::pay_method("WHERE active!=0");
+$pm=unserialize($user['pay_method']);?>
+<div class="modal fade" id="user-pay_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+	 <form id="order_form_go" class="form-signin" action="javascript:void(null);" onsubmit="order_pay_go(<?= $_SESSION['id']; ?>)">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Выплата пользователю <br><?= $user['name']; ?>, ID:<?= $user_id ?></h4>
+      </div>
+	  <div class="modal-body">
+      
+	   <input type="hidden" name='id' value="<?= $user_id ?>">
+	   
+	   <div class="row"> 
+	   <div class="form-group col-sm-6 col-md-6 col-lg-6">
+	   <label for="order_summ">Заказанная сумма:</label>
+	   <div class="input-group">
+  <span class="input-group-addon"><?= CURRENCY ?></span>
+ 	   <input id="order_summ" type="text" class="form-control text-right" name="order_summ" value="<?= $user['order_pay'] ?>">
+	   <span class="input-group-btn">
+	   <button title="Скопировать в буфер"  data-clipboard-target="#order_summ" class="btn btn-default btn-clipboard_summ" type="button"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+      </span>
+</div> <script>new Clipboard('.btn-clipboard_summ'); </script> </div>
+<div class="form-group col-sm-6 col-md-6 col-lg-6">
+<label for="pay_method"><?= $pay_method[$user['order_pay_method']] ?>:</label>
+<div class="input-group">
+     
+      <input  id="pay_method" type="text" readonly value="<?= $pm[$user['order_pay_method']]; ?>" class="form-control">
+	   <span class="input-group-btn">
+        <button title="Скопировать в буфер"  data-clipboard-target="#pay_method" class="btn btn-default btn-clipboard_pm" type="button"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+      </span>
+	  
+    </div>
+  <script>new Clipboard('.btn-clipboard_pm'); </script> 
+
+</div>
+</div>
+
+<div class="form-group">
+<select name="pay_status" id="pay_status" class="form-control">
+<? $pay_status=autoring::pay_status();
+foreach  ($pay_status as $key => $value) { ?> 
+<option <? if ($key==0) echo("disabled"); ?> value="<?= $key ?>"><? if ($key==0) echo("&#128274;"); ?> <?= $value ?></option>
+<? } ?>
+</select>
+</div>
+
+<div class="form-group">
+<textarea placeholder="Комментарий к выплате" class="form-control" name="comment" id="comment" cols="30" rows="5"></textarea>
+</div>
+
+<div class="pay_order_result"></div>
+	  
+      </div>
+	  <div class="modal-footer">
+        <button id="op_modal_cancel" type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <button id="op_modal_button" type="submit" class="btn btn-primary">Присвоить статус</button>
       </div>
 	   </form>
     </div>
