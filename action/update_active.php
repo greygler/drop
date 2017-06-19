@@ -8,5 +8,5 @@ require_once (CLASS_PATH.'/drop.class.php');
 $result=drop::product_active($_POST['id'], $_POST['active']);
 echo $result;
 //print_r($_POST);
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
 ?>

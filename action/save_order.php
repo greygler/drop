@@ -34,5 +34,5 @@ $products = urlencode(serialize($products_list));
 );
 drop::update_order($_POST['order_id'], $data);
 //print_r($data);
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
 ?>

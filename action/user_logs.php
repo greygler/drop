@@ -1,6 +1,6 @@
 <? session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
-//if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
+if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
 require_once (CLASS_PATH.'/db.class.php'); 
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/favicon.class.php');
@@ -63,8 +63,8 @@ $limit=pagination::pagin($_GET, $count_logs, $view_pages,$_SERVER['PHP_SELF']); 
 		</dl>
 		</td>
 		</tr>
-		<? echo $myrow['ИМЯ_ПОЛЯ1'];
-		echo $myrow['ИМЯ_ПОЛЯ2'];
+		<? //echo $myrow['ИМЯ_ПОЛЯ1'];
+		//echo $myrow['ИМЯ_ПОЛЯ2'];
 		 }
 		while ($myrow = mysql_fetch_array($result));
 		?>
@@ -83,4 +83,4 @@ $limit=pagination::pagin($_GET, $count_logs, $view_pages,$_SERVER['PHP_SELF']); 
   
   </body>
 </html>
-<?// } else echo ("Слоны идут нахер!"); ?>
+<? } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php"); ?>

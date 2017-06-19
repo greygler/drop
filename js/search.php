@@ -12,7 +12,7 @@ $('.search').bind("change keyup input click", function() {
             data: {'product':this.value},
             response: 'text',
             success: function(data){
-                $("#search_result").html(data).fadeIn(); \
+                $("#search_result").html(data).fadeIn(); 
 				$("#search_result404").html(data).fadeIn(); 
            }
        })
@@ -21,4 +21,4 @@ $('.search').bind("change keyup input click", function() {
     
 
 })
-  <? } else echo ("Слоны идут нахер!"); ?>
+  <? } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php"); ?>

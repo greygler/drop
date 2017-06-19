@@ -13,5 +13,5 @@ $ok=drop::del_order($_POST['row_id']);
 echo ($ok);
 
 
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
 ?>

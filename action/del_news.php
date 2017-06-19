@@ -8,4 +8,4 @@ require_once (CLASS_PATH.'/systems.class.php');
 
 echo systems::del_news($_POST['id_news']);
 
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");

@@ -143,4 +143,4 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
  
     
 
-<? } else echo ("Слоны идут нахер!"); ?>
+<? } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php"); ?>

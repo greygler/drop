@@ -9,7 +9,7 @@ $count_users=db::cound_bd('users');
 </div>
 <div class="visible-xs alert alert-warning alert-dismissable"> 
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		Рекомендуется просматривать в горизонтальном расположении устройства.<br>Поверните устройство и заново загрузите таблицу товаров через боковое меню
+		Рекомендуется просматривать в горизонтальном расположении устройства.<br>Поверните устройство и заново загрузите таблицу пользователей через боковое меню
 		</div>
 	
 <? $limit=pagination::pagin($_GET,$count_users, $view_pages); 	?>
@@ -52,7 +52,7 @@ do if ($myrow['id']!='0')
 ?>
 	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?>
-		<? if ($myrow['order_pay']>0) echo('&#160;<span class="badge"><a data-toggle="tooltip" data-placement="bottom" title="Пользователь '.$myrow['name'].' заказал выплату '.$myrow['order_pay'].'&#160;'.CURRENCY.'" data-fancybox data-src="'.ACTION_PATH.'/user_data.php?id='.$myrow['id'].'>" href="javascript:;"><i class="fa fa-money" aria-hidden="true"></i>
+		<? if ($myrow['order_pay']>0) echo('&#160;<span class="badge"><a data-toggle="tooltip" data-placement="bottom" title="Пользователь '.$myrow['name'].' заказал выплату '.$myrow['order_pay'].'&#160;'.CURRENCY.'" data-fancybox data-src="'.ACTION_PATH.'/user_pay.php?id='.$myrow['id'].'" href="javascript:;"><i class="fa fa-money" aria-hidden="true"></i>
 '.$myrow['order_pay'].'&#160;'.CURRENCY.'</a></span>'); ?>
 		</td>
 		<td class="users_href" valign="middle">

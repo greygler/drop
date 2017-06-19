@@ -13,5 +13,5 @@ else
 	echo('ok');
 }
 
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
 ?>

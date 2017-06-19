@@ -1,6 +1,6 @@
 <? session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
-//if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
+if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
 require_once (CLASS_PATH.'/db.class.php'); 
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/favicon.class.php');
@@ -26,7 +26,7 @@ require_once (CLASS_PATH.'/systems.class.php');
 ?>
 <?= systems::head();
 
-if (($order!="") AND ($order['lp-crm']!=1))  echo("Редактировать можно!") ?>
+if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Редактировать можно!"); ?>
 
 <div class="container container_user_data">
 <div class="page-header">
@@ -185,8 +185,7 @@ if (($order!="") AND ($order['lp-crm']!=1))  echo("Редактировать м
 <div class="form-group col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"><button type="submit" class="btn btn-primary btn-block"><h4 ><span class="fa fa-save fa-lg"></span> Сохранить</h4></div>
 
 </form></div>
-<script src="<?= JS_PATH ?>/jquery.min.js"></script> 
-<!-- <script src="//code.jquery.com/jquery-3.1.1.min.js"></script> -->
+<script src="//code.jquery.com/jquery-3.1.1.min.js"></script> 
 <script type="text/javascript"> $(document).ready(function() 
 {	var stat_block=$('#stat_block').height();
 	var user_block=$('#user_block').height();
@@ -204,4 +203,5 @@ if (($order!="") AND ($order['lp-crm']!=1))  echo("Редактировать м
 	<? } ?>
   </body>
 </html>
-<?// } else echo ("Слоны идут нахер!"); ?>
+<? }
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php"); ?>

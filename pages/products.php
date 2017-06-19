@@ -87,7 +87,9 @@ thead               { width: 100%; position: fixed; height: 109px; top: 150px;
 	<?  	}  
 	
 	while ($myrow = mysql_fetch_array($result));  }
-else echo('<tr class="warning"><td colspan="5"><p>ничего нет!</p></td>	</tr>');
+else {echo('<tr class="warning"><td colspan="');
+if ($_SESSION['users_group']<5) echo('6'); else echo('5');
+echo('"><p align="center">По данному поисковому запросу ни чего не найдено!</p></td>	</tr>');}
 	?>
 	</tbody>
 	

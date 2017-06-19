@@ -38,5 +38,5 @@ $order=drop::one_order($_POST['row_id']);
 	else echo($out['message'][0]);
 
 
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
 ?>

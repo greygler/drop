@@ -10,5 +10,7 @@ if ($result)
 {
 	if ($_POST['drop_take']!='1') echo('<font color="#737373">Отключена</font>'); else echo('<font color="blue">Включенa</font>') ;
 }	else echo('<font color="red">Ошибка!</font>');
-} else echo ("Слоны идут нахер!");
+} else 
+header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
+
 ?>

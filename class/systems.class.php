@@ -21,7 +21,7 @@ public function head($login="", $registration="")
     <meta name="description" content="<?= DESCRIPTION ?>">
 	<meta name="robots" content="<?= ROBOTS ?>"> 
 	<?= favicon::favicons(FAVICON_PATH, FAVICON_G_PATH, FAVICON); // Favicon ?>
-	<link href='http://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:300,400' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="<?= CSS_PATH ?>/normalize.css" />
 	<link rel="stylesheet" href="<?= CSS_PATH ?>/main.css" />
 	<link rel="stylesheet" type="text/css" href="<?= CSS_PATH ?>/jquery.fancybox.min.css">
@@ -433,7 +433,7 @@ public function footer($geobase="")
 <script type="text/javascript"> jQuery(function($){$(".wmz").mask("\Z999999999999");}); </script>
 <script type="text/javascript"> $(document).ready(function() {$('#stat_block').height($('#user_block').height());}); </script>
 <script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
-<script src="<?= JS_PATH ?>/control-modal.js"></script>
+<!-- <script src="<?= JS_PATH ?>/control-modal.js"></script> -->
 <script src="<?= JS_PATH ?>/gnmenu.php"></script>
 <script src="<?= JS_PATH ?>/search.php"></script>
 <script src="<?= JS_PATH ?>/jquery.fancybox.min.js"></script>

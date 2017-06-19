@@ -40,4 +40,4 @@ else $return=systems::save_news($timestamp, $new_file_name,  $_POST['text']);
 //echo $return;
 echo IMG_NEWS_NAME;
 
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");

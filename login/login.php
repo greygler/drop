@@ -30,7 +30,7 @@ if (!autoring::is_base($_POST['email'])) echo ("no"); else {
 			}
 }
 	
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
 
 
 ?>

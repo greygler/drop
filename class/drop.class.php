@@ -147,7 +147,9 @@ class drop{
 		
 	public function order_pay($id, $summ, $method) // Запрос выплаты
 		{
+			$date_order=time();
 			$result = mysql_query ("UPDATE users SET order_pay='{$summ}', order_pay_method='{$method}' WHERE id='{$id}'");
+			$result = mysql_query ("INSERT INTO pay_history (user_id, date_order, summ, method_pay) VALUES ('{$id}','{$date_order}','{$summ}','{$method}')");
 			if ($result == 'true') return 'ok'; else return 'error';
 		}
 		

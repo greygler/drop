@@ -13,5 +13,5 @@ $data['pay_method']=serialize($_POST['pay_method']);
 	echo('ok');
 
 
-} else echo ("Слоны идут нахер!");
+} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
 ?>
