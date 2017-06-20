@@ -21,4 +21,4 @@ $('.search').bind("change keyup input click", function() {
     
 
 })
-  <? } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php"); ?>
+  <? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>

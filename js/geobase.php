@@ -23,5 +23,5 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 	
 	
   });
-  <? } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php"); ?>
+  <? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>
   

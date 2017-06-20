@@ -165,7 +165,7 @@ class Autoring {
 		
 	public function update_profile($id, $profile) // Обновление профиля пользователя
 		{
-			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			
 			foreach($profile as $key => $value) $command.="{$key}='{$value}',";
 			$command = substr($command, 0, -1);
 			$bd="UPDATE users SET {$command}  WHERE id={$id}";
@@ -175,12 +175,12 @@ class Autoring {
 			
 		}
 		
-	public function user_log($id, $ip, $country, $city,  $region, $agent, $device, $last_enter) // Сохраяем логи
+	public function user_log($id, $ip, $country, $city, $region, $provider, $agent, $device, $last_enter) // Сохраяем логи
 		{
-			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			
 			$time=time();
-			$result = mysql_query("UPDATE users SET ipv4='{$ip}', last_time='{$time}', country='{$country}', city='{$city}', region='{$region}', agent='{$agent}', device='{$device}', last_enter='{$last_enter}'  WHERE id='{$id}'");
-			$result = mysql_query("INSERT INTO enter_log (user_id, last_time, ipv4, country, city, region, agent, device) VALUES ('{$id}', '{$time}', '{$ip}', '{$country}', '{$city}', '{$region}', '{$agent}', '{$device}')");
+			$result = mysql_query("UPDATE users SET ipv4='{$ip}', last_time='{$time}', country='{$country}', city='{$city}', provider='{$provider}', region='{$region}', agent='{$agent}', device='{$device}', last_enter='{$last_enter}'  WHERE id='{$id}'");
+			$result = mysql_query("INSERT INTO enter_log (user_id, last_time, ipv4, country, city, provider, region, agent, device) VALUES ('{$id}', '{$time}', '{$ip}', '{$country}', '{$city}','{$provider}', '{$region}', '{$agent}', '{$device}')");
 						
 		}
 	

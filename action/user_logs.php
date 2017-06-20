@@ -24,7 +24,7 @@ $limit=pagination::pagin($_GET, $count_logs, $view_pages,$_SERVER['PHP_SELF']); 
 <thead>
 	<tr valign="middle">
 		<th>Дата, время</th>
-		<th>IP-адрес, город, регион</th>
+		<th>IP-адрес, город, регион, провайдер</th>
 		<th>Устройство</th>
 		
 	</tr>
@@ -50,9 +50,11 @@ $limit=pagination::pagin($_GET, $count_logs, $view_pages,$_SERVER['PHP_SELF']); 
 		
 		<dt><i class="fa fa-globe" aria-hidden="true"></i></dt><dd><?=  $myrow['ipv4']; ?></dd>
 		<dt><i class="fa fa-map-marker" aria-hidden="true"></i></dt><dd><?= $myrow['city']; ?></dd>
-		<dt><i class="fa <?= $flag ?>" aria-hidden="true"></i></dt><dd><?= $myrow['region']; ?></dd>
+		<dt><i class="<?= $flag ?>" aria-hidden="true"></i></dt><dd><?= $myrow['region']; ?></dd>
+		<dt><i class="fa fa-crosshairs" aria-hidden="true"></i></dt><dd><?= $myrow['provider']; ?></dd>
 		</dl>
 		
+
 		</td>
 		<td>
 		
@@ -83,4 +85,4 @@ $limit=pagination::pagin($_GET, $count_logs, $view_pages,$_SERVER['PHP_SELF']); 
   
   </body>
 </html>
-<? } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php"); ?>
+<? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>

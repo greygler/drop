@@ -17,5 +17,5 @@ require_once (CLASS_PATH.'/drop.class.php');
    }
   //echo $del_link;
    echo (IMG_PRODUCT_PATH.IMG_PRODUCT_NAME);
-   } else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
+   } else header("Location: ".SITE_ADDR."/error/666.php");
 ?>

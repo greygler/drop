@@ -10,5 +10,5 @@ if ($result)
 {
 	if ($_POST['drop_active']!='1') echo('<font color="#737373">Отключена</font>'); else echo('<font color="blue">Включенa</font>') ;
 }	else echo('<font color="red">Ошибка!</font>');
-} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
+} else header("Location: ".SITE_ADDR."/error/666.php");
 ?>

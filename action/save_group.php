@@ -8,5 +8,5 @@ autoring::save_group($_POST['id'], $_POST['group_user']);
 $groups=autoring::groups();
 $user=autoring::get_user($_POST['id']);
 echo('<span class="badge"> <span class="fa '.$groups[$user['users_group']]['fa_user'].' fa-lg"></span> </span> '.$user['name']);
-} else header("Location: ".$_SERVER['DOCUMENT_ROOT']."/error/666.php");
+} else header("Location: ".SITE_ADDR."/error/666.php");
 ?>

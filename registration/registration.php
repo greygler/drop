@@ -12,10 +12,27 @@ if (autoring::is_base($_POST['email'])) echo ("error"); else {
 	$get_base=autoring::get_base($_POST['email'], $_POST['password1'] );
 	$user_group=autoring::user_group($get_base['users_group']);
 	$ip=func::GetRealIp();
+	if ((!isset($_COOKIE["ip"])) OR ($_COOKIE["ip"]!=$ip))
+				{
+					$city_array=func::city_2ip($ip);
+					$country=$city_array['country_code'];
+					$city=$city_array['city_rus'];
+					$region=$city_array['region_rus'];
+					$provider=func::provider_2ip($ip);
+					$provider_name=$provider['name_rus'];
+					func::set_cook_array($city_array, '2592000');
+					func::set_cook_array($provider, '2592000');
+				}
+			else {
+				$country=$_COOKIE['country_code'];
+				$city=$_COOKIE['city_rus'];
+				$region=$_COOKIE['region_rus'];
+				$provider_name=$_COOKIE['name_rus'];
+			}
 	$agent=$_SERVER['HTTP_USER_AGENT'];
 	$device=func::is_mobile();
 	if (!$device) $device='0';
-	autoring::user_log($get_base['id'], $ip, $_POST['country'], $_POST['city'], $_POST['region'], $agent, $device, '');
+	autoring::user_log($get_base['id'], $ip, $country, $city, $region, $provider_name, $agent, $device, '');
 	autoring::set_autoring($get_base, $user_group);
 
 	

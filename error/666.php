@@ -13,6 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link  href="https://fonts.googleapis.com/css?family=Oswald:regular" rel="stylesheet" type="text/css" >
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -22,17 +23,16 @@
 </head>
 <body>
 <div class="comingcontainer">
-    <div class="checkbacksoon">
+    <div class="checkbacksoon checkbacksoon666">
+	<h2 align="center">Ошибка</h2>
 		<p>
 			<span class="go3d">6</span>
 			<span class="go3d">6</span>
 			<span class="go3d">6</span>
-			<span class="go3d">!</span>
-			
+						
 		</p>
         
-        <p class="error"><strong>
-		Слишком любопытных постигнет кара!</strong><br><small>Обращение к этой странице инициировало загрузку вируса на твой комп!<br>Ибо не хрен! &copy; GreyGler</small>.</em></p>
+       <h1 align="center">Слишком любопытных постигнет кара!</h1> <h2 align="center">Несанкционированное обращение к этой странице</h2><h2 align="center">инициировало заражение вирусом &#171;=&#9760;=666:in_hell&#187; этого компа!</h2><p align="right"><small>Ибо не хрен! &copy; GreyGler</small>.</p>
 		
        
     

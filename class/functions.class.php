@@ -242,6 +242,31 @@ public function device($device, $agent)
 	return $device_array;
 	
 }
+public function city_2ip($ip)
+{
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, 'http://api.2ip.ua/geo.json?ip='.$ip);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$out = curl_exec($curl);
+	curl_close($curl);
+	return json_decode($out, true);
+}
+
+public function provider_2ip($ip)
+{
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, 'http://api.2ip.ua/provider.json?ip='.$ip);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$out = curl_exec($curl);
+	curl_close($curl);
+	return json_decode($out, true);
+}
+
+public function set_cook_array($array, $time)
+{
+	foreach($array as $key => $value)
+	setcookie($key, $value, time()+$time);
+}
  
 }
 ?>

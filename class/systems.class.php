@@ -453,7 +453,7 @@ if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='
 ?>
 
 <? if (($_SESSION['balance']<0) AND ($_SESSION['info_balance']!="1")) echo systems::info_balance(); ?>
-<? 	if ($geobase=='yes') { ?><script>var ip='<?= func::GetRealIp() ?>'</script><script src="<?= JS_PATH ?>/geobase.php"></script><? } ?>
+<!--<script>var ip='<?= func::GetRealIp() ?>'</script><script src="<?= JS_PATH ?>/geobase.php"></script> -->
   </body>
 </html>
 <?
