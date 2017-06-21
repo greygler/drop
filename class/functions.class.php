@@ -264,6 +264,7 @@ public function provider_2ip($ip)
 
 public function set_cook_array($array, $time)
 {
+	if ($array!="")
 	foreach($array as $key => $value)
 	setcookie($key, $value, time()+$time);
 }

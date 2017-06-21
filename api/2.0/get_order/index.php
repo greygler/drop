@@ -1,6 +1,7 @@
 <?
 session_start();
 if (!empty($_POST)) {
+	//print_r($_POST);
 	require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	require_once (CLASS_PATH.'/db.class.php');
 	require_once (CLASS_PATH.'/autoring.class.php');

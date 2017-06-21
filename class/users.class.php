@@ -232,8 +232,8 @@ public function profile()
   
   <dt>E-mail: <em>*</em></dt>
   <dd>
-  <div class="form-group <? if  (autoring::is_verify_email()) echo('has-warning'); else echo('has-success'); ?> has-feedback">
-  <input class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>" disabled>
+  <div class="form-group <? if  (autoring::is_verify_email($_SESSION)) echo('has-warning'); else echo('has-success'); ?> has-feedback">
+  <input id="user_email" class="form-control" type="text" required name="email" value="<?= $_SESSION['email'] ?>" disabled>
   <? if (autoring::is_verify_email($_SESSION)) echo('<span  class="help-block control-label"><small><span class="novemail">E-mail не верифицирован!</span></small> <a data-toggle="modal" data-target="#verify_email" href="#"><small><span class="vemaillink">Верифицировать</span></small></a></span><span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>');
   else echo('<span class="glyphicon glyphicon-ok form-control-feedback"></span>');   ?>
 
@@ -325,7 +325,7 @@ public function modal_email()
         Для верификации на Ваш E-mail будет отправленна ссылка верификации.<br>
 		Для подтверждения Вашего <strong>E-mail: <?= $_SESSION['email'] ?></strong> зайдите в Вашу почту,<br>откройте письмо и перейдите по указанной в письме ссылке
       </div>
-	  <form id="verify_email" class="form-signin" action="javascript:void(null);" onsubmit="verify_email()">
+	  <form id="verify_email" class="form-signin" action="javascript:void(null);" onsubmit="verify_email(<?= $_SESSION['id'] ?>)">
 	  <input type="hidden" name="id" value="<?= $_SESSION['id'] ?>">
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

@@ -1,17 +1,21 @@
 <?
 session_start();
-require_once ('../config.php');
+require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
-function verify_email() {
+function verify_email(user_id) {
 		 $('#verify_email').modal('hide');
- 	  var msg   = $('#verify_email').serialize();
-        $.ajax({
+ 	    $.ajax({
           type: 'POST',
-          url: '/verify/email/vemail.php',
-          data: msg,
+          url: '<?= ACTION_PATH ?>/email.php',
+          data: {
+			  email : $('#user_email').val(),
+			  name : $('#user_name_input').val(),
+			  id : '1',
+			  user_id : user_id,
+		  },
           success: function(data) {
 			
-		  if (data=='ok') {$('.novemail').html('Письмо отправлено.');
+		  if (data=='') {$('.novemail').html('Письмо отправлено.');
 		  $('.vemaillink').html('Отправить повторно');
 		   $('#vemail_ok').modal('show');
 		  } else $('.results_form').html(data);

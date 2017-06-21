@@ -21,10 +21,11 @@ $count_users=db::cound_bd('users');
 <thead>
 	<tr valign="middle">
 		<th><a data-toggle="tooltip" data-placement="bottom" title="Сортировка по ID" href="<?= Pagination::pagelink_desc($_GET, 'order', 'id') ?>"><strong>ID</strong> 
-<span class="badge"><?= Pagination::sort_symbol($_GET,'order','id', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>&#160;&#160;|&#160;&#160; 
+<span class="badge"><?= Pagination::sort_symbol($_GET,'order','id', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>
+<? if (($_SESSION['users_group']==1) OR ($_SESSION['users_group']==3)) { ?>&#160;&#160;|&#160;&#160; 
 <a data-toggle="tooltip" data-placement="bottom" title="Сортировка по заказам выплат" href="<?= Pagination::pagelink_desc($_GET, 'order', 'order_pay','1') ?>"><strong>Pay</strong> 
 <span class="badge"><?= Pagination::sort_symbol($_GET,'order','order_pay', 'sort-numeric-asc', 'sort-numeric-desc'); ?></span></a>
-		
+<? } ?>
 </th>
 		<th><a data-toggle="tooltip" data-placement="bottom" title="Сортировка по имени" href="<?= Pagination::pagelink_desc($_GET, 'order', 'name') ?>"><strong>Имя</strong> 
 <span class="badge pull-left"><?= Pagination::sort_symbol($_GET,'order', 'name', 'sort-alpha-asc', 'sort-alpha-desc'); ?></span></a></th>
@@ -52,7 +53,7 @@ do if ($myrow['id']!='0')
 ?>
 	<tr id="table-<?= $myrow['id']?>" valign="middle" <? if ($myrow['users_group']==0) echo('class="danger"') ?> >
 		<td valign="middle"><?= $myrow['id'] ?>
-		<? if ($myrow['order_pay']>0) echo('&#160;<span class="badge"><a data-toggle="tooltip" data-placement="bottom" title="Пользователь '.$myrow['name'].' заказал выплату '.$myrow['order_pay'].'&#160;'.CURRENCY.'" data-fancybox data-src="'.ACTION_PATH.'/user_pay.php?id='.$myrow['id'].'" href="javascript:;"><i class="fa fa-money" aria-hidden="true"></i>
+		<? if (($myrow['order_pay']>0) AND  (($_SESSION['users_group']==1) OR ($_SESSION['users_group']==3))) echo('&#160;<span class="badge"><a data-toggle="tooltip" data-placement="bottom" title="Пользователь '.$myrow['name'].' заказал выплату '.$myrow['order_pay'].'&#160;'.CURRENCY.'" data-fancybox data-src="'.ACTION_PATH.'/user_pay.php?id='.$myrow['id'].'" href="javascript:;"><i class="fa fa-money" aria-hidden="true"></i>
 '.$myrow['order_pay'].'&#160;'.CURRENCY.'</a></span>'); ?>
 		</td>
 		<td class="users_href" valign="middle">

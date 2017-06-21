@@ -1,7 +1,8 @@
 <?php
 class Smtpmail {
 
-public function server_parse($socket, $response, $line = __LINE__) { // Служебная функции отправки сообщений для парсинга сервера
+public function server_parse($socket, $response, $line = __LINE__) 
+{ // Служебная функции отправки сообщений для парсинга сервера
 	while (@substr($server_response, 3, 1) != ' ') {
 		if (!($server_response = fgets($socket, 256))) {
 		    echo "<p>Проблемы с отправкой почты!</p>$response<br>$line<br>";
@@ -15,7 +16,8 @@ public function server_parse($socket, $response, $line = __LINE__) { // Служ
 	return true;
 }	   
 	   
-public function smtpmail($to='', $mail_to, $subject, $message, $headers='') { // Отправка письма через SMTP
+public function smtpmail($to='', $mail_to, $subject, $message, $headers='') 
+{ // Отправка письма через SMTP
 	$SEND =	"Date: ".date("D, d M Y H:i:s") . " UT\r\n";
 	$SEND .= 'Subject: =?'.SMTP_CHARSET.'?B?'.base64_encode($subject)."=?=\r\n";
 	if ($headers) $SEND .= $headers."\r\n\r\n";

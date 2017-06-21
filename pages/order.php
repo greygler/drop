@@ -4,8 +4,10 @@
 <?
 if ($_GET['status']!="") $get_status=$_GET['status']; else $get_status=3;
 $all_status=drop::all_statuses();
- require_once (CLASS_PATH.'/pagination.class.php'); 
-$limit=pagination::limit_pagin($_GET,$_SESSION['status'][$get_status], $view_pages); 	?>
+ require_once (CLASS_PATH.'/pagination.class.php');
+ if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) $count_status=$all_status[$get_status]; 
+else $count_status=$_SESSION['status'][$get_status]; 
+$limit=pagination::limit_pagin($_GET,$count_status, $view_pages); 	?>
 <div class="form-group">
 <div class="form-group col-sm-2 col-md-2  col-lg-2 "> 
 <? if ($_SESSION['users_group']<5) { ?>
@@ -68,8 +70,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 	</thead>
 	<tbody >
 	<?
-     if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) $count_status=$all_status[$get_status]; 
-else $count_status=$_SESSION['status'][$get_status];
+    
 	if ( $count_status > 0)  {
 		$db="SELECT * FROM order_tab WHERE (status='{$get_status}'{$where_id}) ORDER BY order_id DESC LIMIT {$limit['begin']}, {$limit['count']}";
 		//echo $db;
@@ -184,5 +185,5 @@ while ($myrow = mysql_fetch_array($result));
 ?>
 <tbody>
 	</table>
-<? $limit=pagination::pagin($_GET,$_SESSION['status'][$get_status], $view_pages); 
+<? $limit=pagination::pagin($_GET,$count_status, $view_pages); 
 $refresh=="yes";	?>

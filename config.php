@@ -72,6 +72,19 @@ define('CRM_OFFICE','3');
 define('CRM_DELIVERY','1');
 define('CRM_DELIVERY_NAME','Новая Почта');
 
+// SMTP
+$__smtp = array(
+    "host" => 'mail.adm.tools', // SMTP сервер
+    "debug" => 0, // Уровень логирования полный -2
+    "auth" => true, // Авторизация на сервере SMTP. Если ее нет - false
+    "port" => '465', // Порт SMTP сервера
+    "username" => 'drop@greygler.pro', // Логин запрашиваемый при авторизации на SMTP сервере
+    "password" => 'eSZ74LNhah65', // Пароль
+    "addreply" => 'drop@greygler.pro', // Почта для ответа
+    "secure" => 'ssl', // Тип шифрования. Например ssl или tls
+    "mail_name" => 'Дропшиппинг' // Имя отправителя
+);
+
 
 // Подключение к turbosms
 define('DB_LOGIN_TURBOSMS','ArturGoraCRM');

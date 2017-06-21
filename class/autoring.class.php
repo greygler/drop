@@ -206,6 +206,15 @@ class Autoring {
 			$_SESSION['v_phone']=$v_phone;
 			if ($result == 'true') return "ok"; else "error";
 		}
+		
+	public function verify_email($id, $v_email)
+		{
+			$bd="UPDATE `".DB_NAME."`.`users` SET v_email='{$v_email}' WHERE `users`.`id`={$id}";
+			$result = mysql_query($bd);
+			//if ($result) echo("Save! UPDATE users SET v_phone='{$v_phone}' WHERE id='{$id}'");
+			$_SESSION['v_emai']=$v_email;
+			if ($result == 'true') return "ok"; else "error";
+		}
 	
 	public function filling_profile() // Заполнен ли профиль
 		{

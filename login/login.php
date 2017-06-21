@@ -12,7 +12,7 @@ if (!autoring::is_base($_POST['email'])) echo ("no"); else {
 	    else {
 			$user_group=autoring::user_group($get_base['users_group']);
 			$ip=func::GetRealIp();
-			if ((!isset($_COOKIE["ip"])) OR ($_COOKIE["ip"]!=$ip))
+			if ((!isset($_COOKIE["ip"])) OR ($_COOKIE["ip"]!=$ip) OR ($ip!='127.0.0.1'))
 				{
 					$city_array=func::city_2ip($ip);
 					$country=$city_array['country_code'];
