@@ -1,4 +1,5 @@
 <?
+require_once (CLASS_PATH.'/functions.class.php');
 class drop{
 	
 	public function last_time($type) // Последнее время обновлений
@@ -12,6 +13,12 @@ class drop{
 		flock($fp, LOCK_UN); 
 		fclose($fp);
 
+	}
+	
+	public function is_order($order_id) // Есть ли заказ с таким order_id;
+	{
+		$count=db::cound_bd('order_tab', "order_id='{$order_id}'");
+		if ($count>0) return true; else return false;
 	}
 	
 	public function get_id($key) // Ищем ID пользователя по ключу
@@ -34,6 +41,19 @@ class drop{
 		return $result;
 	}
 
+	public function all_products($where="") // Все товары с условием
+	{
+		$result = mysql_query("SELECT * from products {$where}");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+			$all_products[$myrow[id]]=$myrow;
+		}
+		while ($myrow = mysql_fetch_array($result));
+		return $all_products;
+	}
+	
+		
 	public function new_order($user_id, $data, $status) // Cохраняем заказ
 	{
 		$col="user_id, order_time, status, ";
@@ -53,7 +73,7 @@ class drop{
 	}
 	
 	
-	public function update_order($order_id, $data) // Cохраняем заказ
+	public function update_order($order_id, $data) // Обновляем заказ
 	{
 	 foreach($data as $key => $value)
 		{
@@ -65,6 +85,41 @@ class drop{
 		echo $db;
 		if ($result == 'true') return 'ok'; else return 'error';
 
+	}
+	
+	public function update_lpcrm($row_id,$groups) // Передаем в LP-CRM
+	{
+		$order=drop::one_order($row_id);
+		if ($order['site']!="") $site=$order['site']; else $site=$_SERVER['SERVER_NAME'];
+		if ($order['ip']!="") $ip=$order['ip']; else $ip=Func::GetRealIp();
+		if ($order['country']!="") $country=$order['country']; else $country=COUNTRY;
+
+	$data = array(
+    'key'             => CRM_KEY, //Ваш секретный токен
+    'order_id'        => $order['order_id'], //идентификатор  заказа
+    'country'         => $country,                      // Географическое направление заказа
+    'office'          => CRM_OFFICE,                   // Офис (id в CRM)
+    'products'        => $order['products'],                 // массив с товарами в заказе
+    'bayer_name'      => $order['bayer_name'],             // покупатель (Ф.И.О)
+    'phone'           => $order['phone'],           // телефон
+    'email'           => $order['email'],           // электронка
+    'comment'         => $order['comment'],    // комментарий
+    'site'            => $site,  // сайт отправляющий запрос
+    'ip'              => $order['ip'],  // IP адрес покупателя
+    'delivery'        => CRM_DELIVERY,        // способ доставки (id в CRM)
+    'delivery_adress' => $order['delivery_adress'], // адрес доставки
+    'payment'         => $groups['payment'],          // вариант оплаты (id в CRM)
+	'utm_source'      => TITLE,  // utm_source 
+    'utm_medium'      => 'Id: '.$_SESSION['id'],  // utm_medium 
+    'utm_term'        => 'Имя: '.$_SESSION['name'],    // utm_term   
+    'utm_content'     => 'Phone: '.$_SESSION['phone'], // utm_content    
+    'utm_campaign'    => 'Email: '.$_SESSION['email'] // utm_campaign
+);
+	$out=lp_crm::getcurl(CRM, 'addNewOrder.html', $data);
+	//print_r($out);
+	if ($out['status']=='ok') {$ok=drop::lpcrm($row_id, '1');
+	echo($ok);}
+	else echo($out['message'][0]);
 	}
 	
 
@@ -102,6 +157,12 @@ class drop{
 			return $myrow;
 	 }
 	 
+	public function id_order_id($order_id)
+	{
+		$result = mysql_query("SELECT * FROM order_tab WHERE order_id='{$order_id}'");
+		$myrow = mysql_fetch_array($result);
+		return $myrow['id'];
+	}
 	 
 	public function is_categories($id) // Есть ли такая категория в базе
 	{
@@ -269,7 +330,7 @@ class drop{
 	 }
 	 
 	 
-	public function refresh_img($id, $img_name) // Обноление картинки товара
+	public function refresh_img($id, $img_name) // Обновление картинки товара
 	
 	
 	{ ?> 
@@ -286,7 +347,7 @@ class drop{
 		
 		} 
 
-	public function money_log($order_id, $user_id, $name, $summ, $comment)
+	public function money_log($order_id, $user_id, $name, $summ, $comment) // логи движения денежных средств
 	{
 		$datetime=time();
 		$db="INSERT INTO money (datetime, user_id, order_id, name, summ, comment) VALUES ({$datetime},'{$user_id}','{$order_id}', '{$name}','{$summ}','{$comment}')";

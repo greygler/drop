@@ -69,7 +69,7 @@ function del(row_id, order_id)
 				
 			$('.del_'+row_id).html('<i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>');
 			$('#del_button_'+row_id).attr("disabled","disabled");
-			alert(data);
+			//alert(data);
 			}
 		},
           error:  function(xhr, str){
