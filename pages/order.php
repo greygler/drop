@@ -115,10 +115,11 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		</dl>
 		</td>
 		
-		<td><?= $myrow['comment'] ?></td>
+		<td><?= $myrow['comment'] ?><? if ($myrow['comment']!="") echo ("<br>");
+		if ($myrow['cancel_description']!="") echo("Причина отказа:<br>{$myrow['cancel_description']}") ?></td>
 		<td>
 		<dl class="dl-horizontal dl-order">
-		<dt><i class="fa fa-external-link" aria-hidden="true"></i></dt><dd><a target="_blank" href="http://<?= $myrow['site'] ?>"> <?= $myrow['site'] ?></a></dd>
+		<dt><? if ($myrow['site']!="") { ?><i class="fa fa-external-link" aria-hidden="true"></i></dt><dd><a target="_blank" href="http://<?= $myrow['site'] ?>"> <?= $myrow['site'] ?></a> <? }  ?></dd>
 	
 		
 		<? $products = unserialize(urldecode($myrow['products'])); 
@@ -138,15 +139,15 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<dd><strong><?= $count ?> шт.</strong> <small><i class="fa fa-times" aria-hidden="true"></i></small> <strong> <?= $value['price'] ?> <?= CURRENCY ?></strong> = <?= number_format($sum, 2, '.', '')?> <?= CURRENCY ?> <span class="badge pull-right">Profit: <?= $prof ?> <?= CURRENCY ?><span> </dd>
 		
 		<? } ?>
-		<dt>х</dt>
-		<dd><strong><?= $myrow['total'] ?> <?= CURRENCY ?></strong></dd>
+		<dt><i class="fa fa-money" aria-hidden="true"></i></dt>
+		<dd style="background-color: #C0C0C0"> Итого, заказ: <strong><?= $myrow['total'] ?> <?= CURRENCY ?></strong></dd>
 		
-		<dt>
+		<dt >
 			<? if ($myrow['profit'] > 0) {$label="fa-line-chart"; $style="profit_green";}
 			else if ($myrow['profit'] < 0) {$label="fa-thumbs-down"; $style="profit_red";}
 			else {$label="fa-battery-empty"; $style="profit_empty";}	?>
 		<i style="" class="fa <?= $label ?> <?= $style ?>" aria-hidden="true"></i></dt>
-		<dd><strong class="<?= $style ?>"><?= $myrow['profit'] ?> <?= CURRENCY ?></strong></dd>
+		<dd style="background-color: #FFFF00"> Итого, Profit: <strong class="<?= $style ?>"><?= $myrow['profit'] ?> <?= CURRENCY ?></strong></dd>
 		
 		</dl>
 		

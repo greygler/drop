@@ -1,3 +1,4 @@
+<link href="<?= CSS_PATH ?>/error_style.css" rel="stylesheet">
 <div class="comingcontainer">
     <div class="checkbacksoon">
 		<p>

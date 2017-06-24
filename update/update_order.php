@@ -45,7 +45,7 @@ if ($out['status']=='ok'){
 	 if (UPDATE_PRODUCT) $update_product= "products='{$products_base}', total={$total}, profit={$profit},";
 	 else $update_product="";
 	 
-	 $bd="UPDATE order_tab SET bayer_name='{$value['bayer_name']}', phone='{$value['phone']}', status='{$value['status']}', {$update_product}   delivery_adress='{$value['delivery_adress']}', ttn='{$value['ttn']}',ttn_status='{$value['ttn_status']}', delivery_date='{$value['delivery_date']}', delivery='{$value['delivery']}', delivery_index= '{$value['delivery_index']}', comment='{$value['comment']}'  WHERE order_id='{$key}'";
+	 $bd="UPDATE order_tab SET bayer_name='{$value['bayer_name']}', phone='{$value['phone']}', status='{$value['status']}', cancel_description='{$value['cancel_description']}', {$update_product}   delivery_adress='{$value['delivery_adress']}', ttn='{$value['ttn']}',ttn_status='{$value['ttn_status']}', delivery_date='{$value['delivery_date']}', delivery='{$value['delivery']}', delivery_index= '{$value['delivery_index']}', comment='{$value['comment']}'  WHERE order_id='{$key}'";
 	  echo("!<br>");
 	  echo $bd;
 		$result = mysql_query ($bd);

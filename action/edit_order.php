@@ -4,7 +4,8 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 require_once (CLASS_PATH.'/db.class.php'); 
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/favicon.class.php');
-require_once (CLASS_PATH.'/autoring.class.php'); 
+require_once (CLASS_PATH.'/autoring.class.php');
+require_once (CLASS_PATH.'/functions.class.php');
 require_once (CLASS_PATH.'/drop.class.php');
 if (!autoring::is_autoring()) header("Location: ../login/");
 require_once (CLASS_PATH.'/systems.class.php');
@@ -16,9 +17,13 @@ $all_products=drop::all_products("WHERE active='1'");
 	 $order_id=$order['order_id'];
 	 $order_ip=$order['ip'];
 	 $flag="flag-".$order['country']; 
+	 $country=$order['country'];
+	 $site=$order['site'];
  }
  else {
-	 
+	 $order_ip=func::GetRealIp();
+	 $country=COUNTRY;
+	 $site=$site=$_SERVER['SERVER_NAME'];
 	 $order_time=time();
 	 $order_id=number_format(round(microtime(true)*10),0,'.','');
 	 $order_ip=$_SERVER['REMOTE_ADDR'];
@@ -51,9 +56,9 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
 
 <div class="form-group col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-offset-1 col-lg-4 text-right">
 <? if ($_GET['edit']!="on") { ?>
- <a class=" btn btn-default " target="_blank" href="http://<?= $order['site'] ?>"><h4 >Источник заказа:  <?= $order['site'] ?> <span class="fa fa-external-link fa-lg"></span></h4></a><? } 
+ <a class=" btn btn-default " target="_blank" href="http://<?= $site ?>"><h4 ><i class="fa fa-link" aria-hidden="true"></i>  <?= $site ?> <span class="fa fa-external-link fa-lg"></span></h4></a><? } 
  else { ?>
- <button class="btn btn-default btn-block"><h4 >Добавлен вручную</h4></button>
+ <button class="btn btn-default btn-block"><h4 ><i class="fa fa-hand-paper-o" aria-hidden="true"></i></h4></button>
  <? } ?></div> 
  </div>
 <div id="user_block" class="col-sm-5 col-md-5 col-lg-5 panel panel-default"><h3 class="text-center"><span class="fa fa-address-card-o fa-lg"></span> Покупатель:</h3>
@@ -182,6 +187,11 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
 		</dl>
 </div>
 </div>
+
+	
+<input id="country" type="hidden" name="country" value="<?= $country ?>">
+<input id="site" type="hidden" name="site" value="<?= $site ?>">
+ 
 <input id="active_drop" type="hidden" name="active_drop" value="<?= $_SESSION['active_drop'] ?>">
 <input id="user_id" type="hidden" name="user_id" value="<?= $_SESSION['id'] ?>">
 <input id="all-count" type="hidden" name="all-count" value="<?= $pos ?>">
@@ -239,7 +249,7 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
 	$('#stat_block').height(big_block);
 	$('#user_block').height(big_block);
 	
-      window.onbeforeunload = function() {   return "Данные не сохранены. Вы уверены, что хотите покинуть страницу?";  };
+      
     
 	}); 
 

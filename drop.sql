@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Июн 21 2017 г., 21:11
+-- Время создания: Июн 24 2017 г., 21:46
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `enter_log` (
   `agent` varchar(256) NOT NULL,
   `device` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 --
 -- Дамп данных таблицы `enter_log`
@@ -131,7 +131,10 @@ INSERT INTO `enter_log` (`id`, `user_id`, `last_time`, `ipv4`, `country`, `regio
 (19, 1, '1498046946', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
 (20, 6, '1498047101', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
 (21, 1, '1498047154', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
-(22, 7, '1498047207', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0);
+(22, 7, '1498047207', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0),
+(23, 1, '1498282606', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0),
+(24, 1, '1498283784', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0', 0),
+(25, 6, '1498319078', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0', 0);
 
 -- --------------------------------------------------------
 
@@ -193,6 +196,7 @@ CREATE TABLE IF NOT EXISTS `order_tab` (
   `lp-crm` tinyint(1) NOT NULL,
   `order_time` varchar(11) NOT NULL,
   `status` int(11) NOT NULL,
+  `cancel_description` varchar(256) NOT NULL,
   `country` varchar(2) NOT NULL,
   `bayer_name` varchar(100) NOT NULL,
   `phone` varchar(20) NOT NULL,
@@ -215,16 +219,22 @@ CREATE TABLE IF NOT EXISTS `order_tab` (
   `utm_content` varchar(50) NOT NULL,
   `utm_campaign` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 --
 -- Дамп данных таблицы `order_tab`
 --
 
-INSERT INTO `order_tab` (`id`, `user_id`, `order_id`, `lp-crm`, `order_time`, `status`, `country`, `bayer_name`, `phone`, `email`, `products`, `total`, `profit`, `comment`, `site`, `ip`, `delivery_adress`, `delivery_index`, `delivery`, `ttn`, `ttn_status`, `delivery_date`, `utm_source`, `utm_medium`, `utm_term`, `utm_content`, `utm_campaign`) VALUES
-(8, 6, '14980407247', 1, '1498040724', 31, 'UA', 'tect-отказ', '380845654654', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A6%3A%7Bs%3A2%3A%22id%22%3Bs%3A4%3A%221197%22%3Bs%3A8%3A%22order_id%22%3Bs%3A11%3A%2214980407247%22%3Bs%3A10%3A%22product_id%22%3Bs%3A1%3A%222%22%3Bs%3A5%3A%22price%22%3Bs%3A6%3A%22599.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%221%22%3Bs%3A4%3A%22date%22%3Bs%3A10%3A%222017-06-21%22%3B%7D%7D', '599.00', '300.00', '', 'confugurator', '127.0.0.1', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', 'utm_source', 'utm_medium', 'Тест UTM-меток', 'utm_content', 'utm_campaign'),
-(9, 6, '14980464089', 1, '1498046409', 18, 'UA', 'Test1', '380345453453', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A6%3A%7Bs%3A2%3A%22id%22%3Bs%3A4%3A%221199%22%3Bs%3A8%3A%22order_id%22%3Bs%3A11%3A%2214980464089%22%3Bs%3A10%3A%22product_id%22%3Bs%3A1%3A%222%22%3Bs%3A5%3A%22price%22%3Bs%3A6%3A%22603.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%222%22%3Bs%3A4%3A%22date%22%3Bs%3A10%3A%222017-06-21%22%3B%7D%7D', '1206.00', '608.00', '', 'confugurator', '127.0.0.1', 'Мухостральск', '', 'Новая Почта', '4564564645654', '', '0000-00-00 00:00:00', 'utm_source', 'utm_medium', 'Тест UTM-меток', 'utm_content', 'utm_campaign'),
-(10, 6, '14980467851', 1, '1498046785', 31, 'UA', 'test2', '380345453453', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A6%3A%7Bs%3A2%3A%22id%22%3Bs%3A4%3A%221201%22%3Bs%3A8%3A%22order_id%22%3Bs%3A11%3A%2214980467851%22%3Bs%3A10%3A%22product_id%22%3Bs%3A1%3A%222%22%3Bs%3A5%3A%22price%22%3Bs%3A6%3A%22599.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%221%22%3Bs%3A4%3A%22date%22%3Bs%3A10%3A%222017-06-21%22%3B%7D%7D', '599.00', '300.00', '', 'confugurator', '127.0.0.1', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', 'utm_source', 'utm_medium', 'Тест UTM-меток', 'utm_content', 'utm_campaign');
+INSERT INTO `order_tab` (`id`, `user_id`, `order_id`, `lp-crm`, `order_time`, `status`, `cancel_description`, `country`, `bayer_name`, `phone`, `email`, `products`, `total`, `profit`, `comment`, `site`, `ip`, `delivery_adress`, `delivery_index`, `delivery`, `ttn`, `ttn_status`, `delivery_date`, `utm_source`, `utm_medium`, `utm_term`, `utm_content`, `utm_campaign`) VALUES
+(18, 6, '14983212339', 1, '1498321258', 3, '', '', 'Опять Вася1', '+38(067) 342-35-67', '', 'a%3A1%3A%7Bi%3A1%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A2%3A%2214%22%3Bs%3A5%3A%22price%22%3Bs%3A3%3A%22106%22%3Bs%3A5%3A%22count%22%3Bs%3A1%3A%221%22%3B%7D%7D', '106.00', '7.00', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(19, 6, '14983214060', 1, '1498321439', 3, '', '', 'Опять Вася2', '+38(009) 876-55-45', '', 'a%3A1%3A%7Bi%3A1%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A2%3A%2215%22%3Bs%3A5%3A%22price%22%3Bs%3A3%3A%22203%22%3Bs%3A5%3A%22count%22%3Bs%3A1%3A%222%22%3B%7D%7D', '406.00', '8.00', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(20, 6, '14983215488', 1, '1498321575', 3, '', '', 'Опять Вася3', '+38(067) 845-65-43', '', 'a%3A1%3A%7Bi%3A1%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A1%3A%228%22%3Bs%3A5%3A%22price%22%3Bs%3A4%3A%220.00%22%3Bs%3A5%3A%22count%22%3Bs%3A1%3A%221%22%3B%7D%7D', '0.00', '0.00', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(21, 6, '14983226326', 1, '1498322656', 13, '', '', 'Снова Вася145', '380566666689', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A2%3A%2213%22%3Bs%3A5%3A%22price%22%3Bs%3A6%3A%22239.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%221%22%3B%7D%7D', '239.00', '0.00', '', '', '', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', '', '', '', '', ''),
+(22, 6, '14983263611', 1, '1498326400', 13, '', '', 'Хренофон', '380456456456', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A2%3A%2217%22%3Bs%3A5%3A%22price%22%3Bs%3A7%3A%221300.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%222%22%3B%7D%7D', '2600.00', '2.00', '', '', '', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', '', '', '', '', ''),
+(23, 6, '14983264394', 1, '1498326473', 13, '', '', 'Хренофон2', '380453453453', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A2%3A%2219%22%3Bs%3A5%3A%22price%22%3Bs%3A5%3A%2213.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%221%22%3B%7D%7D', '13.00', '13.00', '', '', '', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', '', '', '', '', ''),
+(24, 6, '14983267445', 1, '1498326768', 13, '', '', 'Хренофон23', '380890890890', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A1%3A%229%22%3Bs%3A5%3A%22price%22%3Bs%3A6%3A%22358.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%222%22%3B%7D%7D', '716.00', '18.00', '', '', '', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', '', '', '', '', ''),
+(25, 6, '14983273866', 1, '1498327421', 13, 'Клиент отказался или передумал', '', 'Хренофон78', '380787887877', '', 'a%3A1%3A%7Bi%3A0%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A2%3A%2220%22%3Bs%3A5%3A%22price%22%3Bs%3A5%3A%2299.00%22%3Bs%3A8%3A%22quantity%22%3Bs%3A1%3A%221%22%3B%7D%7D', '99.00', '0.00', '', '', '', '', '', 'Новая Почта', '', '', '0000-00-00 00:00:00', '', '', '', '', ''),
+(26, 6, '14983297604', 1, '1498329781', 3, '', 'UA', 'Вассисуалий2137', '+38(067) 867-86-78', '', 'a%3A1%3A%7Bi%3A1%3Ba%3A3%3A%7Bs%3A10%3A%22product_id%22%3Bs%3A1%3A%229%22%3Bs%3A5%3A%22price%22%3Bs%3A6%3A%22349.00%22%3Bs%3A5%3A%22count%22%3Bs%3A1%3A%221%22%3B%7D%7D', '349.00', '0.00', '', 'drop', '127.0.0.1', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -464,12 +474,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `registration`, `users_group`, `name`, `email`, `v_email`, `phone`, `v_phone`, `sms`, `contact`, `pay_method`, `password`, `drop_key`, `active_drop`, `take_drop`, `balance`, `total_balance`, `order_pay`, `order_pay_method`, `order_pay_id`, `sale`, `total_sale`, `sale_ok`, `last_time`, `ipv4`, `country`, `region`, `city`, `provider`, `agent`, `device`, `last_enter`) VALUES
 (0, '0', 3, 'GreyGler', 'GreyGler@proger.com', 'GreyGler@proger.com', 'GreyGler', 'GreyGler', '', '', '', '1c40671124502abb891ece8b9674dba3', '', 0, 0, '1200.00', '1200.00', '0.00', 0, 0, 0, 0, 0, '1497338654', 'localhost', 'AA', 'Не определен', 'Не определен', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:7:{s:4:"ipv4";s:0:"";s:9:"last_time";s:0:"";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:5:"agent";s:0:"";s:6:"device";s:1:"0";}'),
-(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'a:4:{i:1;s:5:"ddxfg";i:2;s:18:"+38(000) 000-00-00";i:3;s:8:"y78khbjk";i:4;s:18:"+38(000) 000-00-00";}', 'a:2:{i:1;s:19:"9867-8678-6786-7867";i:2;s:13:"U777777777777";}', '1c40671124502abb891ece8b9674dba3', '6c350031e6703349f7533c084ebcdcbb', 0, 0, '300.00', '3100.00', '0.00', 0, 10, 0, 12, 12, '1498047154', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:8:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1498046946";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:8:"provider";s:0:"";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
+(1, '1495644820', 3, 'Игорь', 'igor.sayutin@gmail.com', '', '+38(004) 565-46-54', '+38(004) 565-46-54', '', 'a:4:{i:1;s:5:"ddxfg";i:2;s:18:"+38(000) 000-00-00";i:3;s:8:"y78khbjk";i:4;s:18:"+38(000) 000-00-00";}', 'a:2:{i:1;s:19:"9867-8678-6786-7867";i:2;s:13:"U777777777777";}', '1c40671124502abb891ece8b9674dba3', '6c350031e6703349f7533c084ebcdcbb', 0, 0, '300.00', '3100.00', '0.00', 0, 10, 0, 12, 12, '1498283784', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0', 0, 'a:8:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1498282606";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:8:"provider";s:0:"";s:5:"agent";s:102:"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";s:6:"device";s:1:"0";}'),
 (2, '1495644961', 2, 'Вадим', 'slogger1990@gmail.com', '', '', '', '', '', '', 'c7e70f8844321ca123b4839bd581f644', 'a428b2b328cf4397b62b173eb6c0c10f', 0, 0, '100.00', '200.00', '0.00', 0, 0, 0, 0, 0, '', '', '', '', '', '', '', 0, ''),
 (3, '1495691400', 1, 'Артур', 'new-day2012@mail.ru', '', '', '', '', '', '', '4aa026d492e2645669254e7c655cc3ac', '3d20280a6888ea60528bf5b2c5d7fe90', 0, 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, 0, '', '', '', '', '', '', '', 0, ''),
 (4, '1495877000', 2, 'Panakshev', 'vpanakshev1@mail.ua', '', '', '', '', '', '', '778e7d704a943d8654ad8883154c2b84', '31c8ed1f2e7496a59f5cb525263eca66', 0, 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, 0, '', '', '', '', '', '', '', 0, ''),
 (5, '1496221566', 3, 'webmasterCRM', 'test1234@binka.me', '', '', '', '', '', '', 'e10adc3949ba59abbe56e057f20f883e', '7a7c71c8e9ac0b782a11f7ace1fb3353', 0, 0, '0.00', '0.00', '0.00', 0, 0, 0, 0, 0, '1496221889', '178.213.0.225', 'UA', 'Днепропетровская область', 'Кривой Рог', '', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 0, 'a:7:{s:4:"ipv4";s:13:"178.213.0.225";s:9:"last_time";s:10:"1496221566";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:5:"agent";s:114:"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";s:6:"device";s:1:"0";}'),
-(6, '1498037910', 5, 'Тестер', 'tester@tester.com', '', '', '', '', '', '', 'f5d1278e8109edd94e1e4197e04873b9', '0db77295bc37a3295eb83956952c2cb6', 0, 0, '538.00', '608.00', '0.00', 0, 12, 0, 0, 0, '1498047101', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:8:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1498046335";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:8:"provider";s:0:"";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
+(6, '1498037910', 5, 'Тестер', 'tester@tester.com', '', '', '', '', '', '', 'f5d1278e8109edd94e1e4197e04873b9', '0db77295bc37a3295eb83956952c2cb6', 1, 0, '538.00', '608.00', '0.00', 0, 12, 0, 0, 0, '1498319078', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0', 0, 'a:8:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1498047101";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:8:"provider";s:0:"";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}'),
 (7, '1498043800', 5, 'Tester-1', 'tester-1@tester.com', '', '', '', '', '', '', 'f5d1278e8109edd94e1e4197e04873b9', '59aba23486e8d4c3e2f2fc1c8ca7041b', 0, 0, '-70.00', '0.00', '0.00', 0, 0, 0, 0, 0, '1498047207', 'localhost', '', '', '', '', 'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0', 0, 'a:8:{s:4:"ipv4";s:9:"localhost";s:9:"last_time";s:10:"1498043847";s:7:"country";s:0:"";s:4:"city";s:0:"";s:6:"region";s:0:"";s:8:"provider";s:0:"";s:5:"agent";s:65:"Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0";s:6:"device";s:1:"0";}');
 
 -- --------------------------------------------------------

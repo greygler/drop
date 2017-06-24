@@ -25,6 +25,9 @@ $products = urlencode(serialize($products_list));
 
 	$data = array(
     'order_id' => $_POST['order_id'], 
+	'ip'				 => $_POST['order_ip'], 
+	//'site' 				 => $_POST['site'],
+	'country'         	=> $_POST['country'], 
     'products'       	=> $products,                 // массив с товарами в заказе
 	'total'				=> $_POST['total'],
 	'profit'			=> $_POST['form_profit'],
