@@ -274,6 +274,7 @@ class drop{
 		if ($result == 'true') return 'ok'; else return 'error';
 	}
 	
+	
 	 public function one_status($id, $status) // Собираем колличество заказов в одном статусe по ID пользователя
 	 {
 		 $count_status=db::cound_bd("order_tab", $where="user_id='{$id}' AND status='{$status}'");
@@ -286,6 +287,18 @@ class drop{
 		 return $count_status;
 	 }
 	 
+	 
+	 public function getstatusbase() // забираем все статусы из базы
+	{
+		$result = mysql_query("SELECT * FROM status WHERE `fixed`='1'");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+		$statusbase[$myrow['id']]=$myrow['name'];
+		}
+		while ($myrow = mysql_fetch_array($result));
+		return $statusbase;
+	}
 	 public function all_statuses() // Собираем колличество заказов во всех статусах по всей системе
 	 {
 		$result = mysql_query("SELECT * FROM status");
