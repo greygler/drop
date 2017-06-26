@@ -123,8 +123,9 @@ public function registration()
 	
 public function top_menu()
 { 
+
 $new_order=$_SESSION['status']['3'];
-if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!=0) $color_balance="green";
+if ($_SESSION['balance']<0) $color_balance="color_red"; else if ($_SESSION['balance']!=0) $color_balance="color_green";
 ?>
 	<nav>
 		<ul>
@@ -144,11 +145,12 @@ if ($_SESSION['balance']<0) $color_balance="red"; else if ($_SESSION['balance']!
 		
 		<a data-toggle="modal" data-target="#logmodal" id="logout-xs" class="inform visible-sm" href="#"> <i class="fa fa-power-off fa-lg"></i></a>
 		<br>
-		<font color="<?= $color_balance ?>">
-		<span class="fa fa-money fa-lg" ></span> <strong><?= $_SESSION['balance'] ?> <?= CURRENCY ?>. </strong></font>
-		<? if ($new_order>0) {$color_order="red"; ?>
+		
+		<span id="money" class="fa fa-money fa-lg <?= $color_balance ?>" ></span> <strong id="strong_balance" class="<?= $color_balance ?>"><span id="balance" class="<?= $color_balance ?>"><?= $_SESSION['balance'] ?></span> <?= CURRENCY ?>. </strong>
+		<?// if ($new_order>0) {$color_order="red"; ?>
+		<span id="new_order_span" class="color_red <? if ($new_order<1) echo ("hide"); ?>">
 		<a href="/?type=order&status=3<? if ($_SESSION['users_group']<5) echo('&orders=my'); ?>">
-		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong>  <?= $new_order ?></strong></font></a> <? } ?> 
+		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong id="new_order" class="color_red">  <?= $new_order ?></strong></font></a></span> <? //} ?> 
 		</div>
 		</div>
 		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-4"><address><a href="tel:'.SKYPE.'"><span class="fa fa-skype fa-lg"></span> '.SKYPE.'</a><br><a href="tel:'.preg_replace('![^0-9]+!', '', PHONE).'"><span class="fa fa-phone fa-lg"></span> '.PHONE.'</a></address></div>'); ?>
@@ -180,7 +182,7 @@ public function side_menu()
 					$myrow = mysql_fetch_array($result);
 					do
 					{
-						echo ('<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог товаров категории &#171;'.$myrow['name'].'&#187;'."\n".'Актуальность категорий &#9200; '.date("d.m.Y H:i:s", LAST_TIME_CATEGORY).'" href="/?type=products&cat='.$myrow['id'].'"><span><i class="fa fa-check-square-o" aria-hidden="true"></i> '.$myrow['name'].'</span></a>'."</li>\n");
+						echo ('<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог товаров категории &#171;'.$myrow['name'].'&#187;" href="/?type=products&cat='.$myrow['id'].'"><span><i class="fa fa-check-square-o" aria-hidden="true"></i> '.$myrow['name'].'</span></a>'."</li>\n");
 					
 					}
 					while ($myrow = mysql_fetch_array($result));
@@ -364,7 +366,7 @@ public function info_balance()
     </div>
   </div>
 </div>
-<script type="text/javascript"> jQuery(function($){$('#info_balance').modal('show') }); </script>
+
 <? 
 }
 
@@ -452,8 +454,15 @@ $autoring=autoring::is_autoring();
 if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='1')) AND ($autoring)) echo systems::attention();
 ?>
 
-<? if (($_SESSION['balance']<0) AND ($_SESSION['info_balance']!="1")) echo systems::info_balance(); ?>
-<!--<script>var ip='<?= func::GetRealIp() ?>'</script><script src="<?= JS_PATH ?>/geobase.php"></script> -->
+<? if (($_SESSION['balance']<0) AND ($_SESSION['info_balance']!="1")){ ?>
+<script type="text/javascript"> jQuery(function($){$('#info_balance').modal('show') }); </script>
+<? } ?>
+<?= systems::info_balance(); ?>
+
+<? if (autoring::is_autoring()) { ?> 
+<script src="<?= JS_PATH ?>/update.php"></script>
+<script>var timerId = setInterval(function() { update_user();}, <?= UPDATE_USER*60000 ?>);</script>
+<? } ?>
   </body>
 </html>
 <?

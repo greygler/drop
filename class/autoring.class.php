@@ -115,6 +115,7 @@ class Autoring {
 			$myrow = mysql_fetch_array($result);
 			$user_group=autoring::user_group($myrow['users_group']);
 			autoring::set_autoring($myrow, $user_group);
+			return $myrow;
 		}
 	
 	public function update_password($id, $password) // Замена пароля

@@ -53,9 +53,27 @@ class drop{
 		return $all_products;
 	}
 	
+	public function sale($id, $status){
+		$user=autoring::get_user($id);
+		
+		switch ($status) {
+			case 3:
+			$user['sale']++;
+			$user['total_sale']++;
+			break;
+			case 18:
+			$user['sale_ok']++;
+			break;
+		}
+		$db="UPDATE users SET sale='{$user['sale']}', total_sale='{$user['total_sale']}', sale_ok='{$user['sale_ok']}'  WHERE id='{$id}'";
+		$result = mysql_query ($db);
+		
+	}
+	
 		
 	public function new_order($user_id, $data, $status) // Cохраняем заказ
 	{
+		drop::sale($user_id, $status);
 		$col="user_id, order_time, status, ";
 		$values="'{$user_id}',".time().", {$status}, ";
 		foreach($data as $key => $value) if ($key!='key')
@@ -82,7 +100,7 @@ class drop{
 		$set = substr($set, 0, -1);
 		$db="UPDATE order_tab  SET {$set} WHERE order_id='{$order_id}'";
 		$result = mysql_query ($db);
-		echo $db;
+		//echo $db;
 		if ($result == 'true') return 'ok'; else return 'error';
 
 	}
@@ -281,6 +299,28 @@ class drop{
 		 return $count_status;
 	 }
 	 
+	 
+	public function new_sale($id){ // Обновляем содержимое новые продажи 1 пользователя
+		$sale=drop::one_status($id, 3);
+		$db="UPDATE users SET sale='{$sale}' WHERE id='{$id}'";
+		$result = mysql_query ($db);
+		//echo "<br><br>!!!! {$db} !!!<br><br>";
+	}
+	
+	public function new_sale_all(){ // Обновляем содержимое новые продажи всех пользователей
+		$result = mysql_query("SELECT * FROM users");
+		$myrow = mysql_fetch_array($result);
+		do
+		{
+			drop::new_sale($myrow['id']);
+		
+		}
+		while ($myrow = mysql_fetch_array($result));
+	
+	}
+	
+	
+	 
 	  public function status($status) // Собираем колличество всех заказов в статусe
 	 {
 		 $count_status=db::cound_bd("order_tab", $where="status='{$status}'");
@@ -368,33 +408,129 @@ class drop{
 		echo $db;
 	}
 	
+	
+
+public function are_orders($out) // Больше одного заказа
+{
+	foreach($out['data'] as $key => $value) {
+		echo("{$key} = {$value}<br>");
+		//$products = unserialize(urldecode($value['products'])); 
 		
+	 echo ("Products:"); print_r($value['products']); echo("<br>");
+		$total=0;$profit=0;
+	 foreach($value['products'] as $key_p => $value_p){
+		$product=drop::one_product($value_p['product_id']);
+		 $sum=$value_p['quantity']*$value_p['price'];
+		 echo ("Сумма заказа {$key_p}.{$sum}<br>");
+		 $total=$total+$sum;
+		 $drop_sum=$value_p['quantity']*$product['price'];
+		 echo ("Сумма покупки {$key_p}.{$drop_sum}<br>");
+		 $prof=$sum-$drop_sum;
+		 echo ("Профит {$key_p}.{$prof}<br>");
+		 $profit=$profit+$prof;
+
+	 }
+	 
+	
+	  $products_base = urlencode(serialize($value['products']));
+	 
+	 if (UPDATE_PRODUCT) $update_product= "products='{$products_base}', total={$total}, profit={$profit},";
+	 else $update_product="";
+	 
+	 $bd="UPDATE order_tab SET bayer_name='{$value['bayer_name']}', phone='{$value['phone']}', status='{$value['status']}', cancel_description='{$value['cancel_description']}', {$update_product}   delivery_adress='{$value['delivery_adress']}', ttn='{$value['ttn']}',ttn_status='{$value['ttn_status']}', delivery_date='{$value['delivery_date']}', delivery='{$value['delivery']}', delivery_index= '{$value['delivery_index']}', comment='{$value['comment']}'  WHERE order_id='{$key}'";
+	  echo("!<br>");
+	  echo $bd;
+	  
+		$result = mysql_query ($bd);
+		
+		$user_id=drop::get_order_id($key);
+		//drop::new_sale($user_id);
+		switch ($value['status']) {
+			case 18:
+				
+				echo autoring::plus_balance($user_id, $prof);
+				echo drop::money_log($key,$user_id, 1,$prof,"Продажа");
+			break;
+			case 31:
+				
+				echo autoring::minus_balance($user_id, POST_PAY);
+				echo drop::money_log($key,$user_id, 0,POST_PAY,"Почтовые расходы");
+			break;
+		}
+
+
+
+
+	if ($result == 'true') { echo "Информация в базе обновлена успешно!";}
+	else { echo "Информация в базе не обновлена!"; }
+	}
+}	
+	
+public function one_orders($out)  // только один заказ
+	
+	{
+		
+	 echo ("Products:"); print_r($out['data']['products']); echo("<br>");
+		$total=0;$profit=0;
+	 foreach($out['data']['products'] as $key_p => $value_p){
+		$product=drop::one_product($value_p['product_id']);
+		 $sum=$value_p['quantity']*$value_p['price'];
+		 echo ("Сумма заказа {$key_p}.{$sum}<br>");
+		 $total=$total+$sum;
+		 $drop_sum=$value_p['quantity']*$product['price'];
+		 echo ("Сумма покупки {$key_p}.{$drop_sum}<br>");
+		 $prof=$sum-$drop_sum;
+		 echo ("Профит {$key_p}.{$prof}<br>");
+		 $profit=$profit+$prof;
+
+	 }
+	 
+	
+	  $products_base = urlencode(serialize($out['data']['products']));
+	 
+	 if (UPDATE_PRODUCT) $update_product= "products='{$products_base}', total={$total}, profit={$profit},";
+	 else $update_product="";
+	 
+	 $bd="UPDATE order_tab SET bayer_name='{$out['data']['bayer_name']}', phone='{$out['data']['phone']}', status='{$out['data']['status']}', {$update_product}   delivery_adress='{$out['data']['delivery_adress']}', ttn='{$out['data']['ttn']}',ttn_status='{$out['data']['ttn_status']}', delivery_date='{$out['data']['delivery_date']}', delivery='{$out['data']['delivery']}', delivery_index= '{$out['data']['delivery_index']}', comment='{$out['data']['comment']}'  WHERE order_id='{$out['data']['order_id']}'";
+	  echo("!<br>");
+	  echo $bd;
+		$result = mysql_query ($bd);
+		$user_id=drop::get_order_id($out['data']['order_id']);
+		//drop::new_sale($user_id);
+		switch ($value['status']) {
+			case 18:
+				echo autoring::plus_balance($user_id, $prof);
+				echo drop::money_log($out['data']['order_id'],$user_id, 1,$prof,"Продажа");
+			break;
+			case 31:
+				echo autoring::minus_balance($user_id, POST_PAY);
+				echo drop::money_log($out['data']['order_id'],$user_id, 0,POST_PAY,"Почтовые расходы");
+			break;
+		}
+	if ($result == 'true') {echo "Информация в базе обновлена успешно!";}
+	else {echo "Информация в базе не обновлена!";}
+	}
 	
 	public function update_data()
 		{
-				if (time()-LAST_TIME_CATEGORY>UPDATE_TIME) {
-				$categories=lp_crm::getCategories(CRM,CRM_KEY);
-				$subcategories=lp_crm::subCategories($categories);
-				$status=lp_crm::getStatuses(CRM,CRM_KEY);
-				if ($categories['status']=='ok') {
-					foreach ($categories['data'] as $key => $value)
-						$cat_status[]= drop::cat_base($key, $value['name']);
-					foreach ($subcategories as $key => $value)
-						$subcat_status[]=drop::subcat_base($key, $value['name'], $value['parent']);
+			// Обновляем категории - субкатегории
+			$categories=lp_crm::getCategories(CRM,CRM_KEY);
+			$subcategories=lp_crm::subCategories($categories);
+			$status=lp_crm::getStatuses(CRM,CRM_KEY);
+			if ($categories['status']=='ok') {
+				foreach ($categories['data'] as $key => $value)
+					$cat_status[]= drop::cat_base($key, $value['name']);
+				foreach ($subcategories as $key => $value)
+					$subcat_status[]=drop::subcat_base($key, $value['name'], $value['parent']);
 					}
-				
-				if ($status['status']=='ok'){
-					foreach($status['data'] as $key => $value) drop::statuses_base($key, $value);
-				}
-				
-					
-					
-					
-				drop::last_time('c');
+			// Обновляем статусы
+			if ($status['status']=='ok'){
+				foreach($status['data'] as $key => $value) drop::statuses_base($key, $value);
 			}
-			
-			if (time()-LAST_TIME_PRODUCT>UPDATE_TIME) {
-			//if (!isset($subcategories)) $subcategories=lp_crm::subCategories($categories);
+				
+				// Обновляем базу товаров
+						
+		
 			$products=lp_crm::getProducts(CRM,CRM_KEY); 
 			
 			//print_r($products);
@@ -403,9 +539,9 @@ class drop{
 			if (drop::is_categories($value['category_id'])){ $cat=$value['category_id']; }
 				else {  $cat=$subcat['parent']; $subcat=$value['category_id'];  }
 				$result=drop::products($value ['id'], $value ['name'], $value ['model'], $value ['description'], $value ['price'], $value ['spec_price'], $cat, $subcat); $cat=0; $subcat=0;
-				drop::last_time('p');
+				
 				}
-			}
+			
 		}
 }
 ?>

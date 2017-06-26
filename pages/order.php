@@ -49,7 +49,7 @@ while ($myrow = mysql_fetch_array($result));
 </section>		
 		
 		
-
+<div id="table_order">
 <table class="table table-responsive table-striped table-bordered" >
 <thead>
 	<tr>
@@ -186,5 +186,6 @@ while ($myrow = mysql_fetch_array($result));
 ?>
 <tbody>
 	</table>
+	</div>
 <? $limit=pagination::pagin($_GET,$count_status, $view_pages); 
 $refresh=="yes";	?>

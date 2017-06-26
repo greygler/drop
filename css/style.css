@@ -32,6 +32,7 @@
 .help{
 	color: red;
 }
+
 .inform{
 	
 	padding-top: 10px;
@@ -225,6 +226,12 @@ margin-bottom: 0 !important;
 }
 .profit_empty{
 	color: #5b6064;
+}
+.color_red{
+	color: red !important;
+}
+.color_green{
+	color: green !important;
 }
 /* 
 #order_tabs em a{

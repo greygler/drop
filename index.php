@@ -1,7 +1,6 @@
 <? session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 date_default_timezone_set(TIME_ZONE);
-require_once ($_SERVER['DOCUMENT_ROOT'].'/'.LAST_TIME_FILE);
 require_once (CLASS_PATH.'/db.class.php'); 
 $db_result=db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 require_once (CLASS_PATH.'/autoring.class.php'); 
@@ -12,7 +11,7 @@ require_once (CLASS_PATH.'/functions.class.php');
 require_once (CLASS_PATH.'/lpcrm.class.php'); 
 require_once (CLASS_PATH.'/drop.class.php');
 require_once (CLASS_PATH.'/users.class.php');
-drop::update_data();	
+	
 $status=drop::statuses($_SESSION['id']);				
 
 
