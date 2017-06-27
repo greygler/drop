@@ -40,11 +40,20 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		  else {
 			  $('#new_order_span').addClass('hide');
 		  }
-		//alert(user.sale);  
+		//alert(user.report);  
+		
+		
+	
+	
+	if (user.report!=undefined) {
+		noti('Уведомление <?= TITLE ?>',user.report,'<?= NOTI ?>000');
+		var audio = $("#noti")[0];
+		audio.play();
+	}
 		  
 	  }
 });
-	//alert(data);
+	
  }
  
   <? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>

@@ -32,6 +32,8 @@ public function head($login="", $registration="")
 	<link href="<?= CSS_PATH ?>/bootstrap.min.css" rel="stylesheet">
 	<link href="<?= CSS_PATH ?>/style.css" rel="stylesheet">
 	
+	<script src="<?= JS_PATH ?>/noti.php"></script>
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -460,9 +462,15 @@ if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='
 <?= systems::info_balance(); ?>
 
 <? if (autoring::is_autoring()) { ?> 
+<audio preload="auto" id="noti">
+        <source src="audio/sound.mp3"></source>
+        <source src="audio/sound.ogg"></source>
+</audio>
 <script src="<?= JS_PATH ?>/update.php"></script>
 <script>var timerId = setInterval(function() { update_user();}, <?= UPDATE_USER*60000 ?>);</script>
 <? } ?>
+
+
   </body>
 </html>
 <?

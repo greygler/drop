@@ -36,35 +36,7 @@ $history_count=db::cound_bd("pay_history", "id={$_SESSION['id']}")
 public function order_pay()
 {
 	?>
-	<script>
-function order_pay(id){	
- var msg   = $('#order_form').serialize();
-    
-	   $.ajax({
-          type: 'POST',
-          url: '<?= ACTION_PATH ?>/order_pay.php',
-          data: msg,
-          success: function(data) {
-			//alert(data);
-		  if (data=='ok') {
-			   var order_summ = $('#order_summ').val();
-			  $('.pay_order_result').html('Заказ на выплату принят успешно');
-			  $('#order-pay_button').html('Заказана выплата '+order_summ+'&#160;'+"<?= CURRENCY ?>");
-			  $('#order-pay_button').attr("disabled","disabled");
-			  $('#op_modal_button').addClass('hide');
-			  $('#op_modal_cancel').html("Ok");
-			  
-
-		  } else $('.pay_order_result').html(data);
-									
-								
-          },
-          error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
-          }
-        });
-}
-	</script>
+	<script src="<?= JS_PATH ?>/order_pay.php"></script>
 
 <div class="modal fade" id="order-pay_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -109,34 +81,8 @@ foreach  ($pay_method as $key => $value) { ?>
 public function user_pay($user_id)
 {
 	?>
-	<script>
-function order_pay_go(id){	
- var msg   = $('#order_form_go').serialize();
-    
-	   $.ajax({
-          type: 'POST',
-          url: '<?= ACTION_PATH ?>/user_pay_go.php',
-          data: msg,
-          success: function(data) {
-			alert(data);
-		  if (data!='error') {
-			   var order_summ = $('#order_summ').val();
-			  $('.pay_order_result').html('Присвоен статус <strong>'+data+'</strong> успешно.');
-			  $('#order-pay_button').html('Присвоен статус <strong>'+data+'</strong>');
-			  $('#op_modal_button').addClass('hide');
-			  $('#op_modal_cancel').html("Ok");
-			  $('#frame_history')[0].contentWindow.location.reload(true);
-
-		  } else $('.pay_order_result').html(data);
-									
-								
-          },
-          error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
-          }
-        });
-}
-	</script>
+	<script src="<?= JS_PATH ?>/order_pay_go.php"></script>
+	
 <? $user=autoring::get_user($_GET['id']); 
 $pay_method=autoring::pay_method("WHERE active!=0");
 $pm=unserialize($user['pay_method']);?>

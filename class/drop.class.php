@@ -2,18 +2,7 @@
 require_once (CLASS_PATH.'/functions.class.php');
 class drop{
 	
-	public function last_time($type) // Последнее время обновлений
-	{
-		$fp = fopen($_SERVER['DOCUMENT_ROOT'].'/'.LAST_TIME_FILE, 'w+');
-		flock($fp, LOCK_EX); // Блокирование файла для записи
-		if ($type=='p') {$t1=time(); $t2=LAST_TIME_CATEGORY;} else {$t1=LAST_TIME_PRODUCT; $t2=time(); }
-		$text="<?\n\t// Обновление ".date("d.m.Y H:i:s").", Пользователь id:{$_SESSION['id']}, {$_SESSION['name']}\n\tdefine('LAST_TIME_PRODUCT','".$t1."');\n\tdefine('LAST_TIME_CATEGORY','".$t2."');\n?>";
-		
-		fwrite($fp, $text);
-		flock($fp, LOCK_UN); 
-		fclose($fp);
-
-	}
+	
 	
 	public function is_order($order_id) // Есть ли заказ с таким order_id;
 	{
@@ -509,6 +498,30 @@ public function one_orders($out)  // только один заказ
 		}
 	if ($result == 'true') {echo "Информация в базе обновлена успешно!";}
 	else {echo "Информация в базе не обновлена!";}
+	}
+	
+	
+	public function last_report($user_id, $report)
+	{
+		//echo $report['last_report'];
+		$return='';
+		$lrb=unserialize($report['last_report']);
+		$last=false;
+		$last_report['sale']=$report['sale'];
+		$last_report['balance']=$report['balance'];
+		
+		if ($lrb['sale']!=$report['sale']) {$last=true;
+		$sale=$report['sale']-$lrb['sale'];
+		if ($report['sale']>0) $return.="Новые продажи: {$sale}\n";  }
+		if ($lrb['balance']!=$report['balance']) {$last=true; 
+		if ($report['balance']>$lrb['balance']) $znak="+";
+		$balance=$report['balance']-$lrb['balance'];
+		$return.="Баланс: {$report['balance']} ".CURRENCY." ({$znak}{$balance} ".CURRENCY.")";
+		//." ".CURRENCY."( ".$report['balance']-$lrb['balance'].")";
+		}
+		//echo $return;
+		if ($last) {$lrs=serialize($last_report); $result = mysql_query ("UPDATE users SET last_report='{$lrs}' WHERE id='{$user_id}'"); 
+		return $return;} else return false;
 	}
 	
 	public function update_data()
