@@ -64,8 +64,31 @@ function data_form() {
 			  bot_id : $('#tbot_id').val(),
 		  },
           success: function(data) {
-			valert(data)
+			// valert(data)
+			$('#tbot_button').html('Верификация бота...');
 			$('#tbot').modal('hide');$('#tbot_ver').modal('show');
+									
+								
+          },
+          error:  function(xhr, str){
+	    valert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+	
+	function tbot_ver() {
+		$.ajax({
+		  type: 'POST',
+          url: '<?= ACTION_PATH ?>/tbot_ver.php',
+          data: {
+			  bot_ver_code : $('#tbot_ver_code').val(),
+		  },
+          success: function(data) {
+			  valert($('#tbot_ver_code').val());
+			valert(data);
+			$('#tbot_button').html(data);
+			$('#tbot_button').attr("disabled","disabled");	
+			$('#tbot_ver').modal('hide');
 									
 								
           },

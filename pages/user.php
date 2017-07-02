@@ -40,7 +40,7 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
    <span class="help-block"><small>Автоматическая передача дублирующих заявок возможна в случае, если это разрешено на стороне приема заказов</small></span>
   </dd>
   <dt>Телеграм-бот</dt>
-  <dd><div class="form-group"><a class="btn btn-default btn-block" data-toggle="modal" data-target="#tbot">Подключить</a></div></dd>
+  <dd><div class="form-group"><a id="tbot_button" class="btn btn-default btn-block" data-toggle="modal" data-target="#tbot">Подключить</a></div></dd>
   <dt>Секретный токен:</dt>
   <dd>
    <div class="input-group">

@@ -263,10 +263,22 @@ class Autoring {
 			//$result = mysql_query($bd);
 			$_SESSION['telegram']=$tbot;
 			$t_ver=autoring::sms_gen($id);
+			//$t_ver="444-44-444";
 			$_SESSION['t_verife']=$t_ver;
 			//if ($result == 'true') return "ok"; else "error";
 			return $t_ver;
 		}
+		
+	public function t_v_bot($id, $tv_code)
+		{
+			if ($_SESSION['t_verife']==$tv_code) {
+			$bd="UPDATE `".DB_NAME."`.`users` SET telegram='{$_SESSION['telegram']}' WHERE `users`.`id`={$id}";
+			//echo $bd;
+			$result = mysql_query($bd);
+			if ($result == 'true') return "ok"; else echo "error";
+			} else return "";
+		}	
+		
 		
 	public function pay_method($where="") // Методы выплат
 	{

@@ -483,22 +483,17 @@ public function user_modal()
         <h4 class="modal-title" id="myModalLabel">Верификация Телеграм-бота</h4>
       </div>
       <div class="modal-body">
-	  <ul class="text-left fa-ul">
-	  <li><i class="fa fa-telegram sybmol" aria-hidden="true"></i> Зайдите в свой Телеграм-мессенджер,</li><li><i class="fa fa-telegram" aria-hidden="true"></i> Найдите и добавьте в контакты бот <strong>@<?= TELEGRAM_BOT_NAME ?></strong></li>
-	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Дайте команду <strong>/start</strong> или нажмите соответсвтующую кнопку</li>
-	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Бот Вам сообщит Ваш ID, в виде:<br><em><strong>Ваш ID в системе: ХХХХХХХ</strong></em>, где ХХХХХХХ - какое-то число</li>
-	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Присвоенный Вам ID впишите в поле ниже:</li>
-	  </ul>
+	  Бот отправил Вам проверочный код. Введите его в поле ниже:<br>
 	  <br>
 	  <div class="form-group">
 	   <div class="input-group">
  <span class="input-group-addon"><i class="fa fa-telegram sybmol" aria-hidden="true"></i>
 </span>
-	   <input id="tbot_ver_code" required class="form-control" type="text" name="tbot_ver_code" placeholder="Ваш ID в боте @<?=TELEGRAM_BOT_NAME ?>"></div>
+	   <input id="tbot_ver_code" required class="sms form-control" type="text" name="tbot_ver_code" placeholder="Ваш проверочный код для бота @<?=TELEGRAM_BOT_NAME ?>"></div>
       </div>  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-        <button type="submit" class="btn btn-primary">Подключиться</button>
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
       </div>
     </div>
    </form>

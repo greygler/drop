@@ -7,9 +7,12 @@ $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/autoring.class.php');
 require_once (CLASS_PATH.'/tbot.class.php');
 
-$t_ver=autoring::tbot($_SESSION['id'], $_POST['bot_id']);
-$vercode="Выполнено подключение к боту.%0AВаш проверочный код: {$t_ver}%0AВведите его в соответсвующее поле.";
-tbot::send_bot($_POST['bot_id'], $vercode);
+$t_ver=autoring::t_v_bot($_SESSION['id'], $_POST['bot_ver_code']);
+if ($t_ver=="ok"){
+$vermessage="Бот успешно верифицирован.";
+tbot::send_bot($_SESSION['telegram'], $vermessage);
+echo $vermessage;}
+else echo "Ошибка верификации";
 
 
 
