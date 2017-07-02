@@ -184,10 +184,15 @@ class Autoring {
 			$result = mysql_query("INSERT INTO enter_log (user_id, last_time, ipv4, country, city, provider, region, agent, device) VALUES ('{$id}', '{$time}', '{$ip}', '{$country}', '{$city}','{$provider}', '{$region}', '{$agent}', '{$device}')");
 						
 		}
-	
-	public function sms_code($id)
+		
+		public function sms_gen($id)
 		{
-			$smscode=rand(111, 999)."-".date("s")."-".str_pad($id, 3, rand(11, 99), STR_PAD_LEFT);
+			return $smscode=rand(111, 999)."-".date("s")."-".str_pad($id, 3, rand(11, 99), STR_PAD_LEFT);
+		}
+	
+	public function sms_code($id) // енерим SMS-код
+		{
+			$smscode=autoring::sms_gen($id);
 			
 		if ($_SESSION['sms']!="") $sms=$_SESSION['sms']; else {$sms=$smscode;
 			$result = mysql_query("UPDATE users SET sms='{$sms}'  WHERE id='{$id}'");
@@ -249,6 +254,18 @@ class Autoring {
 		$is_verify_email=autoring::is_verify_email();
 		$is_verify_phone=autoring::is_verify_phone();
 			if ($is_verify_email AND $is_verify_phone )  return true;  else return false;
+		}
+		
+		
+	public function tbot($id, $tbot)
+		{
+			//$bd="UPDATE `".DB_NAME."`.`users` SET telegram='{$tbot}' WHERE `users`.`id`={$id}";
+			//$result = mysql_query($bd);
+			$_SESSION['telegram']=$tbot;
+			$t_ver=autoring::sms_gen($id);
+			$_SESSION['t_verife']=$t_ver;
+			//if ($result == 'true') return "ok"; else "error";
+			return $t_ver;
 		}
 		
 	public function pay_method($where="") // Методы выплат

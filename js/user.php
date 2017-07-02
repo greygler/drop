@@ -25,7 +25,7 @@ function update_password() {
 								
           },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}
@@ -39,7 +39,7 @@ function data_form() {
           url: '<?= ACTION_PATH ?>/update_profile.php',
           data: msg,
           success: function(data) {
-			alert(data)
+			valert(data)
 		  if (data=='ok') {
 			  var user_name = $('#user_name_input').val()
 			  $('.user_name').html(user_name);
@@ -51,7 +51,26 @@ function data_form() {
 								
           },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
+	
+	function tbot() {
+		$.ajax({
+		  type: 'POST',
+          url: '<?= ACTION_PATH ?>/tbot.php',
+          data: {
+			  bot_id : $('#tbot_id').val(),
+		  },
+          success: function(data) {
+			valert(data)
+			$('#tbot').modal('hide');$('#tbot_ver').modal('show');
+									
+								
+          },
+          error:  function(xhr, str){
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}

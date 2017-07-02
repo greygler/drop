@@ -7,7 +7,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 
 
 (function(){ 
-// alert(screen.width);
+// valert(screen.width);
 if (screen.width > 767) {
 	
 	

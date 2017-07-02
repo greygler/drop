@@ -19,7 +19,7 @@ function active_drop(id) {
 			$('.active_drop').html(data);
 		},
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}
@@ -41,7 +41,7 @@ function take_drop(id) {
 			$('.take_drop').html(data);
 		},
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}
@@ -58,7 +58,7 @@ function new_code(id)
           data: {id: id},
           success: function(data) { $("#drop_key").val(data); $('#refresh_code').removeClass('fa-spin');},
           error:  function(xhr, str){
-			alert('Возникла ошибка: ' + xhr.responseCode);
+			valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 		

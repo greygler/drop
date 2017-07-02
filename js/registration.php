@@ -4,7 +4,7 @@ require_once ('../config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 function call() {
 	
-	//alert($('#rules').is(':checked')); 
+	//valert($('#rules').is(':checked')); 
 		$('.no_rules').html('');
 		$('.results').html('');
 		$('#emailgroup').removeClass('has-error');
@@ -27,7 +27,7 @@ function call() {
           url: url,
 		  dataType: "text",
 		  success: function(data) {
-			  alert(url+' '+data);
+			  valert(url+' '+data);
 			if (data=='false') { 
 			$('#emailgroup').addClass('has-error');
 			$('.results').html('Такой E-mail не существует!');
@@ -49,7 +49,7 @@ function call() {
 											
 					  },
 					  error:  function(xhr, str){
-					alert('Возникла ошибка: ' + xhr.responseCode);
+					valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 				
@@ -57,7 +57,7 @@ function call() {
 							
          /*  },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           } 
         })*/
 	

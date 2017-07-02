@@ -96,20 +96,31 @@ require ('class/SimleImage.class.php');
       $this->image = $new_image;
    }
    
-   public function img_ext($file_type)
+   public function img_ext($file_type) // Формируем расширение картинки исходя из mime-type
 	{
-	switch ($file_type) {
-    case "image/jpeg":
-        return "jpg";
-        break;
-    case "image/png":
-        return "png";
-        break;
-     case "image/gif":
-        return "gif";
-        break;
+		switch ($file_type) {
+		case "image/jpeg":
+			return "jpg";
+			break;
+		case "image/png":
+			return "png";
+			break;
+		 case "image/gif":
+			return "gif";
+			break;
 	}
 
 	}
+	
+	public function img_base64($img_file, $class="", $alt="") // Создаем img-тег base64 изображения
+	{
+		$imageSize = getimagesize($img);
+		$imageData = base64_encode(file_get_contents($img));
+		$imageSrc = "data:{$imageSize['mime']};base64,{$imageData}";
+		if ($class!="") $imgclass='class="'.$class.'"'; else $imgclass='';
+		if ($alt!="") $imgalt='alt="'.$alt.'"'; else $imgalt='';
+		$tag = '<img ' .$imgclass.' src="'.$imageSrc.'" '.$imgalt.' />';
+		return $tag;
+		}
 }
 ?>

@@ -74,7 +74,7 @@ class drop{
 		$values = substr($values, 0, -1);
 		$db="INSERT INTO order_tab ({$col}) VALUES ({$values})";
 		$result = mysql_query ($db);
-		echo $db;
+	//	echo $db;
 		if ($result == 'true') return 'ok'; else return 'error';
 
 	}
@@ -164,7 +164,7 @@ class drop{
 			return $myrow;
 	 }
 	 
-	public function id_order_id($order_id)
+	public function id_order_id($order_id) // найти ID заказа по Order_id
 	{
 		$result = mysql_query("SELECT * FROM order_tab WHERE order_id='{$order_id}'");
 		$myrow = mysql_fetch_array($result);

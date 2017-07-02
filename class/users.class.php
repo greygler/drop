@@ -442,6 +442,70 @@ public function user_modal()
   </div>
 </div>
 
+
+<div class="modal fade" id="tbot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+   <form id="bot_form" class="form-signin" action="javascript:void(null);" onsubmit="tbot()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Подключение Телеграм-бота</h4>
+      </div>
+      <div class="modal-body">
+	  <ul class="text-left fa-ul">
+	  <li><i class="fa fa-telegram sybmol" aria-hidden="true"></i> Зайдите в свой Телеграм-мессенджер,</li><li><i class="fa fa-telegram" aria-hidden="true"></i> Найдите и добавьте в контакты бот <strong>@<?= TELEGRAM_BOT_NAME ?></strong></li>
+	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Дайте команду <strong>/start</strong> или нажмите соответсвтующую кнопку</li>
+	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Бот Вам сообщит Ваш ID, в виде:<br><em><strong>Ваш ID в системе: ХХХХХХХ</strong></em>, где ХХХХХХХ - какое-то число</li>
+	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Присвоенный Вам ID впишите в поле ниже:</li>
+	  </ul>
+	  <br>
+	  <div class="form-group">
+	   <div class="input-group">
+ <span class="input-group-addon"><i class="fa fa-telegram sybmol" aria-hidden="true"></i>
+</span>
+	   <input id="tbot_id" required class="form-control" type="text" name="tbot_id" placeholder="Ваш ID в боте @<?=TELEGRAM_BOT_NAME ?>"></div>
+      </div>  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="submit" class="btn btn-primary">Подключиться</button>
+      </div>
+    </div>
+   </form>
+  </div>
+</div>
+
+<div class="modal fade" id="tbot_ver" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+   <form id="bot_form" class="form-signin" action="javascript:void(null);" onsubmit="tbot_ver()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация Телеграм-бота</h4>
+      </div>
+      <div class="modal-body">
+	  <ul class="text-left fa-ul">
+	  <li><i class="fa fa-telegram sybmol" aria-hidden="true"></i> Зайдите в свой Телеграм-мессенджер,</li><li><i class="fa fa-telegram" aria-hidden="true"></i> Найдите и добавьте в контакты бот <strong>@<?= TELEGRAM_BOT_NAME ?></strong></li>
+	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Дайте команду <strong>/start</strong> или нажмите соответсвтующую кнопку</li>
+	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Бот Вам сообщит Ваш ID, в виде:<br><em><strong>Ваш ID в системе: ХХХХХХХ</strong></em>, где ХХХХХХХ - какое-то число</li>
+	  <li><i class="fa fa-telegram" aria-hidden="true"></i> Присвоенный Вам ID впишите в поле ниже:</li>
+	  </ul>
+	  <br>
+	  <div class="form-group">
+	   <div class="input-group">
+ <span class="input-group-addon"><i class="fa fa-telegram sybmol" aria-hidden="true"></i>
+</span>
+	   <input id="tbot_ver_code" required class="form-control" type="text" name="tbot_ver_code" placeholder="Ваш ID в боте @<?=TELEGRAM_BOT_NAME ?>"></div>
+      </div>  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="submit" class="btn btn-primary">Подключиться</button>
+      </div>
+    </div>
+   </form>
+  </div>
+</div>
+
+
 <?	
 	
 }

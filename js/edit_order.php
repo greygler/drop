@@ -76,12 +76,12 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		if (price_form==price)  var prib=confirm('Вы собираетесь продавать без профита?'); else var prib=true;
 			if (prib){
 		
-				if (price_form<price) {alert('Ваша цена не может быть ниже цены продажи!'); $('#price_'+key).val(price);
+				if (price_form<price) {valert('Ваша цена не может быть ниже цены продажи!'); $('#price_'+key).val(price);
 				price_form=price;
 				ref(key, price_form,count_form,price, vsego) }
 				else
 					
-					if (count_form<=0) {alert('Колличество товара не может быть меньше или равна нулю!'); $('#count_'+key).val('1');
+					if (count_form<=0) {valert('Колличество товара не может быть меньше или равна нулю!'); $('#count_'+key).val('1');
 					count_form='1';
 					ref(key, price_form,count_form,price, vsego)}
 				else{
@@ -114,7 +114,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		
 		$('#stat_block').height(new_block);
 		$('#user_block').height(new_block);
-		//alert(key);
+		//valert(key);
 		}
 	}
 	
@@ -122,33 +122,41 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 	
 	function save()
 	{ 				
-	//alert()
+	//valert()
 	if ($("#bayer_name").val()=="") {
 		$("#bayer_name").focus();
-		alert("Нет данных о имени заказчика");
+		valert("Нет данных о имени заказчика");
 		
 	}
 	else if ($("#bayer_phone").val()=="") {
 		$("#bayer_phone").focus();
-		alert("Нет данных о телефоне заказчика");
+		valert("Нет данных о телефоне заказчика");
 	}
 	else if (Number($(".vsego").html())<1) {
-		alert("Нет товаров в заказе");
+		valert("Нет товаров в заказе");
 	}
 	else{
+		$('#disk1').removeClass("fa-save");
+		$('#disk2').removeClass("fa-save");
+		$('#disk1').addClass("fa-refresh fa-spin fa-fw");
+		$('#disk2').addClass("fa-refresh fa-spin fa-fw");
 		 var msg = $('#product-form').serialize();
-		// alert(msg);
+		// valert(msg);
 				$.ajax({
 				  type: 'POST',
 				  url: '<?= ACTION_PATH ?>/save_order.php',
 				  data: msg,
 				  success: function(data) {
-					
-					alert(data);							
-										
+					$('#disk1').removeClass("fa-refresh fa-spin fa-fw");
+					$('#disk2').removeClass("fa-refresh fa-spin fa-fw");
+					$('#disk1').addClass("fa-check");
+					$('#disk2').addClass("fa-check");
+					valert(data);							
+					$('#save_order1').attr("disabled","disabled");	
+					$('#save_order2').attr("disabled","disabled");						
 				  },
 				  error:  function(xhr, str){
-				alert('Возникла ошибка: ' + xhr.responseCode);
+				valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}		
@@ -161,23 +169,31 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		var val = sel.options[sel.selectedIndex].value; 		
 		var txt = sel.options[sel.selectedIndex].text;
 		var price = form.elements['price_'+val].value;
-		//alert(price);
+		//valert(price);
 		var count=Number($('#all-count').val())+1;
 		var pos = Number($('.vsego').html())+1;
+		
 		$('.vsego').html(pos);
 		$('#all-count').val(count);
-		//alert(txt);
+		//valert(txt);
 		var stat_block=$('#stat_block').height();
-		
+		var cont_user=$('#cont_user_id').height();
+	
 	$('#prod_tab > tbody:first').append('<tr id="del_pos_'+count+'"><td><a id="del_button_'+count+'" onclick="del('+count+",'"+txt+"'"+')" title="Удалить позицию" class="btn btn-warning"><div class="del_<?= $pos ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></div></a><div class="deldiv_<?= $pos ?>"></div></td><input type="hidden" name="product_id['+count+']" value="'+val+'"><td>'+txt+'</td><td><input id="price_'+count+'" onchange="profit('+count+','+price+','+count+')" style="max-width: 70px" type="number" class="form-conrol text-right" name="price['+count+']" value="'+price+'" ></td><td><input id="count_'+count+'" onchange="profit('+count+','+price+','+count+')" style="max-width: 50px" type="number" class="form-conrol text-right" name="count['+count+']" value="1" min="1"></td><td><div class="sum_'+count+'"></div></td><td><div class="prof_'+count+'"></div></td></tr>');
 	$("#prod_select option[value='"+val+"']").attr("disabled","disabled");
 	$('#prod_select option:selected').each(function(){this.selected=false;});
 	$("#prod_select option[value='0']").attr("selected", "selected");
 		var new_prod_block=$('#del_pos_'+count).height();
-		var new_block=stat_block+new_prod_block;
 		
+		var new_block=stat_block+new_prod_block;
+		var cont_user_new=cont_user+new_prod_block;
+		if (count==1) new_block=new_block+32;
+		if (count==1) cont_user_new=cont_user_new+32;
+		//alert (cont_user_new);
 		$('#stat_block').height(new_block);
 		$('#user_block').height(new_block);
+		$('#cont_user_id').height(cont_user_new);
+		
 		profit(pos, price, pos);
 		
 	}

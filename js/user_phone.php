@@ -9,7 +9,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 	  
 	 var phone_num=$("#phone_num").val();
 	  var msg   = $('#data_form').serialize();
-	 //alert(phone_num);
+	 //valert(phone_num);
 	 if (phone_num!=""){
 		
 		 $.ajax({
@@ -17,7 +17,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
           url: '/verify/phone/session_phone.php',
           data: msg,
           success: function(data) {
-			// alert(data);
+			// valert(data);
 			 if (data=='ok'){
 			$('#phone_group').removeClass('has-warning');
 			$('#phone_group').addClass('has-success');
@@ -47,7 +47,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 			 }
 			 },
           error:  function(xhr, str){
-		  alert('Возникла ошибка: ' + xhr.responseCode);
+		  valert('Возникла ошибка: ' + xhr.responseCode);
           }
 		  });
 		   }
@@ -67,7 +67,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		 $('#phide2').addClass('glyphicon-warning-sign'); 
 		},
 		 error:  function(xhr, str){
-		  alert('Возникла ошибка: ' + xhr.responseCode);
+		  valert('Возникла ошибка: ' + xhr.responseCode);
           }
 		  });
 		 }
@@ -83,7 +83,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
           url: '/verify/phone/sendsms.php',
           data: msg,
           success: function(data) {
-			//alert(data);
+			//valert(data);
 		  if (data!='') {$('.novphone').html('SMS отправлено.');
 		   $('#phide3').removeClass('hide');
 		 // phide3
@@ -101,7 +101,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 								
           },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}
@@ -114,7 +114,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
           url: '/verify/phone/sms_ok.php',
           data: msg,
           success: function(data) {
-			// alert(data);
+			// valert(data);
 		  if (data=='ok') {$('.verify_help').html('Телефон успешно верифицирован!');
 		   $('#verify_fg').addClass('has-success');
 		   $('#verify_fg').addClass('has-feedback');
@@ -134,7 +134,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		  }			 
           },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 		 $('#button_ok').addClass('hide');

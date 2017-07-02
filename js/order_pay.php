@@ -11,7 +11,7 @@ function order_pay(id){
           url: '<?= ACTION_PATH ?>/order_pay.php',
           data: msg,
           success: function(data) {
-			//alert(data);
+			//valert(data);
 		  if (data=='ok') {
 			   var order_summ = $('#order_summ').val();
 			  $('.pay_order_result').html('Заказ на выплату принят успешно');
@@ -26,7 +26,7 @@ function order_pay(id){
 								
           },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 }

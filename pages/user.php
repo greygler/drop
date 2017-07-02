@@ -39,6 +39,8 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
   <dd><input onchange='take_drop(<?= $_SESSION['id'] ?>)' id="checkbox_take" type="checkbox"  name="checkbox" <? if ($_SESSION['take_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="take_drop"><? if  ($_SESSION['take_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
    <span class="help-block"><small>Автоматическая передача дублирующих заявок возможна в случае, если это разрешено на стороне приема заказов</small></span>
   </dd>
+  <dt>Телеграм-бот</dt>
+  <dd><div class="form-group"><a class="btn btn-default btn-block" data-toggle="modal" data-target="#tbot">Подключить</a></div></dd>
   <dt>Секретный токен:</dt>
   <dd>
    <div class="input-group">
@@ -53,8 +55,10 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
  
   </dl>
 </form>
-
-<a class="btn btn-info btn-block" data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">История авторизаций</a>
+<div class="form-group">
+<a class="btn btn-info btn-block " data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/money.php?id=<?= $_SESSION['id']?>&frame=no" href="javascript:;">Движение средств</a></div>
+<div class="form-group">
+<a class="btn btn-info btn-block " data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">История авторизаций</a></div>
 
 </div>
 

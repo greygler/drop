@@ -14,7 +14,7 @@ function save_news(id)
 	fd.append('time_m', $('#time_m').val());
 	fd.append('text', $('#text').val());
 	
-	//alert($('#text').val())
+	//valert($('#text').val())
 	$.ajax({
           type: 'POST',
           url: '<?= ACTION_PATH ?>/save_news.php',
@@ -22,17 +22,17 @@ function save_news(id)
           processData: false,
           contentType: false,
           success: function(data) { 
-		  alert(data);
+		  valert(data);
 		  if (data!="error") {
 		  $("#img_news").attr("src","<?= IMG_NEWS_PATH ?>"+data);
-			//$('#ref-button_'+id).attr("disabled","disabled");	
+		  $('#new_buttton_news').attr("disabled","disabled");	
 			}
 		   
 		  //$('#refresh_code_'+id).removeClass('fa-spin');
-		  alert('Новость #'+id+'\nуспешно сохранена.');
+		  valert('Новость #'+id+'\nуспешно сохранена.');
 		  },
           error:  function(xhr, str){
-			alert('Возникла ошибка: ' + xhr.responseCode);
+			valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 		

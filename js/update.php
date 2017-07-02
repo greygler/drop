@@ -3,7 +3,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?> 
  function update_user(id)
  {
-	//alert("Обновляюсь");
+	//valert("Обновляюсь");
 	
 	 $.ajax({
 	  url: '<?= UPDATE_PATH ?>/update_user.php',
@@ -40,7 +40,7 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 		  else {
 			  $('#new_order_span').addClass('hide');
 		  }
-		//alert(user.report);  
+		//valert(user.report);  
 		
 		
 	

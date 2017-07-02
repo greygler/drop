@@ -469,7 +469,11 @@ if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='
 <script src="<?= JS_PATH ?>/update.php"></script>
 <script>var timerId = setInterval(function() { update_user();}, <?= UPDATE_USER*60000 ?>);</script>
 <? } ?>
-
+<div onclick="valertclose()" class="alerts"></div>
+<script>
+function valert(alert){$(".alerts").html('<strong><?= TITLE ?>:</strong><br><br>'+alert+'<div>Нажмите, что бы закрыть</div>').show();}
+function valertclose(){$(".alerts").html("").hide();}
+</script> 
 
   </body>
 </html>

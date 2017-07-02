@@ -23,7 +23,7 @@ $all_products=drop::all_products("WHERE active='1'");
  else {
 	 $order_ip=func::GetRealIp();
 	 $country=COUNTRY;
-	 $site=$site=$_SERVER['SERVER_NAME'];
+	 if ($site!="") $site=$site=$_SERVER['SERVER_NAME']; 
 	 $order_time=time();
 	 $order_id=number_format(round(microtime(true)*10),0,'.','');
 	 $order_ip=$_SERVER['REMOTE_ADDR'];
@@ -35,7 +35,13 @@ $all_products=drop::all_products("WHERE active='1'");
 
 if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Редактировать можно!"); ?>
 
-<div class="container container_user_data">
+<style> 
+.modal {text-align: center;}
+@media screen and (min-width: 768px) { 
+	.modal:before {display: inline-block; vertical-align: middle; content: " "; height: 100%; } }
+	.modal-dialog {display: inline-block; text-align: left; vertical-align: middle; }
+</style>
+<div id="cont_user_id" class="container container_user_data">
 <div class="page-header">
 		<h1 style="margin: 0px 0 10px 0;"><small>Заказ #<?= $order_id ?></small></h1>
 </div>
@@ -48,15 +54,16 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
  <form id="product-form"  action="javascript:void(null);" onsubmit="save()" novalidate>
 <!-- <form id="product-form" method="POST" action="form.php"  >  -->
 <div>
-<div class="form-group col-sm-3 col-md-3 col-lg-3 text-left"><button class="btn btn-default"><h4 ><span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y H:i.s", $order_time); ?></h4></button></div>
+<div class="form-group col-sm-3 col-md-3 col-lg-3 text-left"><button class="btn btn-default btn-block"><h4 ><span class="fa fa-calendar-plus-o fa-lg"></span> <?= date("d.m.Y H:i.s", $order_time); ?></h4></button></div>
 
 <div class="form-group col-sm-3 col-sm-offset-1 col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1 text-right">
 <button class="btn btn-default btn-block"><h4 ><i class="<?= $flag ?>"></i> <?= $order_ip ?></h4 ></button>
 </div>
 
 <div class="form-group col-sm-4 col-sm-offset-1 col-md-4 col-md-offset-1 col-lg-offset-1 col-lg-4 text-right">
-<? if ($_GET['edit']!="on") { ?>
- <a class=" btn btn-default " target="_blank" href="http://<?= $site ?>"><h4 ><i class="fa fa-link" aria-hidden="true"></i>  <?= $site ?> <span class="fa fa-external-link fa-lg"></span></h4></a><? } 
+<? if ($_GET['edit']!="on") { 
+if ($site!="") {?>
+<a class=" btn btn-default " target="_blank" href="http://<?= $site ?>"><h4 ><i class="fa fa-link" aria-hidden="true"></i>  <?= $site ?> <span class="fa fa-external-link fa-lg"></span></h4></a><? } else { ?> <button class="btn btn-default btn-block"><h4 ><i class="fa fa-hand-paper-o" aria-hidden="true"></i></h4></button> <? }}
  else { ?>
  <button class="btn btn-default btn-block"><h4 ><i class="fa fa-hand-paper-o" aria-hidden="true"></i></h4></button>
  <? } ?></div> 
@@ -96,7 +103,9 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
 </div>
 <div id="stat_block" class="col-sm-7 col-md-7 col-lg-7 panel panel-default">
 <div>
-<h3 class="text-center"><span class="fa fa-shopping-cart  fa-lg"></span> <strong>Покупка:</strong></h3>
+<h3 class="text-left"><span class="fa fa-shopping-cart  fa-lg"></span> <strong>Покупка:</strong></h3>
+
+<button id="save_order1" style="float: right; position: absolute; top: 5px; right: 10px;"  type="submit" class=" btn btn-danger"><span id="disk1" class="fa fa-save fa-lg"></span> Сохранить</button>
 
 		
 		
@@ -200,7 +209,7 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
 <input type="hidden" name="order_ip" value="<?= $order_ip ?>">
 <input id="inp_total" type="hidden" name="total" value="<?= $order['total'] ?>">
 <input id="inp_profit" type="hidden" name="form_profit" value="<?= $order['profit'] ?>">
-<div class="form-group col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"><button type="submit" class="btn btn-primary btn-block"><h4 ><span class="fa fa-save fa-lg"></span> Сохранить</h4></button></div>
+ <div class="form-group col-sm-6 col-sm-offset-3 col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6"><button id="save_order1" type="submit" class="btn btn-primary btn-block"><h4 ><span id="disk2" class="fa fa-save fa-lg"></span> Сохранить</h4></button></div> 
 
 </form>
 </div>
@@ -220,7 +229,7 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
 		<option value="0" selected disabled>Название товара:</option>
 		<? foreach($all_products as $key => $value)
 		{ ?>
-			<option <? if ((isset($is_id)) AND (in_array($key, $is_id)))   echo('disabled') ?> value="<?= $key ?>"><? if ((isset($is_id)) AND (in_array($key, $is_id))) echo('	&#128274; ') ?> <?= $value['name'] ?></option>
+			<option <? if ((isset($is_id)) AND (in_array($key, $is_id)))   echo('disabled') ?> value="<?= $key ?>"><? if ((isset($is_id)) AND (in_array($key, $is_id))) echo('	&#128274; ') ?> <?= $value['name'] ?> (Цена: <?= $value['price'] ?>, Toп-Цена: <?= $value['spec_price'] ?> )</option>
 		<? } ?>
 	
 	</select>
@@ -241,15 +250,22 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
 
 <!-- <script src="//code.jquery.com/jquery-3.1.1.min.js"></script> -->
 <script src="<?= JS_PATH ?>/jquery.min.js"></script> 
+<div onclick="valertclose()" class="alerts"></div>
+<script>
+function valert(alert){$(".alerts").html('<strong><?= TITLE ?>:</strong><br><br>'+alert+'<div>Нажмите, что бы закрыть</div>').show();}
+function valertclose(){$(".alerts").html("").hide();}
+</script> 
 <script type="text/javascript"> $(document).ready(function() 
-{	var stat_block=$('#stat_block').height();
+{	
+	if ($('#cont_user_id').width() > 767) {
+	var stat_block=$('#stat_block').height();
 	var user_block=$('#user_block').height();
 	if (stat_block>user_block){var big_block=stat_block;}
 	else {var big_blok=userblock;}
 	$('#stat_block').height(big_block);
 	$('#user_block').height(big_block);
 	
-      
+	} 
     
 	}); 
 
@@ -259,6 +275,8 @@ if (($order!="") AND ($order['lp-crm']!=1) OR ($_GET['edit']=='on')) { echo("Р�
     <script src="<?= JS_PATH ?>/jquery.maskedinput.js"></script>
 <script type="text/javascript"> jQuery(function($){$(".phone").mask("<?= MASK_PHONE ?>");}); </script>
 	<? } ?>
+<br><br><br><br><br><br><br><br> 
+	<div id="foot_order"></div>
   </body>
 </html>
 <? }

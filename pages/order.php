@@ -8,17 +8,17 @@ $all_status=drop::all_statuses();
  if (($_SESSION['users_group']<5) AND ($_GET['orders']!="my")) $count_status=$all_status[$get_status]; 
 else $count_status=$_SESSION['status'][$get_status]; 
 $limit=pagination::limit_pagin($_GET,$count_status, $view_pages); 	?>
-<div class="form-group">
+<div class="row form-group">
 <div class="form-group col-sm-2 col-md-2  col-lg-2 "> 
 <? if ($_SESSION['users_group']<5) { ?>
 <a href="/?type=order" class="btn <? if ($_GET['orders']!='my') echo ('btn-info'); else echo('btn-default'); ?> btn-block"><? if ($_GET['orders']!='my') echo ('<i class="fa fa-check" aria-hidden="true"></i>'); ?> Все заказы</a>
  <? } ?>
 </div>
-<div class="form-group col-sm-2 col-md-2 col-md-offset-1 col-lg-2 col-lg-offset-1"> 
+<div class="form-group col-sm-3 col-md-2 col-sm-offset-1 col-md-offset-1 col-lg-2 col-lg-offset-1"> 
 <? if ($_SESSION['users_group']<5) { ?>
 <a href="/?type=order&orders=my" class="btn <? if ($_GET['orders']=='my') echo ('btn-info'); else echo('btn-default'); ?> btn-block"><? if ($_GET['orders']=='my') echo ('<i class="fa fa-check" aria-hidden="true"></i>'); ?> Мои заказы</a> <? } ?>
 </div>
-<div class="form-group col-sm-2 col-md-2 col-md-offset-5 col-lg-2 col-lg-offset-5"> 
+<div class="form-group col-sm-3 col-md-3 col-sm-offset-3 col-md-offset-4 col-lg-2 col-lg-offset-5"> 
 <button data-fancybox data-src="<?= ACTION_PATH ?>/edit_order.php?edit=on" href="javascript:;" class="btn btn-default btn-block"><i class="fa fa-plus-square" aria-hidden="true"></i> Добавить заказ</button> 
 </div>
 </div>

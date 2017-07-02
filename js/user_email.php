@@ -23,7 +23,7 @@ function verify_email(user_id) {
 								
           },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}

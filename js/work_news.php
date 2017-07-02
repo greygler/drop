@@ -14,7 +14,7 @@ if (is_del){
           data: {id_news: id_news},
           success: function(data) { $("#news_"+id_news).html('<font color="red">Новость <strong>#'+id_news+'</strong> от <strong>'+date_news+'</strong> успешно удалена</font>');},
           error:  function(xhr, str){
-			alert('Возникла ошибка: ' + xhr.responseCode);
+			valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	

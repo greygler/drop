@@ -14,7 +14,7 @@ function upload(id, row_id)
 			  row_id : row_id
 		  },
         success: function(data) {
-			//alert(data);
+			//valert(data);
 			if (data=='ok'){
 			$('#upload_button_'+row_id).removeClass('btn-danger');
 			$('#upload_button_'+row_id).addClass('btn-primary');
@@ -27,11 +27,11 @@ function upload(id, row_id)
 				if (data!="") var alert_text=data; else var alert_text="Нет связи. Повторите попытку позже."
 			$('.upload_'+row_id).html('<i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>');
 			$('#upload_button_'+row_id).attr("disabled","disabled");
-			alert('⚠️ Ошибка при передаче:\n'+alert_text);
+			valert('⚠️ Ошибка при передаче:\n'+alert_text);
 			}
 		},
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	
@@ -54,7 +54,7 @@ function del(row_id, order_id)
 			  order_id : order_id
 		  },
         success: function(data) {
-			//alert(data);
+			//valert(data);
 			if (data=='ok'){
 			$('#del_button_'+row_id).removeClass('btn-danger');
 			$('#del_button_'+row_id).addClass('btn-primary');
@@ -69,11 +69,11 @@ function del(row_id, order_id)
 				
 			$('.del_'+row_id).html('<i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>');
 			$('#del_button_'+row_id).attr("disabled","disabled");
-			//alert(data);
+			//valert(data);
 			}
 		},
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	} else $('.del_'+row_id).html('<i class="fa fa-trash-o" aria-hidden="true"></i>');

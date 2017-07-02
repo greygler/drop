@@ -3,7 +3,7 @@ session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 function product_form(id) {
-	//alert($('#checkbox_'+id).is(':checked'));
+	//valert($('#checkbox_'+id).is(':checked'));
 	if (!$('#checkbox_'+id).is(':checked')) 
 		var active='0'; else var active='1';
  	 
@@ -16,7 +16,7 @@ function product_form(id) {
 			  active : active,
 		  },
           success: function(data) { 
-		  //alert(data);
+		  //valert(data);
 		  if (data=='ok'){
 			  if (active!='0') {
 			  $('.active_'+id).html('<font color="blue"><samll>Доступен к продаже</small></font>');
@@ -33,7 +33,7 @@ function product_form(id) {
 		  else $('.active_'+id).html('<font color="red">Ошибка!</font>'); 
 		  },
           error:  function(xhr, str){
-			alert('Возникла ошибка: ' + xhr.responseCode);
+			valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}
@@ -54,7 +54,7 @@ function product_form(id) {
           processData: false,
           contentType: false,
           success: function(data) { 
-		  //alert(data);
+		  //valert(data);
 		  if (data!="error") {
 		  $("#img_"+id).attr("src","<?= IMG_PRODUCT_PATH ?>"+data);
 			$('#ref-button_'+id).attr("disabled","disabled");		  }
@@ -62,7 +62,7 @@ function product_form(id) {
 		  $('#refresh_code_'+id).removeClass('fa-spin');
 		  },
           error:  function(xhr, str){
-			alert('Возникла ошибка: ' + xhr.responseCode);
+			valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 		
@@ -88,12 +88,12 @@ function product_form(id) {
 			  
 		  },
           success: function(data) { 
-		 // alert(data);
+		 // valert(data);
 		 $('#del_img_but_'+id).addClass('hide');
 		  $("#img_"+id).attr("src",data);
 		    },
           error:  function(xhr, str){
-			alert('Возникла ошибка: ' + xhr.responseCode);
+			valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 	}

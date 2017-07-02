@@ -1,6 +1,6 @@
 <? session_start();
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
-if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
+ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){
 require_once (CLASS_PATH.'/db.class.php'); 
 $result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 require_once (CLASS_PATH.'/favicon.class.php');
@@ -49,7 +49,7 @@ $datetime=$news['date'];
 <div class="form-group input-group">
 
   <span class="input-group-addon"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i></span>
-   <input id="time_h" class="form-control text-center" placeholder="Время новости" type="number" min="0" max="23" step="1" value="<?= date("H", $datetime) ?>"> 
+   <input id="time_h" class="form-control text-center" placeholder="Время новости" type="number" min="0" max="23"  value="<?= date("H", $datetime) ?>"> 
    <span class="input-group-addon hidden-md">час.</span>
 </div>
 
@@ -58,8 +58,8 @@ $datetime=$news['date'];
 <div class=" col-lg-4 col-md-4">
 <div class="form-group input-group">
 
-  <span class="input-group-addon"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i></span>
-   <input id="time_m" class="form-control text-center" placeholder="Время новости" type="number" min="0" max="59" step="5" value="<?= date("i", $datetime) ?>"> 
+  <span class="input-group-addon">:</span>
+   <input id="time_m" class="form-control text-center" placeholder="Время новости" type="number" min="0" max="59"  value="<?= date("i", $datetime) ?>"> 
    <span class="input-group-addon hidden-md">мин.</span>
 </div>
 
@@ -87,7 +87,7 @@ $datetime=$news['date'];
  <textarea class="form-control" name="t" id="text"  rows="7"><?= $news['text'] ?></textarea>
 </div>
 <div class="form-group">
- <button class="btn btn-primary btn-block">Сохранить</button></div>
+ <button id="new_buttton_news" class="btn btn-primary btn-block">Сохранить</button></div>
 </div>
 </div>
 <p>
@@ -113,7 +113,12 @@ $datetime=$news['date'];
 $(function() {
     $("#datepicker").datepicker($.datepicker.regional["ru"]);
 });
- </script>   
+ </script>  
+<div onclick="valertclose()" class="alerts"></div>
+<script>
+function valert(alert){$(".alerts").html('<strong><?= TITLE ?>:</strong><br><br>'+alert+'<div>Нажмите, что бы закрыть</div>').show();}
+function valertclose(){$(".alerts").html("").hide();}
+</script>  
   </body>
 </html>
 <? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>

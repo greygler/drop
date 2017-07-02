@@ -9,7 +9,8 @@ require_once (CLASS_PATH.'/functions.class.php');
 require_once (CLASS_PATH.'/lpcrm.class.php');
 require_once (CLASS_PATH.'/drop.class.php');
 $groups=autoring::user_group($_SESSION['users_group']);
-print_r($_POST);
+
+//print_r($_POST);
 
 $products_list = array();
 $counter=1;
@@ -36,6 +37,7 @@ $products = urlencode(serialize($products_list));
     'email'         	=> $_POST['email'],           // электронка
     'comment'       	=> $_POST['comment'],    // комментарий
     'delivery_adress'	=> $_POST['delivery_adress'], // адрес доставки
+	
     
 );
 
@@ -43,10 +45,11 @@ if (drop::is_order($_POST['order_id'])) drop::update_order($_POST['order_id'], $
 else {
 	
 	 drop::new_order($_POST['user_id'], $data, '3');
-	 if ($_POST['active_drop']==1) {
-		 echo drop::id_order_id($_POST['order_id']);
+	 if ($_POST['active_drop']=='1') {
+			//drop::id_order_id($_POST['order_id']);
 		 drop::update_lpcrm(drop::id_order_id($_POST['order_id']),$groups);}
 }
+echo ("Заказ успешно сохранен.");
 //print_r($data);
 } else header("Location: ".SITE_ADDR."/error/666.php");
 ?>

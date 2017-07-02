@@ -10,7 +10,7 @@ function order_pay_go(id){
           url: '<?= ACTION_PATH ?>/user_pay_go.php',
           data: msg,
           success: function(data) {
-			alert(data);
+			valert(data);
 		  if (data!='error') {
 			   var order_summ = $('#order_summ').val();
 			  $('.pay_order_result').html('Присвоен статус <strong>'+data+'</strong> успешно.');
@@ -24,7 +24,7 @@ function order_pay_go(id){
 								
           },
           error:  function(xhr, str){
-	    alert('Возникла ошибка: ' + xhr.responseCode);
+	    valert('Возникла ошибка: ' + xhr.responseCode);
           }
         });
 }
