@@ -66,6 +66,27 @@ function new_code(id)
 	else {$('#refresh_code').removeClass('fa-spin');}
 		
 }
+
+function active_tbot(id) {
+	
+	if ($('#checkbox_tbot').is(':checked')) 
+		var active='1'; else var active='0';
+		 	
+ 	    $.ajax({
+          type: 'POST',
+          url: '<?= ACTION_PATH ?>/active_tbot.php',
+          data: {
+			  tbox: active,
+			  id : id
+		  },
+        success: function(data) {
+			$('.active_tbot').html(data);
+		},
+          error:  function(xhr, str){
+	    valert('Возникла ошибка: ' + xhr.responseCode);
+          }
+        });
+	}
 	
 
 <? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>

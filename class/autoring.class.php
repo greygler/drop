@@ -148,9 +148,18 @@ class Autoring {
 		
 	public function active_drop($id, $active) // Автоматическая передача данных - да\нет
 		{
-			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
+			
 			
 			$result = mysql_query("UPDATE users SET active_drop='{$active}' WHERE id={$id}" );
+						
+			return $result;
+		}
+		
+		
+		public function active_tbot($id, $active) // Уведомление телеграмм - да\нет
+		{
+			
+			$result = mysql_query("UPDATE users SET tbot='{$active}' WHERE id={$id}" );
 						
 			return $result;
 		}
@@ -276,6 +285,7 @@ class Autoring {
 			//echo $bd;
 			$result = mysql_query($bd);
 			if ($result == 'true') return "ok"; else echo "error";
+			$_SESSION['t_verife']='';
 			} else return "";
 		}	
 		

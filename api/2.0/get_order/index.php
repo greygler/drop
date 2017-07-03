@@ -7,6 +7,7 @@ if (!empty($_POST)) {
 	require_once (CLASS_PATH.'/autoring.class.php');
 	require_once (CLASS_PATH.'/lpcrm.class.php'); 
 	require_once (CLASS_PATH.'/drop.class.php'); 
+	require_once (CLASS_PATH.'/tbot.class.php'); 
 	db::connect_db(DB_HOST,DB_NAME,DB_LOGIN,DB_PASS);
 	if (db::cound_bd('users', "drop_key='{$_POST['key']}'")>0) $user=drop::get_id($_POST['key']); else $user=autoring::get_user(DEFAULT_ID);
 	$take=db::cound_bd('order_tab', "(phone='{$_POST['phone']}' AND bayer_name='{$_POST['bayer_name']}' AND site='{$_POST['site']}')");
@@ -37,6 +38,8 @@ if (!empty($_POST)) {
 
 	echo TITLE.": ".$result."<br>";
 	
+	
+	
 
 	if ($user['active_drop']=='1'){
  
@@ -65,8 +68,19 @@ if (!empty($_POST)) {
 	print_r($out);
 	if ($out['status']=='ok') drop::lpcrm_order_id($_POST['order_id'], '1');
 	echo $out;
-	} else echo (TITLE.": заказ добавлен в базу, но не передан для обработки");
+	} else {
+		$lp_drop="заказ добавлен в базу, но не передан для обработки";
+		echo (TITLE.": {$lp_drop}");
+	}
 	
 } else {echo('error! Дубль');	echo ("{$take} - {$user['take_drop']}");}
+
+if ($user['tbot']!=0) {
+		if ($out['status']!="") $lp_status=$out['status']; else $lp_status="Нет";
+		$message="Новый заказ%0AСайт: <b>http://{$_POST['site']}</b>%0A%0AСумма заказа: <b>{$total} ".CURRENCY."</b>%0AProfit: <b>{$profit} ".CURRENCY."</b>%0AДобавлен в базу: <b>{$result}</b>%0AПередан в обработку:  <b>{$lp_status}</b>";
+		tbot::send_bot($user['telegram'], $message);
+		echo("<br>bot: {$user['telegram']}, {$message}");
+	}
+
 } else	header("Location: / ");
 ?>

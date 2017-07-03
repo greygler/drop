@@ -9,6 +9,7 @@ require_once (CLASS_PATH.'/tbot.class.php');
 
 $t_ver=autoring::t_v_bot($_SESSION['id'], $_POST['bot_ver_code']);
 if ($t_ver=="ok"){
+	//echo($_SESSION['telegram']."=".$_SESSION['t_verife']);
 $vermessage="Бот успешно верифицирован.";
 tbot::send_bot($_SESSION['telegram'], $vermessage);
 echo $vermessage;}

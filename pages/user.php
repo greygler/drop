@@ -39,8 +39,18 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
   <dd><input onchange='take_drop(<?= $_SESSION['id'] ?>)' id="checkbox_take" type="checkbox"  name="checkbox" <? if ($_SESSION['take_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="take_drop"><? if  ($_SESSION['take_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
    <span class="help-block"><small>Автоматическая передача дублирующих заявок возможна в случае, если это разрешено на стороне приема заказов</small></span>
   </dd>
-  <dt>Телеграм-бот</dt>
-  <dd><div class="form-group"><a id="tbot_button" class="btn btn-default btn-block" data-toggle="modal" data-target="#tbot">Подключить</a></div></dd>
+  <dt>Телеграм-бот <? if ($_SESSION['telegram']!="") echo ("<br>уведомления:"); ?></dt>
+  <dd>
+  <? if ($_SESSION['telegram']!="") { ?>
+<input onchange='active_tbot(<?= $_SESSION['id'] ?>)' id="checkbox_tbot" type="checkbox"  name="checkbox" <? if ($_SESSION['tbot']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_tbot"><? if  ($_SESSION['tbot']=='1') echo('<font color="blue">Включенo</font>'); else echo('<font color="#737373">Отключено</font>'); ?></span></small></span>
+  <? } else {?> 
+  <div id="form_v_tbot" class="form-group"><a id="tbot_button" class="btn btn-default btn-block" data-toggle="modal" data-target="#tbot">Подключить</a><span class="help-block hide" id="link_ver_bot" ><a  data-toggle="modal" data-target="#tbot_ver" >Ввести код верификации</a></span></div>
+  <div id="check_tbot" class="hide">
+  <input onchange='active_tbot(<?= $_SESSION['id'] ?>)' id="checkbox_tbot" type="checkbox"  name="checkbox" <? if ($_SESSION['tbot']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_tbot"><? if  ($_SESSION['tbot']=='1') echo('<font color="blue">Включенo</font>'); else echo('<font color="#737373">Отключено</font>'); ?></span></small></span>
+  </div>
+  
+  <? } ?>
+  </dd>
   <dt>Секретный токен:</dt>
   <dd>
    <div class="input-group">

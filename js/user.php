@@ -66,6 +66,7 @@ function data_form() {
           success: function(data) {
 			// valert(data)
 			$('#tbot_button').html('Верификация бота...');
+			$('#link_ver_bot').removeClass("hide");
 			$('#tbot').modal('hide');$('#tbot_ver').modal('show');
 									
 								
@@ -88,6 +89,9 @@ function data_form() {
 			valert(data);
 			$('#tbot_button').html(data);
 			$('#tbot_button').attr("disabled","disabled");	
+			$('#link_ver_bot').addClass("hide");
+			$('#form_v_tbot').addClass("hide");
+			$('#check_tbot').removeClass("hide");
 			$('#tbot_ver').modal('hide');
 									
 								
