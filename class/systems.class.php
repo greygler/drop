@@ -132,9 +132,11 @@ if ($_SESSION['balance']<0) $color_balance="color_red"; else if ($_SESSION['bala
 	<nav>
 		<ul>
 			<li><a href="#" class="icon icon-menu" id="btn-menu">Menu</a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Перечень заказов и продаж" href="/?type=order"><div class="hidden-xs">Заказы</div><div class="visible-xs"><i class="fa fa-shopping-cart fa-2x"></i>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Перечень заказов и продаж" href="/?type=order">
+			
+			<div class="hidden-xs"><span id="new_order_big" class="badge bage_plus_big <? if ($new_order<1) echo ("hide"); ?>">+<?= $new_order ?></span>Заказы</div><div class="visible-xs"><span id="new_order" class="badge bage_plus <? if ($new_order<1) echo ("hide"); ?>">+<?= $new_order ?></span><i class="fa fa-shopping-cart fa-2x"></i>
 </div></a></li>
-			<li><a  data-toggle="tooltip" data-placement="bottom" title="Личный кабинет пользователя" href="/?type=user"><div class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
+			<li><a  data-toggle="tooltip" data-placement="bottom" title="Личный кабинет пользователя" href="/?type=user"><div  id="new_order" class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
 </div></a></li>
           <? if ($_SESSION['users_group']>=5) echo('<li class="visible-xs"><a data-toggle="modal" data-target="#support" href="#"><span class="help fa fa-support fa-2x"></span></a></li>');
 		   else echo('<li><a data-toggle="tooltip" data-placement="bottom" title="Управление пользователями системы &#171;'.TITLE.'&#187;" href="/?type=users"><i class="visible-xs fa fa-users fa-2x"></i><div class="hidden-xs">Пользователи</div></a></li>'); ?>
@@ -150,18 +152,23 @@ if ($_SESSION['balance']<0) $color_balance="color_red"; else if ($_SESSION['bala
 		
 		<span id="money" class="fa fa-money fa-lg <?= $color_balance ?>" ></span> <strong id="strong_balance" class="<?= $color_balance ?>"><span id="balance" class="<?= $color_balance ?>"><?= $_SESSION['balance'] ?></span> <?= CURRENCY ?>. </strong>
 		<?// if ($new_order>0) {$color_order="red"; ?>
+		<!--
 		<span id="new_order_span" class="color_red <? if ($new_order<1) echo ("hide"); ?>">
 		<a href="/?type=order&status=3<? if ($_SESSION['users_group']<5) echo('&orders=my'); ?>">
-		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong id="new_order" class="color_red">  <?= $new_order ?></strong></font></a></span> <? //} ?> 
+		<font color="<?= $color_order ?>"> <span class="neworder fa fa-shopping-cart fa-lg"></span><strong id="new_order_" class="color_red">  <?= $new_order ?></strong></font></a></span> -->
+		
+		<? //} ?> 
 		</div>
 		</div>
-		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-4"><address><a href="tel:'.SKYPE.'"><span class="fa fa-skype fa-lg"></span> '.SKYPE.'</a><br><a href="tel:'.preg_replace('![^0-9]+!', '', PHONE).'"><span class="fa fa-phone fa-lg"></span> '.PHONE.'</a></address></div>'); ?>
+		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-4"><address><a href="tel:'.SUPPORT.'"><span class="fa '.SUPPORT_FA.' fa-lg"></span> '.SUPPORT.'</a><br><a href="tel:'.preg_replace('![^0-9]+!', '', PHONE).'"><span class="fa fa-phone fa-lg"></span> '.PHONE.'</a></address></div>'); else echo('<div class="inform text-left col-sm-1 col-md-1 col-lg-1"><button class="btn btn-danger"><i class="fa fa-bell fa-2x" aria-hidden="true"></i></button></div>') ?>
 		
 		</div>
 		
 		<div id="logout-xs" class="inform visible-xs">
 		<a  data-toggle="modal" data-target="#logmodal" href="#"> <i class="fa fa-power-off fa-lg"></i></a></div>
-		<!--<div class="text-right visible-xs"><i class="help fa fa-support fa-3x"></i> </div>  -->
+		<? if ($_SESSION['users_group']<5) { ?> 
+		<div class="text-center visible-xs"><button class="btn btn-danger"><i class="fa fa-bell fa-2x"></i></button></div>
+		<? } ?>		
 	</nav>
 <?}
 
@@ -176,7 +183,7 @@ public function side_menu()
 			 </form></li> 
 			<!-- <ul class="search_result drop_color"></ul> -->
 			<li><a data-toggle="tooltip" data-placement="bottom" title="Главная страница системы &#171;<?= TITLE ?>&#187;" href="/" class="icon icon-home"><span>Главная</span></a></li>
-			<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог всех товаров, всех категорий, представленных в системе &#171;<?= TITLE ?>&#187; для продаж.<?= "\n" ?>Актуальность &#9200; <?= date("d.m.Y H:i:s", LAST_TIME_PRODUCT) ?>" href="/?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
+			<li><a data-toggle="tooltip" data-placement="bottom" title="Каталог всех товаров, всех категорий, представленных в системе &#171;<?= TITLE ?>&#187; для продаж." href="/?type=products" class="icon icon-articles"><span>Товары <i class="fa fa-caret-down" aria-hidden="true"></i></span></a>
 				<ul>
 				<? 
 				
@@ -194,12 +201,14 @@ public function side_menu()
 					<!-- <li><a href="#"><span>Web Development</span></a></li> -->
 				</ul>
 			</li>
+			<? if ($_SESSION['users_group']<5) { ?>
 			<li><a href="/?type=options" class="icon icon-options"><span>Настройки системы</span></a>
 				<!-- <ul>
 				<li><a href="#"><span>1</span></a></li>
 				<li><a href="#"><span>2</span></a></li>								
 				</ul>	 -->		
 			</li>
+			<? } ?>
 		</ul>	
 	</div>	
 <?
@@ -216,8 +225,8 @@ public function support_modal()
         <h4 class="modal-title">Поддержка</h4>
       </div>
       <div class="modal-body">
-        <p><address><a href="tel:<?= SKYPE ?>">
-		<span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br><a href="tel:<?= preg_replace('![^0-9]+!', '', PHONE); ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a></address></p>
+        <p><address><a href="tel:<?= SUPPORT ?>">
+		<span class="fa <?= SUPPORT_FA ?> fa-lg"></span> <?= SUPPORT ?></a><br><a href="tel:<?= preg_replace('![^0-9]+!', '', PHONE); ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a></address></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
@@ -275,7 +284,7 @@ public function politics()
 				<p>Услуга предоставлена 
 				<address>
 				<strong><?= ADDRESS ?></strong>.<p>
-				<a href="tel:<?= SKYPE ?>"> <span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br>
+				<a href="tel:<?= SUPPORT ?>"> <span class="fa <?= SUPPORT_FA ?> fa-lg"></span> <?= SUPPORT ?></a><br>
 				<a href="tel:<?= PHONE ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a></p>
 				</address>
                 <p class="s1">Благодарим Вас за проявленный интерес к системе <?= TITLE?>! </p><br><br><br>
@@ -305,7 +314,7 @@ public function rules()
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, explicabo, a consequatur odit esse mollitia nulla pariatur nesciunt qui quisquam ea ipsam consectetur dolor enim omnis doloremque autem consequuntur quia sint alias harum odio molestias adipisci aliquid quod sequi veniam! Blanditiis, tenetur illo labore incidunt inventore quo consequuntur dolorum corporis nobis aperiam eligendi illum nihil reiciendis nisi natus tempore corrupti obcaecati commodi esse ut ipsam aliquam sequi repudiandae. Sapiente, fugit atque excepturi quo est illo nihil ipsa exercitationem quos deserunt. Illo itaque assumenda dolorem in temporibus aliquid atque perferendis! Qui, possimus, sapiente ex harum omnis consequuntur eum totam doloribus voluptatibus!</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla, non, voluptates optio aut labore nobis eligendi tempora blanditiis alias quo iusto rem dolorem minus minima sint pariatur iste nisi. Dicta?</p>
 				<p><strong>Услуга предоставлена <?= ADDRESS ?>.</strong><br>
-				<a href="tel:<?= SKYPE ?>"> <span class="fa fa-skype fa-lg"></span> <?= SKYPE ?></a><br>
+				<a href="tel:<?= SUPPORT ?>"> <span class="fa <?= SUPPORT_FA ?> fa-lg"></span> <?= SUPPORT ?></a><br>
 				<a href="tel:<?= PHONE ?>"><span class="fa fa-phone fa-lg"></span> <?= PHONE ?></a></p>
                 <p class="s1">Благодарим Вас за проявленный интерес к системе <?= TITLE?>! </p><br><br><br>
       </div>
@@ -406,7 +415,7 @@ public function footer($geobase="")
 ?>
 <div  id="footer">
   <div class="col-lg-3 col-md-3 col-sm-3">
-   <center><small><?= ADDRESS ?></small></center>
+   <center><a target="_blank" href="<?= ADDRESS_LINK ?>"><small><?= ADDRESS ?></small></a></center>
    </div>
     <div class="col-lg-3 col-md-3 col-sm-3">
    <center><small><a data-toggle="modal" data-target="#polit" href="#">Политика конфиденциальности</a></small></center>
@@ -414,8 +423,7 @@ public function footer($geobase="")
     <div class="col-lg-3 col-md-3 col-sm-3">
    <center><small><a data-toggle="modal" data-target="#rules_modal" href="#">Правила предоставления услуг</a></small></center>
    </div>
-   <div class="col-lg-3 col-md-3 col-sm-3 text-right">
-   <span>&copy;&#032;&#050;&#048;&#049;&#053;&#045;<?= date("Y")?>&#032;&#071;&#114;&#101;&#121;&#071;&#108;&#101;&#114;</span>
+   <div class="col-lg-3 col-md-3 col-sm-3 text-right"><span>&copy;&#032;&#050;&#048;&#049;&#053;&#045;<?= date("Y")?></span><a target="_blank" href="http://greygler.pro"><span>&#032;&#071;&#114;&#101;&#121;&#071;&#108;&#101;&#114;</span></a>
    </div>
   </div>
   

@@ -1,9 +1,9 @@
 ﻿<?
 require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
-if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?> 
+//if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?> 
  function update_user(id)
  {
-	//valert("Обновляюсь");
+	//alert("Обновляюсь");
 	
 	 $.ajax({
 	  url: '<?= UPDATE_PATH ?>/update_user.php',
@@ -33,12 +33,15 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 			$('#strong_balance').addClass('color_green');
 			$('#balance').addClass('color_green');
 		  }
-		  $('#new_order').html(user.sale);
+		  $('#new_order').html('+'+user.sale);
+		  $('#new_order_big').html('+'+user.sale);
 		  if (user.sale>0){
-			  	$('#new_order_span').removeClass('hide');
+			  	$('#new_order').removeClass('hide');
+				$('#new_order_big').removeClass('hide');
 		  }
 		  else {
-			  $('#new_order_span').addClass('hide');
+			  $('#new_order').addClass('hide');
+			  $('#new_order_big').addClass('hide');
 		  }
 		//valert(user.report);  
 		
@@ -56,5 +59,5 @@ if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?>
 	
  }
  
-  <? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>
+  <?// } else header("Location: ".SITE_ADDR."/error/666.php"); ?>
   

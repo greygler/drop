@@ -34,9 +34,9 @@ while ($myrow = mysql_fetch_array($result));
 <?
 $count_news=db::cound_bd('news');
 $limit=pagination::pagin($_GET,$count_news, $view_news); 
-?>
+ if ($_SESSION['users_group']<5) { ?>
 <button data-fancybox data-src="<?= ACTION_PATH ?>/edit_news.php?id=new" href="javascript:;" class="btn btn-primary btn-block">Добавить новость </button>
-<?
+ <? }
  $result = mysql_query("SELECT * FROM news ORDER BY id DESC LIMIT {$limit['begin']}, {$limit['count']}");
 $myrow = mysql_fetch_array($result);
 do

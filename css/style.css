@@ -234,7 +234,18 @@ margin-bottom: 0 !important;
 	color: green !important;
 }
 
-
+.bage_plus{
+	position: absolute;
+	background-color: red;
+	margin-left: 15px;
+	font-size: 10px;
+}
+.bage_plus_big{
+	position: absolute;
+	background-color: red;
+	margin-left: 55px;
+	font-size: 10px;
+}
 
 
 

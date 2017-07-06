@@ -36,6 +36,8 @@ define('IMG_PROD_PATH',ABS_PATH.'/img_product/'); // Серверный путь
 define('IMG_PRODUCT_NAME','noimg.png'); // Картинка продукта по умолчанию
 define('IMG_PATH',SITE_ADDR.'/img/'); // Абсолютный путь для картинок
 
+define('SUPPORT','Skype'); // Мессенджер техподдержки
+define('SUPPORT_FA','fa-skype'); // Логотип мессенджера техподдержки
 define('SKYPE','Skype'); // Skype техподдержки
 define('PHONE','+38(000) 000-00-00'); // Телефон техподдержки
 define('CURRENCY','грн'); // Валюта системы

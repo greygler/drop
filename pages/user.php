@@ -35,9 +35,9 @@ echo func::Last_enter($last_enter, $_SESSION['device'], $_SESSION['ipv4'], $_SES
   <dt>Автоматическая<br>передача заказа:</dt>
   <dd><input onchange='active_drop(<?= $_SESSION['id'] ?>)' id="checkbox_active" type="checkbox"  name="checkbox" <? if ($_SESSION['active_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_drop"><? if  ($_SESSION['active_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
   </dd>
-   <dt>Прием<br>дублирующих заказов:</dt>
+   <dt>Прием<br>дублирующих заказов:<span class="help-block"><small>Без автопередачи</small></span></dt>
   <dd><input onchange='take_drop(<?= $_SESSION['id'] ?>)' id="checkbox_take" type="checkbox"  name="checkbox" <? if ($_SESSION['take_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="take_drop"><? if  ($_SESSION['take_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
-   <span class="help-block"><small>Автоматическая передача дублирующих заявок возможна в случае, если это разрешено на стороне приема заказов</small></span>
+   
   </dd>
   <dt>Телеграм-бот <? if ($_SESSION['telegram']!="") echo ("<br>уведомления:"); ?></dt>
   <dd>
