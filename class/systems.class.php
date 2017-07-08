@@ -136,7 +136,7 @@ if ($_SESSION['balance']<0) $color_balance="color_red"; else if ($_SESSION['bala
 			
 			<div class="hidden-xs"><span id="new_order_big" class="badge bage_plus_big <? if ($new_order<1) echo ("hide"); ?>">+<?= $new_order ?></span>Заказы</div><div class="visible-xs"><span id="new_order" class="badge bage_plus <? if ($new_order<1) echo ("hide"); ?>">+<?= $new_order ?></span><i class="fa fa-shopping-cart fa-2x"></i>
 </div></a></li>
-			<li><a  data-toggle="tooltip" data-placement="bottom" title="Личный кабинет пользователя" href="/?type=user"><div  id="new_order" class="hidden-xs">Kабинет</div><div class="visible-xs"><i class="fa fa-user-circle fa-2x"></i>
+			<li><a  data-toggle="tooltip" data-placement="bottom" title="Личный кабинет пользователя" href="/?type=user"><div  id="new_order" class="hidden-xs">Kабинет</div><div class="visible-xs"><span id="money-mob" class="badge bage_money <? if ($_SESSION['balance']>0) echo("bage_money_plus"); else echo("bage_money_minus"); ?>"><?= $_SESSION['balance'] ?></span><i class="fa fa-user-circle fa-2x"></i>
 </div></a></li>
           <? if ($_SESSION['users_group']>=5) echo('<li class="visible-xs"><a data-toggle="modal" data-target="#support" href="#"><span class="help fa fa-support fa-2x"></span></a></li>');
 		   else echo('<li><a data-toggle="tooltip" data-placement="bottom" title="Управление пользователями системы &#171;'.TITLE.'&#187;" href="/?type=users"><i class="visible-xs fa fa-users fa-2x"></i><div class="hidden-xs">Пользователи</div></a></li>'); ?>
@@ -160,14 +160,14 @@ if ($_SESSION['balance']<0) $color_balance="color_red"; else if ($_SESSION['bala
 		<? //} ?> 
 		</div>
 		</div>
-		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-4"><address><a href="tel:'.SUPPORT.'"><span class="fa '.SUPPORT_FA.' fa-lg"></span> '.SUPPORT.'</a><br><a href="tel:'.preg_replace('![^0-9]+!', '', PHONE).'"><span class="fa fa-phone fa-lg"></span> '.PHONE.'</a></address></div>'); else echo('<div class="inform text-left col-sm-1 col-md-1 col-lg-1"><button class="btn btn-danger"><i class="fa fa-bell fa-2x" aria-hidden="true"></i></button></div>') ?>
+		<? if ($_SESSION['users_group']>=5) echo('<div class="inform text-left col-sm-3 col-md-4 col-lg-4"><address><a href="tel:'.SUPPORT.'"><span class="fa '.SUPPORT_FA.' fa-lg"></span> '.SUPPORT.'</a><br><a href="tel:'.preg_replace('![^0-9]+!', '', PHONE).'"><span class="fa fa-phone fa-lg"></span> '.PHONE.'</a></address></div>');  ?>
 		
 		</div>
 		
 		<div id="logout-xs" class="inform visible-xs">
 		<a  data-toggle="modal" data-target="#logmodal" href="#"> <i class="fa fa-power-off fa-lg"></i></a></div>
 		<? if ($_SESSION['users_group']<5) { ?> 
-		<div class="text-center visible-xs"><button class="btn btn-danger"><i class="fa fa-bell fa-2x"></i></button></div>
+		<!-- <div class="text-center visible-xs"><button class="btn btn-danger"><i class="fa fa-bell fa-2x"></i></button></div> -->
 		<? } ?>		
 	</nav>
 <?}
@@ -443,7 +443,16 @@ public function footer($geobase="")
 <script type="text/javascript"> jQuery(function($){$(".wmu").mask("\U999999999999");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".wmr").mask("\R999999999999");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".wmz").mask("\Z999999999999");}); </script>
-<script type="text/javascript"> $(document).ready(function() {$('#stat_block').height($('#user_block').height());}); </script>
+<script type="text/javascript"> $(document).ready(function() {	
+	if ($('#cont_user_id').width() > 767) {
+	var stat_block=$('#stat_block').height();
+	var user_block=$('#user_block').height();
+	if (stat_block>user_block){var big_block=stat_block;}
+	else {var big_blok=userblock;}
+	$('#stat_block').height(big_block);
+	$('#user_block').height(big_block);
+	
+	}); </script>
 <script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
 <!-- <script src="<?= JS_PATH ?>/control-modal.js"></script> -->
 <script src="<?= JS_PATH ?>/gnmenu.php"></script>

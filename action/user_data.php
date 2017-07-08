@@ -54,7 +54,16 @@ $user=autoring::get_user($_GET['id']);
 
 
 
-<script type="text/javascript"> $(document).ready(function() {$('#stat_block').height($('#user_block').height());}); </script>
+<script type="text/javascript"> $(document).ready(function() {	
+	if ($('#cont_user_id').width() > 767) {
+	var stat_block=$('#stat_block').height();
+	var user_block=$('#user_block').height();
+	if (stat_block>user_block){var big_block=stat_block;}
+	else {var big_blok=userblock;}
+	$('#stat_block').height(big_block);
+	$('#user_block').height(big_block);
+	
+	}); </script>
 	<script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
     
   </body>

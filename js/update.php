@@ -11,6 +11,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	  success: function(data) {
 		  var user=JSON.parse(data);
 		  $('#balance').html(user.balance);
+		  $('#money_mob').html(user.balance);
 		  $("#aside1").load(location.href+" #aside1>*","");
 		  $("#table_order").load(location.href+" #table_order>*","");
 		  
@@ -18,14 +19,18 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 			  	$('#money').removeClass('color_green');
 				$('#strong_balance').removeClass('color_green');
 				$('#balance').removeClass('color_green');
+				$('#money_mob').removeClass('bage_money_plus');
 				if (user.balance<0){
 					$('#money').addClass('color_red');
+					$('#money_mob').addClass('bage_money_minus');
 					$('#strong_balance').addClass('color_red');
 					$('#balance').addClass('color_red');
 					if (user_info_balance!='1') {$('#info_balance').modal('show');}
 				}
 				
 		  } else {
+			$('#money_mob').removeClass('bage_money_minus');
+			$('#money_mob').addClass('bage_money_plus');
 			$('#money').removeClass('color_red');
 			$('#strong_balance').removeClass('color_red');
 			$('#balance').removeClass('color_red');

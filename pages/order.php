@@ -1,6 +1,7 @@
 <h1></h1>
 
 <script src="<?= JS_PATH ?>/order.php"></script>
+
 <?
 if ($_GET['status']!="") $get_status=$_GET['status']; else $get_status=3;
 $all_status=drop::all_statuses();
@@ -112,6 +113,7 @@ else $where_id=" AND user_id='{$_SESSION['id']}'";
 		<dt><i class="fa fa-envelope" aria-hidden="true"></i></dt><dd><?= $myrow['email'] ?></dd> <? } ?>
 
 		<dt><i class="flag-<?= $myrow['country'] ?>"></i></dt><dd><?= $myrow['ip'] ?></dd>
+		<dt></dt><dd><span id="geobase_<?= $myrow['id'] ?>"></span></dd>
 		</dl>
 		</td>
 		

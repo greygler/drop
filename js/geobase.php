@@ -1,27 +1,29 @@
 ﻿<?
 require_once ('../config.php');
-if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?> 
- jQuery.ajax ({
-    type: "GET",
-    url: "http://ipgeobase.ru:7020/geo/?ip=" + ip,
+//if (mb_stripos($_SERVER['HTTP_REFERER'],SITE_ADDR)!==false){ ?> 
+function geobase(ip_geo,geo_class)
+{
+	
+ $.ajax ({
+    type: "POST",
+    url: "http://ipgeobase.ru:7020/geo/?ip=" + ip_geo,
     dataType: "xml",
     success: function(xml) {
-      var city = jQuery(xml).find('city').text();
-	  var region = jQuery(xml).find('region').text();
-	  var country = jQuery(xml).find('country').text();
-      jQuery(".geocity").text(city);
-	  $('<input>').attr('type','hidden').attr('name','city').attr('value',city).appendTo('form');   
-	  $('<input>').attr('type','hidden').attr('name','region').attr('value',region).appendTo('form'); 
-	  $('<input>').attr('type','hidden').attr('name','country').attr('value',country).appendTo('form'); 
+		
+      var city = $(xml).find('city').text();
+	  var region = $(xml).find('region').text();
+	  var country = $(xml).find('country').text();
+      $(geo_class).html(city);
+	  
     },
     error: function() {
-      jQuery(".geocity").text("********");
-	  $('<input>').attr('type','hidden').attr('name','city').attr('value',"Не определен").appendTo('form');
-	  $('<input>').attr('type','hidden').attr('name','region').attr('value',"Не определен").appendTo('form'); 
-	  $('<input>').attr('type','hidden').attr('name','country').attr('value',"AA").appendTo('form');	  
+      $(geo_class).html("Не определен");
+	 	  
     }
 	
 	
   });
-  <? } else header("Location: ".SITE_ADDR."/error/666.php"); ?>
+
+}
+  <? //} else header("Location: ".SITE_ADDR."/error/666.php"); ?>
   
