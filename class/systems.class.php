@@ -443,16 +443,17 @@ public function footer($geobase="")
 <script type="text/javascript"> jQuery(function($){$(".wmu").mask("\U999999999999");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".wmr").mask("\R999999999999");}); </script>
 <script type="text/javascript"> jQuery(function($){$(".wmz").mask("\Z999999999999");}); </script>
-<script type="text/javascript"> $(document).ready(function() {	
+<script type="text/javascript"> $(document).ready(function() {
+
 	if ($('#cont_user_id').width() > 767) {
+		
 	var stat_block=$('#stat_block').height();
 	var user_block=$('#user_block').height();
-	if (stat_block>user_block){var big_block=stat_block;}
-	else {var big_blok=userblock;}
+	if (stat_block>user_block) var big_block=stat_block; 
+	else  var big_block=user_block; 
 	$('#stat_block').height(big_block);
 	$('#user_block').height(big_block);
-	
-	}); </script>
+	} }) </script>
 <script src="<?= JS_PATH ?>/bootstrap.min.js"></script>
 <!-- <script src="<?= JS_PATH ?>/control-modal.js"></script> -->
 <script src="<?= JS_PATH ?>/gnmenu.php"></script>
@@ -477,8 +478,15 @@ if (((!$filling_profile OR $is_verify_profile) AND ($_SESSION['info_profile']!='
 <script type="text/javascript"> jQuery(function($){$('#info_balance').modal('show') }); </script>
 <? } ?>
 <?= systems::info_balance(); ?>
+<?
+switch($_GET['verify']) {
+case "1": { ?> <script type="text/javascript"> jQuery(function($){$('#ver_eml_ok').modal('show') }); </script> <?}; break;
+case "2":{ ?> <script type="text/javascript"> jQuery(function($){$('#ver_eml_is').modal('show') }); </script> <?}; break;
+case "3":{ ?> <script type="text/javascript"> jQuery(function($){$('#ver_eml_no').modal('show') }); </script> <?}; break;
+}
 
-<? if (autoring::is_autoring()) { ?> 
+
+if (autoring::is_autoring()) { ?> 
 <audio preload="auto" id="noti">
         <source src="audio/sound.mp3"></source>
         <source src="audio/sound.ogg"></source>

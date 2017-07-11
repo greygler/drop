@@ -15,7 +15,7 @@ drop::new_sale($_SESSION['id']);
 $user=autoring::update_user_info($_SESSION['id']);
 $_SESSION['info_profile']=$info_profile;
 $_SESSION['info_balance']=$info_balance;
-$last_report=drop::last_report($_SESSION['id'], $user);
+$last_report=drop::last_report($_SESSION['id'], $user, $_SESSION['users_group']);
 if ($last_report!=false) {//print_r($last_report);
 	$user['report']=$last_report;
 

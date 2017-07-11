@@ -1,22 +1,15 @@
 <?
+require_once ('tbot.class.php'); 
 session_start();
 class Autoring {
 	
-	
-	public function is_autoring() // есть ли авторизация
-		{
-			if (($_SESSION['email']!="") AND ($_SESSION['password']!="")){
-//echo ("<script>alert('Авторизация OK')</script>");
-			return true; } else return false;
-		}
-		
 	public function is_base($email) // есть ли в базе
 		{
 		//	$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
 			$count=db::cound_bd('users', "email='{$email}'");
 			if ($count>0) return true; else return false;
 		}
-		
+	
 	public function get_base($email, $password) // Забираем из базы по паролю и почте. Если нет - возвращаем FALSE
 		{
 		//	$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
@@ -35,7 +28,6 @@ class Autoring {
 			
 		}
 		
-		
 	public function user_group($group_id) // Забираем информацию о группе пользователя по ID пользователя
 		{
 			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
@@ -44,6 +36,33 @@ class Autoring {
 			
 			return $myrow;
 		}
+	
+	public function set_autoring($base, $user_group) // Авторизация
+		{
+			
+			$_SESSION=array_merge ($base, $user_group);
+			$_SESSION['at']=time();
+			$_SESSION['hash'] = hash_hmac("md5",$_SESSION['email'],$_SESSION['password']);
+			
+		}
+	
+	public function is_autoring() // есть ли авторизация
+		{
+			//print_r($_SESSION);
+			
+			if ((time()-$_SESSION['at'])>600) {
+				$base=autoring::get_base($_SESSION['email'], $_SESSION['password']);
+				if ($base!=false){
+						$user_group=autoring::user_group($base['user_group']);
+						autoring::set_autoring($base, $user_group);
+					}
+				}
+			if (($_SESSION['email']!="") AND ($_SESSION['password']!="") AND ($_SESSION['hash'] == hash_hmac("md5",$_SESSION['email'],$_SESSION['password']))){
+			//echo ("<script>alert('Авторизация OK')</script>");
+			return true; } else return false;
+		}
+		
+
 		
 	public function save_group($id, $group_id) // Изменяем номер группы пользователя
 		{
@@ -101,13 +120,7 @@ class Autoring {
 	
 		
 	
-	public function set_autoring($base, $user_group) // Авторизация
-		{
-			
-			$_SESSION=array_merge ($base, $user_group);
-			
-			
-		}
+	
 	public function update_user_info($id) // Обновляем информацию о пользователе в сесии
 		{
 			//$result=db::connect_db(DB_HOST, DB_NAME, DB_LOGIN, DB_PASS);
@@ -194,12 +207,12 @@ class Autoring {
 						
 		}
 		
-		public function sms_gen($id)
+	public function sms_gen($id) // Генерим SMS-код
 		{
 			return $smscode=rand(111, 999)."-".date("s")."-".str_pad($id, 3, rand(11, 99), STR_PAD_LEFT);
 		}
 	
-	public function sms_code($id) // енерим SMS-код
+	public function sms_code($id) 
 		{
 			$smscode=autoring::sms_gen($id);
 			
@@ -320,12 +333,18 @@ class Autoring {
 	public function order_pay($id, $summ, $method) // Запрос выплаты
 		{
 			$date_order=time();
-			
+			$user=autoring::get_user($id);
+			$pay_method=autoring::pay_method();
 			$result = mysql_query ("INSERT INTO pay_history (user_id, date_order, summ, method_pay) VALUES ('{$id}','{$date_order}','{$summ}','{$method}')");
 			$result = mysql_query ("SELECT * FROM `pay_history` WHERE (date_order='{$date_order}' AND user_id='{$id}')");
 			$myrow = mysql_fetch_array($result);
 			$result = mysql_query ("UPDATE users SET order_pay_id='{$myrow['id']}', order_pay='{$summ}', order_pay_method='{$method}' WHERE id='{$id}'");
-			if ($result == 'true') return 'ok'; else return 'error';
+			tbot::SendToAdmin("Заказана выплата. %0AПользователь: <b>{$user['name']}</b>, id {$id}%0AСумма: <b>{$summ} ".CURRENCY."</b>%0AСпособ выплаты: <b>{$pay_method[$method]}</b>");
+			if ($result == 'true')
+			{
+				return 'ok'; 
+			}				
+			else return 'error';
 		}
 	
 	public function last_status_pay($id) // Статус выплаты по ID в истории
@@ -336,14 +355,15 @@ class Autoring {
 			return $pay_status[$myrow['pay_status']]; 
 		}	
 		
-		
+			
 	public function order_pay_go($id, $summ, $status, $comment) // Выплата
 		{
 			$date_pay=time();
 			$users=autoring::get_user($id);
-			if ($status==1) $balance=$users['balance']-$summ; else {$balance=$users['balance'];$summ=$users['balance'];}
-			
-
+			if ($status==1) {$balance=$users['balance']-$summ;
+			drop::money_log('', $id, 0, $summ, "Выплата, согласно заявке");
+			} else {$balance=$users['balance'];$summ=$users['balance'];
+			}
 			$result = mysql_query ("UPDATE users SET order_pay='0.00', balance='{$balance}', order_pay_method='' WHERE id='{$id}'");
 			$result = mysql_query ("UPDATE pay_history SET date_pay='{$date_pay}', summ='{$summ}',pay_status='{$status}',comment='{$comment}' WHERE id={$users['order_pay_id']}");
 
@@ -351,7 +371,7 @@ class Autoring {
 			if ($result == 'true') return $pay_status[$status]; else return 'Ошибка обновления данных';
 		}
 
-    public function plus_balance($id, $summ)
+    public function plus_balance($id, $summ) // Увеличение баланса
 		{
 			$users=autoring::get_user($id);
 			$balance=$users['balance']+$summ;
@@ -360,11 +380,15 @@ class Autoring {
 			$result = mysql_query ("UPDATE users SET balance='{$balance}', total_balance='{$total_balance}' WHERE id='{$id}'");
 			if ($result == 'true') return 'ok'; else return 'error';
 		}
-   public function minus_balance($id, $summ)
+   public function minus_balance($id, $summ) // Уменьшение баланса
 		{
 			$users=autoring::get_user($id);
 			$balance=$users['balance']-$summ;
-			if (($balance<0) AND (($users['users_group']!=7) OR  ($users['users_group']>5)))  autoring::save_group($id, '5');
+			if (($balance<0) AND (($users['users_group']!=7) OR  ($users['users_group']>5)))  {
+				autoring::save_group($id, '5');
+				// Отправляем мыло
+				// Маякуем не телеграм;
+			}
 			$result = mysql_query ("UPDATE users SET balance='{$balance}' WHERE id='{$id}'");
 			if ($result == 'true') return 'ok'; else return 'error';
 		}
@@ -373,6 +397,7 @@ class Autoring {
 		{
 			$_SESSION = array();
 			session_destroy();
+			print_r($_SESSION); 
 		}
 }
 ?>

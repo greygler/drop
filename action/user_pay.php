@@ -9,6 +9,7 @@ require_once (CLASS_PATH.'/autoring.class.php');
 if (!autoring::is_autoring()) header("Location: ../login/");
 require_once (CLASS_PATH.'/users.class.php');
 require_once (CLASS_PATH.'/systems.class.php');
+require_once (CLASS_PATH.'/tbot.class.php');
 $groups=autoring::groups();
 $user=autoring::get_user($_GET['id']);
 //print_r($user);
@@ -32,7 +33,7 @@ $user=autoring::get_user($_GET['id']);
 
 <span class="fa fa-money fa-lg"></span> <strong>Заказ выплаты:</strong><br><small><?= $user['order_pay']?> <?= CURRENCY ?></small></h3>
 <div>
-<button id="order-pay_button" class="btn btn-primary btn-block form-group" data-toggle="modal" data-target="#user-pay_modal">Выплатить</button>
+<button id="order-pay_button" class="btn btn-primary btn-block form-group" data-toggle="modal" data-target="#user-pay_modal">Меню выплат</button>
 </div>
 
 

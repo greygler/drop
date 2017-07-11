@@ -22,6 +22,31 @@ while ($myrow = mysql_fetch_array($result));
 		</div> 
 		
 <script src="<?= JS_PATH ?>/work_news.php"></script>	
+
+<?
+drop::new_sale($_SESSION['id']);
+    $info_profile=$_SESSION['info_profile'];
+	$info_balance=$_SESSION['info_balance'];
+$user=autoring::update_user_info($_SESSION['id']);
+$_SESSION['info_profile']=$info_profile;
+$_SESSION['info_balance']=$info_balance;
+$last_report=drop::last_report($_SESSION['id'], $user, $_SESSION['users_group']);
+if ($last_report!=false) {//print_r($last_report);
+	
+	?>
+	<div class="alert alert-info alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+ <strong>Информация о работе системы управления продажами <?= TITLE ?></strong><br><?= $last_report ?>
+</div>
+	<?
+
+	
+}
+?>
+
+
+
+
 	
 <div class="row">
 <div id="aside1" class="col-sm-6 col-md-6 col-lg-6 panel panel-default">

@@ -9,6 +9,7 @@ require_once ($_SERVER['DOCUMENT_ROOT'].'/config.php');
 	  url: '<?= UPDATE_PATH ?>/update_user.php',
 	  data: '',
 	  success: function(data) {
+		 // alert(data);
 		  var user=JSON.parse(data);
 		  $('#balance').html(user.balance);
 		  $('#money_mob').html(user.balance);

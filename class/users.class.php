@@ -255,6 +255,57 @@ while ($myrow = mysql_fetch_array($result));
 	<?
 }
 
+
+public function user_stat()
+{
+	?>
+	
+	<script src="<?= JS_PATH ?>/stat.php"></script>
+
+<h3 class="text-center"><span class="fa fa-cogs fa-lg"></span> <strong>Настройки</strong></h3><br>
+<form action="javascript:void(null);" onsubmit="new_code(<?= $_SESSION['id'] ?>)" >
+<dl class="dl-horizontal">
+  <dt>Автоматическая<br>передача заказа:</dt>
+  <dd><input onchange='active_drop(<?= $_SESSION['id'] ?>)' id="checkbox_active" type="checkbox"  name="checkbox" <? if ($_SESSION['active_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_drop"><? if  ($_SESSION['active_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
+  </dd>
+   <dt>Прием дублей:<span class="help-block"><small>Без автопередачи</small></span></dt>
+  <dd><input onchange='take_drop(<?= $_SESSION['id'] ?>)' id="checkbox_take" type="checkbox"  name="checkbox" <? if ($_SESSION['take_drop']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="take_drop"><? if  ($_SESSION['take_drop']=='1') echo('<font color="blue">Включена</font>'); else echo('<font color="#737373">Отключена</font>'); ?></span></small></span>
+   
+  </dd>
+  <dt>Телеграм-бот <? if ($_SESSION['telegram']!="") echo ("<br>уведомления:"); ?></dt>
+  <dd>
+  <? if ($_SESSION['telegram']!="") { ?>
+<input onchange='active_tbot(<?= $_SESSION['id'] ?>)' id="checkbox_tbot" type="checkbox"  name="checkbox" <? if ($_SESSION['tbot']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_tbot"><? if  ($_SESSION['tbot']=='1') echo('<font color="blue">Включенo</font>'); else echo('<font color="#737373">Отключено</font>'); ?></span></small></span>
+  <? } else {?> 
+  <div id="form_v_tbot" class="form-group"><a id="tbot_button" class="btn btn-default btn-block" data-toggle="modal" data-target="#tbot">Подключить</a><span class="help-block hide" id="link_ver_bot" ><a  data-toggle="modal" data-target="#tbot_ver" >Ввести код верификации</a></span></div>
+  <div id="check_tbot" class="hide">
+  <input onchange='active_tbot(<?= $_SESSION['id'] ?>)' id="checkbox_tbot" type="checkbox"  name="checkbox" <? if ($_SESSION['tbot']=='1') echo("checked"); ?>><span class="help-block"><small> <span class="active_tbot"><? if  ($_SESSION['tbot']=='1') echo('<font color="blue">Включенo</font>'); else echo('<font color="#737373">Отключено</font>'); ?></span></small></span>
+  </div>
+  
+  <? } ?>
+  </dd>
+  <dt>Секретный токен:</dt>
+  <dd>
+   <div class="input-group">
+  <input id="drop_key" style="cursor: text;" type="text" class="form-control" value="<?= $_SESSION['drop_key'] ?>"  readonly>
+  <span class="input-group-btn">
+        <button id="new_drop_code"  data-toggle="tooltip" data-placement="bottom" title="Пересоздать токен" class="btn btn-default" type="submit"><i id="refresh_code" class="fa fa-refresh fa-lg fa-fw"></i></button>
+      </span>
+	 
+  </div>
+   <span class="help-block">Внимание! После изменения токена могут не приниматься заказы, в которых указан старый токен!</span>
+  </dd>
+ 
+  </dl>
+</form>
+<div class="form-group">
+<a class="btn btn-info btn-block " data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/money.php?id=<?= $_SESSION['id']?>&frame=no" href="javascript:;">Движение средств</a></div>
+<div class="form-group">
+<a class="btn btn-info btn-block " data-toggle="tooltip" data-placement="bottom" title="Логи входов" data-fancybox data-src="<?= ACTION_PATH ?>/user_logs.php?id=<?= $_SESSION['id']?>" href="javascript:;">История авторизаций</a></div>
+	
+	<?
+}
+
 public function modal_email()
 {
 	?>
@@ -269,7 +320,7 @@ public function modal_email()
       </div>
       <div class="modal-body">
         Для верификации на Ваш E-mail будет отправленна ссылка верификации.<br>
-		Для подтверждения Вашего <strong>E-mail: <?= $_SESSION['email'] ?></strong> зайдите в Вашу почту,<br>откройте письмо и перейдите по указанной в письме ссылке
+		Для подтверждения Вашего <strong>E-mail: <?= $_SESSION['email'] ?></strong> зайдите в Вашу почту,<br>откройте письмо и перейдите по указанной в письме ссылке.<br><strong>Важно!</strong> Если письма нет - посмотрите в папке «СПАМ»
       </div>
 	  <form id="verify_email" class="form-signin" action="javascript:void(null);" onsubmit="verify_email(<?= $_SESSION['id'] ?>)">
 	  <input type="hidden" name="id" value="<?= $_SESSION['id'] ?>">
@@ -292,6 +343,66 @@ public function modal_email()
       <div class="modal-body">
         Для верификации на Ваш E-mail Вам отправленна ссылка верификации.<br>
 		Для подтверждения Вашего <strong>E-mail: <?= $_SESSION['email'] ?></strong> зайдите в Вашу почту,<br>откройте письмо и перейдите по указанной в письме ссылке
+      </div>
+	
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+       
+      </div>
+	
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ver_eml_ok" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация E-mail</h4>
+      </div>
+      <div class="modal-body">
+        Верификация Вашего <strong>E-mail: <?= $_SESSION['email'] ?></strong> прошла успешно!
+      </div>
+	
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+       
+      </div>
+	
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ver_eml_is" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация E-mail</h4>
+      </div>
+      <div class="modal-body">
+        Ваш <strong>E-mail: <?= $_SESSION['email'] ?></strong> уже верифицирован!
+      </div>
+	
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+       
+      </div>
+	
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ver_eml_no" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Верификация E-mail</h4>
+      </div>
+      <div class="modal-body">
+        Ваш <strong>E-mail: <?= $_SESSION['email'] ?></strong> не верифицирован!<br>Очевидно Вы воспользовались не действительной ссылкой! 
       </div>
 	
       <div class="modal-footer">

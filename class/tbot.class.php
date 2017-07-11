@@ -1,9 +1,11 @@
 <?
-class Tbot{
-	const WEBSITE='https://api.telegram.org/bot'.TELEGRAM_BOT;
-	const HELP='Все команды по правилам Telegram-ботов начинаются <b>с наклонной черты</b>.%0A%0AКоманды бота <b>«'.TITLE.'»</b>:%0A/start - Начало работы с Ботом «'.TITLE .'»,%0A/reg - регистрация,%0A/balance - текущий баланс,%0A/mystat - статистика по заказам,%0A/options - настройки Вашего аккаунта,%0A<i>Опции включения/выключения:</i>%0A/bot on - включить уведомления,%0A/bot off - выключить уведомления,%0A/auto on - включить автопередачу заказа,%0A/auto off - выключить автопередачу заказа,%0A/take on - разрешить дубли заказа,%0A/take off - запретить заказа,%0A/help - Эта подсказка.';
-	const ERROR='Вы не зарегистрированны в системе <b>«'.TITLE.'»</b>.%0AПожалуйста, пройдите регистрацию.';
+class Tbot
+{
+	const WEBSITE="https://api.telegram.org/bot".TELEGRAM_BOT;
+	const HELP="Все команды по правилам Telegram-ботов начинаются <b>с наклонной черты</b>.%0A%0AКоманды бота <b>«".TITLE."»</b>:%0A/start - Начало работы с Ботом «".TITLE."»,%0A/reg - регистрация,%0A/balance - текущий баланс,%0A/mystat - статистика по заказам,%0A/options - настройки Вашего аккаунта,%0A<i>Опции включения/выключения:</i>%0A/bot on - включить уведомления,%0A/bot off - выключить уведомления,%0A/auto on - включить автопередачу заказа,%0A/auto off - выключить автопередачу заказа,%0A/take on - разрешить дубли заказа,%0A/take off - запретить заказа,%0A/help - Эта подсказка.";
+	const ERROR="Вы не зарегистрированны в системе <b>«".TITLE."»</b>.%0AПожалуйста, пройдите регистрацию.";
 	const NO_COMMAND='Неизвестная команда! Воспользуйтесь подсказкой по команде /help';
+	
 	
 	
 	public function UserIdChat($id_chat) // Забираем данные пользователя по Id_chat
@@ -16,7 +18,9 @@ class Tbot{
 		}
 		else return false;
 	}
-		
+	
+	
+	
 	public function stats($id) // Общая статистика
 	{
 		$status=drop::getstatusbase(); 
@@ -34,19 +38,20 @@ class Tbot{
 	
 	public function options($user)
 	{
+		$groups=autoring::groups();
 		$mess="Имя: <b>{$user['name']}</b>%0A";
-			$mess.="Группа: <b>{$user['users_group']}</b>%0A";
-			$mess.="Email: <b>{$user['email']}</b> ";
-			if ($user['email']==$user['v_email']) $mess.="(Верифицирован)%0A"; else $mess.="(Не верифицирован)%0A";
+		$mess.="Группа: <b>{$groups[$user['users_group']]['name_group']}</b>%0A";
+		$mess.="Email: <b>{$user['email']}</b> ";
+		if ($user['email']==$user['v_email']) $mess.="(Верифицирован)%0A"; else $mess.="(Не верифицирован)%0A";
 			
 			if ($user['phone']!=""){
 				$mess.="Телефон: <b>{$user['phone']}</b> ";
 				if ($user['phone']==$user['v_phone']) $mess.="(Верифицирован)%0A"; else $mess.="(Не верифицирован)%0A";
 			}
-			$mess.="Автодобавление заказа: <b>".tbot::yes_or_no($user['active_drop'])."</b>%0A";
-			$mess.="Разрешение дублей: <b>".tbot::yes_or_no($user['take_drop'])."</b>%0A";
-			$mess.="Уведомление телеграм-бот: <b>".tbot::yes_or_no($user['tbot'])."</b>%0A";
-			return $mess;
+		$mess.="Автодобавление заказа: <b>".tbot::yes_or_no($user['active_drop'])."</b>%0A";
+		$mess.="Разрешение дублей: <b>".tbot::yes_or_no($user['take_drop'])."</b>%0A";
+		$mess.="Уведомление телеграм-бот: <b>".tbot::yes_or_no($user['tbot'])."</b>%0A";
+		return $mess;
 	}
 	
 	
@@ -216,6 +221,28 @@ return $mess;
 		file_get_contents(tbot::WEBSITE."/sendmessage?chat_id=".$chatId."&parse_mode=html&text=".$mess); 
 	}  
 
+	public function info_balance($id, $summ, $comment)
+	{
+		$user=autoring::get_user($id);
+		if ($user['tbot']>0){
+			$chatId=$user['telegram'];
+			$balance=$user['balance'];
+			if ($summ>0) $znak="+";
+			$mess="У Вас изменился баланс.%0AВаш текущий баланс: <b>{$balance} ".CURRENCY."</b>%0AИзменение <b>{$znak}{$summ})".CURRENCY."</b>%0AОснование: <b>{$comment}</b>";
+			tbot::send_bot($chatId, $mess);
+		}
+	}
+	
+	public function SendToAdmin($mess)
+	{
+	$result = mysql_query ("SELECT * FROM `users` WHERE (users_group<5 AND tbot>0)");
+	$myrow = mysql_fetch_array($result);
+		do
+			{
+				tbot::send_bot($myrow['telegram'], $mess);
+			}
+		while ($myrow = mysql_fetch_array($result));	
+	}
 }
 
 ?>

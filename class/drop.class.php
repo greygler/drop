@@ -394,6 +394,7 @@ class drop{
 		$datetime=time();
 		$db="INSERT INTO money (datetime, user_id, order_id, name, summ, comment) VALUES ({$datetime},'{$user_id}','{$order_id}', '{$name}','{$summ}','{$comment}')";
 		$result = mysql_query ($db);
+		tbot::info_balance($id, $balance, $summ, $comment);
 		echo $db;
 	}
 	
@@ -501,7 +502,39 @@ public function one_orders($out)  // только один заказ
 	}
 	
 	
-	public function last_report($user_id, $report)
+	
+	public function count_pay()
+		{
+			return db::cound_bd('`pay_history`', "`pay_status`=0");
+			
+		}
+		
+	public function expected_costs() // Сводка ожидаемых выплат
+		{
+			//$count=drop::count_pay();
+			$count=0;
+			$summ=0;
+			$result = mysql_query ("SELECT * FROM `pay_history` WHERE `pay_status` =0");
+			$myrow = mysql_fetch_array($result);
+			do
+			{
+				$count++;
+				$summ=$summ+$myrow['summ'];
+			}
+			while ($myrow = mysql_fetch_array($result));
+			$return="Ожидают выплат: {$count} пользователей,\nНа сумму {$summ} ".CURRENCY;
+			if ($count>0) return $return; else return false;
+		
+		}
+	
+	public function all_report()
+	{
+		$new_sale_all=drop::new_sale_all();
+		$expected_costs=drop::expected_costs();
+		
+	}
+	
+	public function last_report($user_id, $report, $group_id)
 	{
 		//echo $report['last_report'];
 		$return='';
@@ -509,6 +542,25 @@ public function one_orders($out)  // только один заказ
 		$last=false;
 		$last_report['sale']=$report['sale'];
 		$last_report['balance']=$report['balance'];
+		if ($group_id<5){
+		
+			$expected_costs=drop::expected_costs();
+		
+			$count_pay=drop::count_pay();
+			$last_report['new_sale']=drop::status('3');
+			$last_report['count_pay']=$count_pay;
+			
+			if ($lrb['new_sale']!=$last_report['new_sale']) 
+			{
+				$last=true;
+				$return.="Новые продажи (всего): {$last_report['new_sale']}\n";
+			}
+			if ($lrb['count_pay']!=$last_report['count_pay']) 
+			{
+				$last=true;
+		
+			}
+		}
 		
 		if ($lrb['sale']!=$report['sale']) {$last=true;
 		$sale=$report['sale']-$lrb['sale'];
@@ -516,9 +568,11 @@ public function one_orders($out)  // только один заказ
 		if ($lrb['balance']!=$report['balance']) {$last=true; 
 		if ($report['balance']>$lrb['balance']) $znak="+";
 		$balance=$report['balance']-$lrb['balance'];
-		$return.="Баланс: {$report['balance']} ".CURRENCY." ({$znak}{$balance} ".CURRENCY.")";
+		$return.="Изменения баланса: {$report['balance']} ".CURRENCY." ({$znak}{$balance} ".CURRENCY.")";
+		
 		//." ".CURRENCY."( ".$report['balance']-$lrb['balance'].")";
 		}
+		if ($expected_costs!=false) $return.="\n".$expected_costs;
 		//echo $return;
 		if ($last) {$lrs=serialize($last_report); $result = mysql_query ("UPDATE users SET last_report='{$lrs}' WHERE id='{$user_id}'"); 
 		return $return;} else return false;
